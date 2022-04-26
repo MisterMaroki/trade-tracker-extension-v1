@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
+  "name": "ctrade-tracker-react",
   "version": "4.3.5",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "description": "A chrome extension to track your trades",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/MisterMaroki/trade-tracker-extension-v1.git"
   },
   "scripts": {
     "build": "node utils/build.js",
