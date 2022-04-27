@@ -10,13 +10,18 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
+    "axios": "^0.27.1",
+    "dotenv": "^16.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -45,6 +50,7 @@
     "html-webpack-plugin": "^5.5.0",
     "node-sass": "^6.0.1",
     "prettier": "^2.5.1",
+    "react-error-overlay": "^6.0.9",
     "sass-loader": "^12.4.0",
     "source-map-loader": "^3.0.1",
     "style-loader": "^3.3.1",
@@ -54,5 +60,9 @@
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   }
 }
