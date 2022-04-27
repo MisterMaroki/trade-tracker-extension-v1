@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from '../../assets/img/logo.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
@@ -10,39 +10,45 @@ const options = [
   { value: 'BNB', label: 'Binance' },
 ];
 const Popup = () => {
-  const [state, setstate] = useState(true);
-  const handleClick = () => {
-    setstate(!state);
-    getTickerPrice('BTC');
+  const [currentTicker, setCurrentTicker] = useState('BTC');
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const priceEl = useRef(null);
+
+  const getTickerPrice = async (ticker) => {
+    if (ticker !== undefined) {
+      const res = await fetch(
+        `https://api.binance.com/api/v3/ticker/price?symbol=${ticker}USDT`
+      );
+      const data = await res.json();
+
+      setCurrentPrice(data.price);
+      priceEl.current.textContent = `${currentTicker}: $${parseFloat(
+        data.price
+      ).toFixed(2)}`;
+    }
   };
+  // console.log(currentPrice);
+  const selected = getTickerPrice(currentTicker);
+  console.log(JSON.stringify(selected));
   const handleSelect = (selectedTicker) => {
-    getTickerPrice(selectedTicker);
+    setCurrentTicker(selectedTicker);
   };
+
   return (
-    <div className={`App ${state && 'bg'}`}>
+    <div className={`App`}>
       <header className="App-header">
-        <p></p>
+        <p ref={priceEl}>BTC: $39225.00</p>
 
         <Select
           options={options}
           name="ticker-select"
           id="ticker-select"
+          value={currentTicker}
           onChange={(e) => handleSelect(e.value)}
         />
-        <button onClick={handleClick}>click</button>
       </header>
     </div>
   );
 };
 
 export default Popup;
-
-const getTickerPrice = async (ticker) => {
-  if (ticker !== undefined) {
-    const res = await fetch(
-      `https://api.binance.com/api/v3/ticker/price?symbol=${ticker}USDT`
-    );
-    const data = await res.json();
-    console.log(`${data.symbol} price: $${data.price}`);
-  }
-};
