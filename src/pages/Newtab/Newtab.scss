@@ -9,8 +9,13 @@ $gray: #6b7688;
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   // background-color: #0b2434;
-  padding: 20px;
   background-color: $primary;
   // font-family: $fontBase;
   font-size: 2rem;
@@ -43,4 +48,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  background-color: $white;
+
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
 }

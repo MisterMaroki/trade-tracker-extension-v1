@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background-color: #062c30;
   font-size: 2rem;
   color: #f5f5f5;
@@ -32,5 +32,30 @@ button:focus {
 button:active {
   -webkit-box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
           box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.__whitebg {
+  background-color: #f5f5f5;
+}
+
+.__primarybg {
+  background-color: #062c30;
+}
+
+.__container {
+  width: 400px;
+  height: 260px;
+}
+
+.__flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=Popup.css.map */

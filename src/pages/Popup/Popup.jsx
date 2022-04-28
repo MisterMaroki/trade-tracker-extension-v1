@@ -1,56 +1,57 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import logo from '../../assets/img/logo.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
 import Select from 'react-select';
 
 const options = [
-  { value: 'BTC', label: 'Bitcoin' },
-  { value: 'ETH', label: 'Ethereum' },
-  { value: 'BNB', label: 'Binance' },
+  { value: 'bitcoin', label: 'Bitcoin' },
+  { value: 'ethereum', label: 'Ethereum' },
+  { value: 'binancecoin', label: 'Binance' },
 ];
 const Popup = () => {
-  const [currentTicker, setCurrentTicker] = useState('BTC');
+  const [currentTicker, setCurrentTicker] = useState('bitcoin');
   const [currentPrice, setCurrentPrice] = useState(
-    async () => await getTickerPrice(currentTicker)
+    async () => getTickerPrice(currentTicker) || 0
   );
-
+  console.log(currentPrice);
   const priceEl = useRef(null);
-
   const getTickerPrice = async (ticker) => {
     if (ticker !== undefined) {
       const res = await fetch(
-        `https://api.binance.com/api/v3/ticker/price?symbol=${ticker}USDT`
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ticker}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true`
       );
       const data = await res.json();
-
-      setCurrentPrice(data.price);
-      priceEl.current.textContent = `${currentTicker}: $${parseFloat(
-        data.price
-      ).toFixed(2)}`;
+      setCurrentPrice(data[Object.keys(data)[0]]?.usd);
     }
   };
+
+  useEffect(() => {
+    getTickerPrice(currentTicker);
+    priceEl.current.textContent = `${currentTicker.toUpperCase()}: $${parseFloat(
+      currentPrice
+    ).toFixed(2)}`;
+  }, [currentPrice, currentTicker]);
+
   // console.log(currentPrice);
-  getTickerPrice(currentTicker);
 
   const handleSelect = (selectedTicker) => {
     setCurrentTicker(selectedTicker);
+    getTickerPrice(selectedTicker);
   };
 
   return (
-    <div className={`App`}>
-      <header className="App-header">
-        <p ref={priceEl}>BTC: $39225.00</p>
+    <div className={`__container `}>
+      <p ref={priceEl}>BTC: $39225.00</p>
 
-        <Select
-          options={options}
-          name="ticker-select"
-          id="ticker-select"
-          value={currentTicker}
-          onChange={(e) => handleSelect(e.value)}
-        />
-        <button>Buy</button>
-      </header>
+      <Select
+        options={options}
+        name="ticker-select"
+        id="ticker-select"
+        value={currentTicker}
+        onChange={(e) => handleSelect(e.value)}
+      />
+      <button>Buy</button>
     </div>
   );
 };

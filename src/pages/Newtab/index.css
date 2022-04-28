@@ -3,9 +3,18 @@
 
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
   font-family: 'Karla', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.app_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 code {

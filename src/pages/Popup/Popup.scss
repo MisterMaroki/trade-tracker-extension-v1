@@ -10,7 +10,7 @@ $gray: #6b7688;
 body {
   margin: 0;
   // background-color: #0b2434;
-  padding: 20px;
+  padding: 0;
   background-color: $primary;
   // font-family: $fontBase;
   font-size: 2rem;
@@ -40,4 +40,22 @@ button:focus {
 
 button:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+.__whitebg {
+  background-color: $white;
+}
+
+.__primarybg {
+  background-color: $primary;
+}
+
+.__container {
+  width: 400px;
+  height: 260px;
+}
+
+.__flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
