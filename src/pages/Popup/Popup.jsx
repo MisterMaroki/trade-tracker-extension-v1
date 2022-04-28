@@ -11,7 +11,10 @@ const options = [
 ];
 const Popup = () => {
   const [currentTicker, setCurrentTicker] = useState('BTC');
-  const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(
+    async () => await getTickerPrice(currentTicker)
+  );
+
   const priceEl = useRef(null);
 
   const getTickerPrice = async (ticker) => {
@@ -28,8 +31,8 @@ const Popup = () => {
     }
   };
   // console.log(currentPrice);
-  const selected = getTickerPrice(currentTicker);
-  console.log(JSON.stringify(selected));
+  getTickerPrice(currentTicker);
+
   const handleSelect = (selectedTicker) => {
     setCurrentTicker(selectedTicker);
   };
@@ -46,6 +49,7 @@ const Popup = () => {
           value={currentTicker}
           onChange={(e) => handleSelect(e.value)}
         />
+        <button>Buy</button>
       </header>
     </div>
   );
