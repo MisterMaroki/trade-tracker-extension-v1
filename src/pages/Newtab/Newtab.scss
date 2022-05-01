@@ -19,7 +19,7 @@ body {
   background-color: $primary;
   // font-family: $fontBase;
   font-size: 2rem;
-  color: $white;
+  color: $gray;
 }
 
 * {
@@ -57,9 +57,42 @@ nav {
 
   width: 100%;
   height: 60px;
+  padding-inline: 1rem;
+
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  color: $black;
   background-color: $white;
 
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
+  button {
+    width: 50px;
+  }
+}
+button {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e2d784;
+
+  color: rgb(62, 62, 62);
+  font-size: 1.2rem;
+  font-family: 'Karla', sans-serif;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0 0 2px #0000000f;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  box-shadow: inset 0 0 10px #0000000f;
 }
