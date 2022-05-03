@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar';
 import CoinPage from './Components/coinPage';
 import styled from '@emotion/styled';
 import CryptoContext from './CryptoContext';
+import CoinDashboard from './Components/CoinDashboard';
 
 const Newtab = () => {
   const [inCoinPage, setInCoinPage] = useState(false);
@@ -12,7 +13,7 @@ const Newtab = () => {
     <CryptoContext>
       <div className="newTab__container newTab__primarybg">
         <Navbar inCoinPage={inCoinPage} setInCoinPage={setInCoinPage} />
-
+        <CoinDashboard />
         {selectedCoinId && inCoinPage && <CoinPage id={selectedCoinId} />}
       </div>
     </CryptoContext>
