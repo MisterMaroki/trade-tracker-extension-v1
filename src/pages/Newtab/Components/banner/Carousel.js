@@ -63,7 +63,7 @@ const Carousel = () => {
   };
 
   return (
-    <div>
+    <div className="carousel">
       <AliceCarousel
         mouseTracking
         infinite

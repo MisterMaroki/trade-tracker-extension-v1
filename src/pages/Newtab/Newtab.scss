@@ -112,6 +112,11 @@ button:active {
 .red {
   color: red;
 }
+.carousel {
+  background-image: url(../../assets/img/dots.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .carousel-item {
   display: flex;
   flex-direction: column;
