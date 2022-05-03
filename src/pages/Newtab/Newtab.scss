@@ -12,12 +12,10 @@ body {
   padding: 0;
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   // background-color: #0b2434;
   background-color: $primary;
-  // font-family: $fontBase;
+  font-family: $fontBase;
   font-size: 2rem;
   color: $gray;
 }
@@ -126,4 +124,7 @@ button:active {
   span {
     font-size: 1.3rem;
   }
+}
+.dashboard--banner {
+  min-height: 250px;
 }

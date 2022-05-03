@@ -3,16 +3,8 @@ body {
   padding: 0;
   height: 100vh;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   background-color: #062c30;
+  font-family: "Karla", sans-serif;
   font-size: 2rem;
   color: #6b7688;
 }
@@ -155,5 +147,9 @@ button:active {
 
 .carousel-item span {
   font-size: 1.3rem;
+}
+
+.dashboard--banner {
+  min-height: 250px;
 }
 /*# sourceMappingURL=Newtab.css.map */

@@ -2,6 +2,7 @@ import {
   Container,
   LinearProgress,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -11,6 +12,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CoinList } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
 
@@ -23,14 +25,25 @@ const CoinsTable = () => {
   const fetchCoins = async () => {
     setLoading(true);
     const data = await axios.get(CoinList(currency));
-
-    setCoins(data);
+    if (data.data !== coins) setCoins(data.data);
     setLoading(false);
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCoins();
   }, [currency]);
+
+  const handleSearch = () => {
+    if (coins.length > 20 && !loading) {
+      return coins.filter(
+        (coin) =>
+          coin.name.toLowerCase().includes(search) ||
+          coin.symbol.toLowerCase().includes(search)
+      );
+    }
+  };
 
   return (
     <Container style={{ paddingTop: 20 }}>
@@ -68,7 +81,7 @@ const CoinsTable = () => {
                             : '0',
                       }}
                       key={head}
-                      align={head === 'Coin' ? '' : 'right'}
+                      align={head === 'Coin' ? 'center' : 'right'}
                     >
                       {head}
                     </TableCell>
@@ -76,6 +89,28 @@ const CoinsTable = () => {
                 )}
               </TableRow>
             </TableHead>
+            <TableBody>
+              {handleSearch()?.map((row) => {
+                const profit = row.price_change_percentage_24h > 0;
+
+                return (
+                  <TableRow key={row.name}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ display: 'flex', gap: 15 }}
+                    >
+                      <img
+                        src={row.image}
+                        alt={row.name}
+                        height="50"
+                        style={{ marginBottom: 10 }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
           </Table>
         )}
       </TableContainer>

@@ -5,8 +5,14 @@ import Banner from '../Components/banner/Banner';
 import CoinsTable from '../Components/CoinsTable';
 
 const DashboardContainer = styled(Container)`
-  margin-top: 4rem;
-  height: 88vh;
+  margin-top: 5rem;
+  /* height: 88vh; */
+  min-height: 88vh;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   width: 95vw;
 
   border-radius: 10px;
