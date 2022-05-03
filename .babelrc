@@ -6,6 +6,25 @@
   ],
   "plugins": [
     // "@babel/plugin-proposal-class-properties",
-    "react-hot-loader/babel"
+    "react-hot-loader/babel",
+    [
+      "@emotion",
+      {
+        "importMap": {
+          "@mui/system": {
+            "styled": {
+              "canonicalImport": ["@emotion/styled", "default"],
+              "styledBaseImport": ["@mui/system", "styled"]
+            }
+          },
+          "@mui/material/styles": {
+            "styled": {
+              "canonicalImport": ["@emotion/styled", "default"],
+              "styledBaseImport": ["@mui/material/styles", "styled"]
+            }
+          }
+        }
+      }
+    ]
   ]
 }
