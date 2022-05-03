@@ -13,7 +13,8 @@ const Newtab = () => {
         <Navbar />
         <Routes>
           <Route path="/newTab.html" element={<CoinDashboard />} />
-          <Route path="/coins/:id" component={CoinPage} exact />
+          <Route path="/" element={<CoinDashboard />} exact />
+          <Route path="/coins/:id" component={<CoinPage />} exact />
         </Routes>
       </div>
     </BrowserRouter>

@@ -8,7 +8,7 @@ const Banner = () => {
       <div>
         <Typography
           variant="h6"
-          style={{ marginBottom: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
+          style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
         >
           Trending Coins
         </Typography>

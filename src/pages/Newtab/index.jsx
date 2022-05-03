@@ -3,7 +3,13 @@ import { render } from 'react-dom';
 
 import Newtab from './Newtab';
 import './index.css';
+import CryptoContext from './CryptoContext';
 
-render(<Newtab />, window.document.querySelector('#app-container'));
+render(
+  <CryptoContext>
+    <Newtab />
+  </CryptoContext>,
+  window.document.querySelector('#app-container')
+);
 
 if (module.hot) module.hot.accept();
