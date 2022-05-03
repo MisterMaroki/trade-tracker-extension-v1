@@ -1,5 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import React from 'react';
+import Carousel from './Carousel';
 
 const Banner = () => {
   return (
@@ -9,9 +10,10 @@ const Banner = () => {
           variant="h6"
           style={{ marginBottom: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
         >
-          Top Currencies past 7d
+          Trending Coins
         </Typography>
       </div>
+      <Carousel />
     </Container>
   );
 };
