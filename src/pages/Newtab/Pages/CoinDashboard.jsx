@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import { Container } from '@mui/material';
 import React from 'react';
 import Banner from '../Components/banner/Banner';
+import CoinsTable from '../Components/CoinsTable';
 
-const Containerr = styled(Container)`
+const DashboardContainer = styled(Container)`
   margin-top: 4rem;
   height: 88vh;
   width: 95vw;
@@ -13,9 +14,10 @@ const Containerr = styled(Container)`
 `;
 const CoinDashboard = () => {
   return (
-    <Containerr className="dashboard--container">
+    <DashboardContainer className="dashboard--container">
       <Banner />
-    </Containerr>
+      <CoinsTable />
+    </DashboardContainer>
   );
 };
 
