@@ -27,7 +27,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #e2d784;
+  color: #030303;
 }
 
 .newTab__whitebg {
@@ -121,5 +121,33 @@ button:focus {
 button:active {
   -webkit-box-shadow: inset 0 0 10px #0000000f;
           box-shadow: inset 0 0 10px #0000000f;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.carousel-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.carousel-item span {
+  font-size: 1.3rem;
 }
 /*# sourceMappingURL=Newtab.css.map */

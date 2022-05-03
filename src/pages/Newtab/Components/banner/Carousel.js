@@ -38,10 +38,11 @@ const Carousel = () => {
           style={{ marginBottom: 10 }}
         />
         <span>
-          {coin?.symbol}
+          {coin?.symbol.toUpperCase()}
           &nbsp;
-          <span>
-            {profit && '+'} {coin?.price_change_percentage_24h?.toFixed(2)}%
+          <span className={profit ? 'green' : 'red'}>
+            {profit && '+'}
+            {coin?.price_change_percentage_24h?.toFixed(2)}%
           </span>
         </span>
 
@@ -56,7 +57,7 @@ const Carousel = () => {
     0: {
       items: 2,
     },
-    512: {
+    612: {
       items: 4,
     },
   };

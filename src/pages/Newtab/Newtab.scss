@@ -31,7 +31,7 @@ body {
 
 a {
   text-decoration: none;
-  color: $tertiary;
+  color: $black;
 }
 
 .newTab__whitebg {
@@ -105,3 +105,20 @@ button:active {
   box-shadow: inset 0 0 10px #0000000f;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 1.3rem;
+  }
+}
