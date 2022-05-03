@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Newtab.css';
 import Navbar from './Components/Navbar';
-import CoinPage from './Components/coinPage';
-import styled from '@emotion/styled';
-import CryptoContext from './CryptoContext';
-import CoinDashboard from './Components/CoinDashboard';
+import CoinPage from './Pages/CoinPage';
+import CoinDashboard from './Pages/CoinDashboard';
+import 'react-alice-carousel/lib/alice-carousel.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const Newtab = () => {
-  const [inCoinPage, setInCoinPage] = useState(false);
-  const [selectedCoinId, setSelectedCoinId] = useState(null);
   return (
-    <CryptoContext>
+    <BrowserRouter>
       <div className="newTab__container newTab__primarybg">
-        <Navbar inCoinPage={inCoinPage} setInCoinPage={setInCoinPage} />
-        <CoinDashboard />
-        {selectedCoinId && inCoinPage && <CoinPage id={selectedCoinId} />}
+        <Navbar />
+        <Routes>
+          <Route path="/newTab.html" element={<CoinDashboard />} />
+          <Route path="/coins/:id" component={CoinPage} exact />
+        </Routes>
       </div>
-    </CryptoContext>
+    </BrowserRouter>
   );
 };
 

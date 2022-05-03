@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Container } from '@mui/material';
 import React from 'react';
-import Banner from './banner/Banner';
+import Banner from '../Components/banner/Banner';
 
 const Containerr = styled(Container)`
   margin-top: 4rem;
@@ -11,7 +11,7 @@ const Containerr = styled(Container)`
   border-radius: 10px;
   background: #f5f5f5e8;
 `;
-const CoinDashboard = ({}) => {
+const CoinDashboard = () => {
   return (
     <Containerr className="dashboard--container">
       <Banner />
