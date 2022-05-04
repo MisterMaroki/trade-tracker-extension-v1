@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ const Sidebar = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem;
   border-right: 2px solid whitesmoke;
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -43,7 +44,7 @@ const CoinPage = () => {
   const fetchCoin = async () => {
     const data = await axios.get(SingleCoin(id));
 
-    setCoin(data);
+    if (coin?.id !== data.data.id) setCoin(data.data);
   };
   useEffect(() => {
     fetchCoin();
@@ -51,9 +52,22 @@ const CoinPage = () => {
 
   const { currency, symbol } = CryptoState();
 
+  console.log(coin);
+
   return (
     <CoinContainer>
-      <Sidebar>{/* {sidebar} */}sidebar</Sidebar>
+      <Sidebar>
+        <img
+          src={coin?.image?.large}
+          alt={coin?.name}
+          height="120"
+          style={{ marginBottom: 20 }}
+        />
+        <Typography variant="h6" className="heading">
+          {coin?.name}
+        </Typography>
+        <Typography>{coin?.description.en}</Typography>
+      </Sidebar>
 
       {/* {chart} */}
       <CoinInfo coin={coin} />
