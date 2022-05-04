@@ -210,7 +210,7 @@ button:active {
   -ms-flex-item-align: start;
       -ms-grid-row-align: start;
       align-self: start;
-  padding: 25px;
+  padding: 0;
   padding-top: 10px;
   width: 100%;
 }

@@ -130,7 +130,7 @@ const CoinPage = () => {
       </Sidebar>
 
       {/* {chart} */}
-      <CoinInfo coin={coin} />
+      {coin && <CoinInfo coin={coin} />}
     </CoinContainer>
   );
 };

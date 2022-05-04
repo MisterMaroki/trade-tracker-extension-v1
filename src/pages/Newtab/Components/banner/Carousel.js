@@ -75,8 +75,8 @@ const Carousel = () => {
 
   return loading ? (
     <div className="carousel flex carousel-loading ">
-      {['1', '2', '3', '4'].map(() => (
-        <Stack spacing={1}>
+      {['1', '2', '3', '4'].map((i) => (
+        <Stack spacing={1} key={i}>
           <Skeleton variant="circular" width={70} height={70} />
           <Skeleton variant="rectangular" width={180} height={70} />
         </Stack>
