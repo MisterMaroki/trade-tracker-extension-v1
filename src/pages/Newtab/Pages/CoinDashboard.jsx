@@ -17,7 +17,7 @@ const DashboardContainer = styled(Container)`
   max-width: 1800px !important;
 
   border-radius: 10px;
-  background: #f5f5f5e8;
+  background: #f5f5f5ee;
 `;
 const CoinDashboard = () => {
   return (

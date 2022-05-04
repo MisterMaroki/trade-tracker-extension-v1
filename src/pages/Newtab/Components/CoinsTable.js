@@ -74,7 +74,7 @@ const CoinsTable = () => {
           <Table>
             <TableHead style={{ backgroundColor: 'whitesmoke' }}>
               <TableRow style={{ borderRadius: '10px' }}>
-                {['Coin', 'Price', '24h Change', 'Market Cap'].map(
+                {['Coin', 'Rank', 'Price', '24h Change', 'Market Cap'].map(
                   (head, index) => (
                     <TableCell
                       style={{
@@ -82,7 +82,7 @@ const CoinsTable = () => {
                         borderRadius:
                           index === 0
                             ? '10px 0 0 10px'
-                            : index === 3
+                            : index === 4
                             ? '0 10px 10px 0'
                             : '0',
                       }}
@@ -121,6 +121,9 @@ const CoinsTable = () => {
                           </span>
                           <span style={{ color: 'darkgrey' }}>{row.name}</span>
                         </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        #{row.market_cap_rank}
                       </TableCell>
                       <TableCell align="right">
                         {symbol}{' '}

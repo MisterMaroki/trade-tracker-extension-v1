@@ -15,7 +15,7 @@ body {
 
   // background-color: #0b2434;
   background-color: $primary;
-  font-family: $fontBase;
+  font-family: $fontBase !important;
   font-size: 2rem;
   color: $gray;
 }
@@ -97,6 +97,10 @@ button {
 
   box-shadow: 0 0 0 2px #0000000f;
 }
+aside button {
+  width: 150px;
+  background-color: $tertiary !important;
+}
 
 button:focus {
   outline: none;
@@ -150,5 +154,19 @@ button:active {
   .coin-container {
     flex-direction: column;
     align-items: center;
+  }
+}
+.market-data {
+  align-self: start;
+  padding: 25px;
+  padding-top: 10px;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: space-around;
+  }
+  @media screen and (max-width: 568px) {
+    display: flex;
+    flex-direction: column;
   }
 }

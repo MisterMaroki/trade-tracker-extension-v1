@@ -4,7 +4,7 @@ body {
   height: 100vh;
   width: 100%;
   background-color: #062c30;
-  font-family: "Karla", sans-serif;
+  font-family: "Karla", sans-serif !important;
   font-size: 2rem;
   color: #6b7688;
 }
@@ -116,6 +116,11 @@ button {
           box-shadow: 0 0 0 2px #0000000f;
 }
 
+aside button {
+  width: 150px;
+  background-color: #e2d784 !important;
+}
+
 button:focus {
   outline: none;
 }
@@ -198,6 +203,37 @@ button:active {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+  }
+}
+
+.market-data {
+  -ms-flex-item-align: start;
+      -ms-grid-row-align: start;
+      align-self: start;
+  padding: 25px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .market-data {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .market-data {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 /*# sourceMappingURL=Newtab.css.map */

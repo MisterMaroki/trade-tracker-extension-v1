@@ -13,7 +13,9 @@ aside {
     right: 1rem;
     color: #030303;
     animation: fadeIn 0.3s ease;
+
 }
+
 
 @keyframes fadeIn {
     0% {
