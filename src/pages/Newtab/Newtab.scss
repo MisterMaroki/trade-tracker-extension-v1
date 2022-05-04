@@ -128,6 +128,14 @@ button:active {
     font-size: 1.3rem;
   }
 }
+.carousel-loading {
+  justify-content: space-evenly;
+  * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 .table-row {
   &:hover {
     background: rgba(255, 255, 255, 0.117);

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import { Container, LinearProgress } from '@mui/material';
+import { Container, LinearProgress, Skeleton, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
@@ -21,19 +21,17 @@ const Carousel = () => {
   const fetchTrendingCoins = async () => {
     const { data } = await axios.get(TrendingCoins(currency));
     setTrending(data);
+    setLoading(false);
   };
   useEffect(() => {
     setLoading(true);
     fetchTrendingCoins();
-    setLoading(false);
   }, [currency]);
 
   const items = trending.map((coin) => {
     let profit = coin.price_change_percentage_24h >= 0;
 
-    return loading ? (
-      <LinearProgress />
-    ) : (
+    return (
       <Link className="carousel-item" to={`/coins/${coin.id}`}>
         <>
           {' '}
@@ -75,7 +73,16 @@ const Carousel = () => {
     1300: { items: 8 },
   };
 
-  return (
+  return loading ? (
+    <div className="carousel flex carousel-loading ">
+      {['1', '2', '3', '4'].map(() => (
+        <Stack spacing={1}>
+          <Skeleton variant="circular" width={70} height={70} />
+          <Skeleton variant="rectangular" width={180} height={70} />
+        </Stack>
+      ))}
+    </div>
+  ) : (
     <div className="carousel">
       <AliceCarousel
         mouseTracking
