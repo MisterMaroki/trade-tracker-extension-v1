@@ -3,6 +3,7 @@ import logo from '../../assets/img/logo.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
 import Select from 'react-select';
+import { CryptoState } from '../Newtab/CryptoContext';
 
 const options = [
   { value: 'bitcoin', label: 'Bitcoin' },
@@ -39,6 +40,9 @@ const Popup = () => {
     setCurrentTicker(selectedTicker);
     getTickerPrice(selectedTicker);
   };
+
+  const { currency } = CryptoState();
+  console.log('🚀 ~ file: Popup.jsx ~ line 45 ~ Popup ~ currency', currency);
 
   return (
     <div className={`__container `}>
