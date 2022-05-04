@@ -8,6 +8,7 @@ import { HistoricalChart } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
+import { chartDays } from '../../Content/config/data';
 
 const InfoContainer = styled(Container)`
   width: 75%;
@@ -43,7 +44,7 @@ const CoinInfo = ({ coin }) => {
   return (
     <InfoContainer>
       {!historicalData ? (
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#05595b' }} />
       ) : (
         <>
           <Line
@@ -62,10 +63,36 @@ const CoinInfo = ({ coin }) => {
                 {
                   data: historicalData.map((coin) => coin[1]),
                   label: `Price (Past ${days} days) in ${currency}`,
+                  borderColor: '#05595b',
                 },
               ],
             }}
+            options={{
+              elements: {
+                point: {
+                  radius: 1,
+                },
+              },
+            }}
           />
+          <div
+            className="flex"
+            style={{
+              marginTop: 20,
+              justifyContent: 'space-around',
+              width: '100%',
+            }}
+          >
+            {chartDays.map((day) => (
+              <button
+                key={day.label}
+                onClick={() => setDays(day.value)}
+                className={days === day.value && 'selected'}
+              >
+                {day.label}
+              </button>
+            ))}
+          </div>
         </>
       )}
     </InfoContainer>

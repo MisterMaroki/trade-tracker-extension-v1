@@ -51,6 +51,16 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  // gap: 1rem;
+
+  button {
+    padding: 5px 10px;
+    margin-right: 1rem;
+  }
+  button.selected {
+    background-color: $secondary !important;
+    color: $white;
+  }
 }
 .col {
   flex-direction: column;
@@ -76,12 +86,11 @@ header {
 
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
   button {
+    height: 50px;
     width: 50px;
   }
 }
 button {
-  height: 50px;
-  width: 50px;
   border: none;
   border-radius: 6px;
   background-color: whitesmoke !important;
@@ -105,9 +114,13 @@ aside button {
 button:focus {
   outline: none;
 }
+button:hover {
+  filter: contrast(2);
+}
 
 button:active {
   box-shadow: inset 0 0 10px #0000000f;
+  transform: scale(0.98);
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
