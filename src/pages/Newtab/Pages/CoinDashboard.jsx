@@ -8,23 +8,23 @@ const DashboardContainer = styled(Container)`
   margin-top: 5rem;
   /* height: 88vh; */
   min-height: 88vh;
-  max-height: none;
-  max-width: none !important;
+  /* max-height: none; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 95vw;
+  width: 95%;
+  max-width: 1800px !important;
 
   border-radius: 10px;
   background: #f5f5f5e8;
 `;
 const CoinDashboard = () => {
   return (
-    <>
+    <DashboardContainer>
       <Banner />
       <CoinsTable />
-    </>
+    </DashboardContainer>
   );
 };
 

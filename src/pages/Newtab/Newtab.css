@@ -43,7 +43,7 @@ a {
   background-color: #062c30;
 }
 
-.app__flex {
+.flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -60,9 +60,12 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
-nav {
+header {
   position: fixed;
   top: 0;
   left: 0;
@@ -86,16 +89,16 @@ nav {
           box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
 }
 
-nav button {
+header button {
   width: 50px;
 }
 
 button {
   height: 50px;
-  width: 150px;
+  width: 50px;
   border: none;
   border-radius: 6px;
-  background-color: #e2d784;
+  background-color: whitesmoke !important;
   color: #3e3e3e;
   font-size: 1.2rem;
   font-family: 'Karla', sans-serif;
@@ -158,5 +161,25 @@ button:active {
 
 .table-row:hover {
   background: rgba(255, 255, 255, 0.117);
+}
+
+.coin-container {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .coin-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
 }
 /*# sourceMappingURL=Newtab.css.map */

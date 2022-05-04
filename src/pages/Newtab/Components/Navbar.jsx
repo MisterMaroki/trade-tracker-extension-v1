@@ -9,6 +9,7 @@ import {
   NativeSelect,
 } from '@mui/material';
 import { CryptoState } from '../CryptoContext';
+import { Home } from '@mui/icons-material';
 
 const Navbar = () => {
   const [showTenziesGame, setshowTenziesGame] = useState(false);
@@ -19,8 +20,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav>
-        <h6 onClick={() => navigate('/')}>Hi, Omar!</h6>
+      <header>
+        <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+          Hi, Omar!
+        </h6>
         <FormControl>
           <InputLabel variant="standard" htmlFor="controlled-native">
             Currency
@@ -37,6 +40,9 @@ const Navbar = () => {
             <option value={'GBP'}>GBP</option>
           </NativeSelect>
         </FormControl>
+        <IconButton style={{ color: '#05595b' }} onClick={() => navigate('/')}>
+          <Home />
+        </IconButton>
 
         <IconButton
           style={{ color: '#05595b' }}
@@ -44,7 +50,7 @@ const Navbar = () => {
         >
           <GamepadIcon />
         </IconButton>
-      </nav>
+      </header>
       {showTenziesGame && <DiceGame />}
     </>
   );

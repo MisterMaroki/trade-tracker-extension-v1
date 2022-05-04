@@ -47,15 +47,16 @@ a {
   background-color: $primary;
 }
 
-.app__flex {
+.flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .col {
   flex-direction: column;
+  align-items: flex-start;
 }
-nav {
+header {
   position: fixed;
   top: 0;
   left: 0;
@@ -80,10 +81,10 @@ nav {
 }
 button {
   height: 50px;
-  width: 150px;
+  width: 50px;
   border: none;
   border-radius: 6px;
-  background-color: #e2d784;
+  background-color: whitesmoke !important;
 
   color: rgb(62, 62, 62);
   font-size: 1.2rem;
@@ -130,5 +131,16 @@ button:active {
 .table-row {
   &:hover {
     background: rgba(255, 255, 255, 0.117);
+  }
+}
+.coin-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+@media screen and (max-width: 768px) {
+  .coin-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
