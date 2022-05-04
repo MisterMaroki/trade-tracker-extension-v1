@@ -12,7 +12,7 @@ aside {
     bottom: 1rem;
     right: 1rem;
     color: #030303;
-    animation: fadeIn 0.7s ease;
+    animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {

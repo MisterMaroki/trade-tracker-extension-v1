@@ -15,12 +15,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoinList } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
+import { numberWithCommas } from './banner/Carousel';
 
 const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
-  const { currency } = CryptoState();
+
+  const { currency, symbol } = CryptoState();
 
   const fetchCoins = async () => {
     setLoading(true);
@@ -46,7 +48,7 @@ const CoinsTable = () => {
   };
 
   return (
-    <Container style={{ paddingTop: 20 }}>
+    <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
       <Typography
         variant="h6"
         style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
@@ -94,18 +96,44 @@ const CoinsTable = () => {
                 const profit = row.price_change_percentage_24h > 0;
 
                 return (
-                  <TableRow key={row.name}>
+                  <TableRow className="table-row" key={row.name}>
                     <TableCell
                       component="th"
                       scope="row"
-                      style={{ display: 'flex', gap: 15 }}
+                      style={{ display: 'flex', gap: 15, paddingLeft: 0 }}
                     >
                       <img
                         src={row.image}
                         alt={row.name}
                         height="50"
-                        style={{ marginBottom: 10 }}
+                        style={{ marginBottom: 0 }}
                       />
+                      <div className="app__flex col">
+                        <span
+                          style={{ fontSize: 20, textTransform: 'uppercase' }}
+                        >
+                          {row.symbol}
+                        </span>
+                        <span style={{ color: 'darkgrey' }}>{row.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell align="right">
+                      {symbol} {numberWithCommas(row.current_price.toFixed(2))}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      style={{
+                        color: profit > 0 ? 'black' : 'red',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {profit && '+'}{' '}
+                      {row.price_change_percentage_24h.toFixed(2)}%
+                    </TableCell>
+                    <TableCell align="right">
+                      {symbol}{' '}
+                      {numberWithCommas(row.market_cap.toString().slice(0, -6))}
+                      M
                     </TableCell>
                   </TableRow>
                 );

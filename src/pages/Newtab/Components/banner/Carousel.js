@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import { Container } from '@mui/material';
+import { Container, LinearProgress } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
@@ -14,7 +14,7 @@ export function numberWithCommas(x) {
 
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const { currency, symbol } = CryptoState();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,32 +23,38 @@ const Carousel = () => {
     setTrending(data);
   };
   useEffect(() => {
+    setLoading(true);
     fetchTrendingCoins();
+    setLoading(false);
   }, [currency]);
 
   const items = trending.map((coin) => {
     let profit = coin.price_change_percentage_24h >= 0;
 
-    return (
+    return loading ? (
+      <LinearProgress />
+    ) : (
       <Link className="carousel-item" to={`/coins/${coin.id}`}>
-        <img
-          src={coin.image}
-          alt={coin.name}
-          height="60"
-          style={{ marginBottom: 10 }}
-        />
-        <span>
-          {coin?.symbol.toUpperCase()}
-          &nbsp;
-          <span className={profit ? 'green' : 'red'}>
-            {profit && '+'}
-            {coin?.price_change_percentage_24h?.toFixed(2)}%
+        <>
+          {' '}
+          <img
+            src={coin.image}
+            alt={coin.name}
+            height="60"
+            style={{ marginBottom: 10 }}
+          />
+          <span>
+            {coin?.symbol.toUpperCase()}
+            &nbsp;
+            <span className={profit ? 'green' : 'red'}>
+              {profit && '+'}
+              {coin?.price_change_percentage_24h?.toFixed(2)}%
+            </span>
           </span>
-        </span>
-
-        <span style={{ fontSize: 22, fontWeight: 500 }}>
-          {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
-        </span>
+          <span style={{ fontSize: 22, fontWeight: 500 }}>
+            {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
+          </span>
+        </>
       </Link>
     );
   });
@@ -60,6 +66,13 @@ const Carousel = () => {
     612: {
       items: 4,
     },
+    850: {
+      items: 5,
+    },
+    1100: {
+      items: 6,
+    },
+    1300: { items: 8 },
   };
 
   return (

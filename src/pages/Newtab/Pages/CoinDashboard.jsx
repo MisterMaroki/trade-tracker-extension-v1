@@ -9,6 +9,7 @@ const DashboardContainer = styled(Container)`
   /* height: 88vh; */
   min-height: 88vh;
   max-height: none;
+  max-width: none !important;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,10 +21,10 @@ const DashboardContainer = styled(Container)`
 `;
 const CoinDashboard = () => {
   return (
-    <DashboardContainer className="dashboard--container">
+    <>
       <Banner />
       <CoinsTable />
-    </DashboardContainer>
+    </>
   );
 };
 

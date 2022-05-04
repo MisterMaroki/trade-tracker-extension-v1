@@ -20,6 +20,13 @@ body {
   color: $gray;
 }
 
+#app-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -40,26 +47,21 @@ a {
   background-color: $primary;
 }
 
-.newTab__container {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.newTab__flex {
+.app__flex {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.col {
+  flex-direction: column;
 }
 nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+
+  z-index: 10;
 
   width: 100%;
   height: 60px;
@@ -125,6 +127,8 @@ button:active {
     font-size: 1.3rem;
   }
 }
-.dashboard--banner {
-  min-height: 250px;
+.table-row {
+  &:hover {
+    background: rgba(255, 255, 255, 0.117);
+  }
 }
