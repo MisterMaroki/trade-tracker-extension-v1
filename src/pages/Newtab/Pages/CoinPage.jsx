@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../../Content/config/api';
 import CoinInfo from '../Components/CoinInfo';
 import { CryptoState } from '../CryptoContext';
+const parse = require('html-react-parser');
 
 const Sidebar = styled(Container)`
   width: 30%;
@@ -66,7 +67,9 @@ const CoinPage = () => {
         <Typography variant="h6" className="heading">
           {coin?.name}
         </Typography>
-        <Typography>{coin?.description.en}</Typography>
+        <Typography>
+          {parse(`${coin?.description.en.split('. ')[0]}`)}.
+        </Typography>
       </Sidebar>
 
       {/* {chart} */}
