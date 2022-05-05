@@ -8,7 +8,12 @@
   <h3 align="center">Logo</h3>
 
   <p align="center">
-    This is a Chrome Extension that consists of a Crypto dashboard that features a newTab app, and a popup. I built this with the help of coinGecko API calls, pagination, an alice slider, and a react-chartjs implementation using data derived form a different endpoint in coinGecko's API. I also implemented a popup tenzies game and will continue to add features to this as I'm using it as my current newtab for chrome.
+    This is a Chrome Extension that consists of a Crypto dashboard that features a newTab app, and a popup. I built this with the help of:
+    - coinGecko API
+    - alice slider
+    - react-chartjs 
+    
+    I also implemented a popup tenzies game and will continue to add features to this as I'm using it as my current newtab for chrome.
     <br>
    
   </p>
@@ -17,10 +22,6 @@
 ## Table of contents
 
 - [Quick start](#quick-start)
-- [Status](#status)
-- [What's included](#whats-included)
-- [Bugs and feature requests](#bugs-and-feature-requests)
-- [Contributing](#contributing)
 - [Creators](#creators)
 - [Thanks](#thanks)
 - [Copyright and license](#copyright-and-license)
@@ -35,10 +36,6 @@ This app will run with npm, or pnpm
 - load this into chrome as an unpacked ext.
 - you will only need to run npm start to update the app.
 - if this does not work, go to manage extensions, and hit update.
-
-## Bugs and feature requests
-
-Have a bug or a feature request? Please first read the [issue guidelines](https://reponame/blob/master/CONTRIBUTING.md) and search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://reponame/issues/new).
 
 ## Creators
 
