@@ -5,7 +5,7 @@
     <img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
   </a>
 
-  <h3 align="center">Logo</h3>
+  <h3 align="center">Chrome Dashboard</h3>
 
   <p align="center">
     This is a Chrome Extension that consists of a Crypto dashboard that features a newTab app, and a popup. I built this with the help of:
