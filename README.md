@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://example.com/">
-    <img src="https://lh6.googleusercontent.com/75ghUJz4M-ELLNHtLeH3E6DHFDb9B0Fyi6l5mHCjvOH3LJXwwJdyB9_FCkeAwRwdkEb83IEq1-DP38MXCTi7=w2478-h1772-rw" alt="Logo" width=72 height=72>
+    <img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
   </a>
 
   <h3 align="center">Logo</h3>
