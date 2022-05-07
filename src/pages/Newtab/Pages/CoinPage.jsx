@@ -19,6 +19,7 @@ const Sidebar = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   padding: 1rem;
   padding-top: 3rem;
@@ -60,8 +61,6 @@ const CoinPage = () => {
   }, [coin]);
 
   const { currency, symbol } = CryptoState();
-
-  console.log(coin);
 
   return (
     <CoinContainer>

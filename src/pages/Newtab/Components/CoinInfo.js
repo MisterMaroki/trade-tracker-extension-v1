@@ -40,7 +40,7 @@ const CoinInfo = ({ coin }) => {
   useEffect(() => {
     fetchHistoricalData();
   }, [currency, days]);
-  console.log(historicalData);
+
   return (
     <InfoContainer>
       {!historicalData ? (
@@ -87,7 +87,7 @@ const CoinInfo = ({ coin }) => {
               <button
                 key={day.label}
                 onClick={() => setDays(day.value)}
-                className={days === day.value && 'selected'}
+                className={days === day.value ? 'selected' : ''}
               >
                 {day.label}
               </button>

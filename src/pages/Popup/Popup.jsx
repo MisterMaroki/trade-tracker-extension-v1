@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import logo from '../../assets/img/logo.svg';
 import Greetings from '../../containers/Greetings/Greetings';
 import './Popup.css';
-import Select from 'react-select';
+
 import { CryptoState } from '../Newtab/CryptoContext';
+import { Select } from '@mui/material';
 
 const options = [
   { value: 'bitcoin', label: 'Bitcoin' },
@@ -15,7 +16,7 @@ const Popup = () => {
   const [currentPrice, setCurrentPrice] = useState(
     async () => getTickerPrice(currentTicker) || 0
   );
-  console.log(currentPrice);
+
   const priceEl = useRef(null);
   const getTickerPrice = async (ticker) => {
     if (ticker !== undefined) {
@@ -33,8 +34,6 @@ const Popup = () => {
       currentPrice
     ).toFixed(2)}`;
   }, [currentPrice, currentTicker]);
-
-  // console.log(currentPrice);
 
   const handleSelect = (selectedTicker) => {
     setCurrentTicker(selectedTicker);
