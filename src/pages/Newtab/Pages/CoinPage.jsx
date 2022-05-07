@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import axios from 'axios';
+import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../../Content/config/api';
@@ -56,9 +57,7 @@ const CoinPage = () => {
   const { currency, setCurrency, symbol, trades, setTrades } = CryptoState();
   const { id } = useParams();
   const [coin, setCoin] = useState();
-  // const [trades, setTrades] = useState(
-  //   JSON.parse(localStorage.getItem('trades'))
-  // );
+
   const [quantity, setQuantity] = useState(0);
 
   const fetchCoin = async () => {
@@ -74,18 +73,12 @@ const CoinPage = () => {
     localStorage.setItem('trades', JSON.stringify(trades));
   }, [trades]);
 
-  console.log(
-    '🚀 ~ file: CoinPage.jsx ~ line 69 ~ CoinPage ~ currency',
-    currency
-  );
-
   const buyNow = async () => {
-    console.log(coin);
-
     quantity &&
       setTrades((prevTrades) => [
         ...prevTrades,
         {
+          id: nanoid(),
           coin: coin.id,
           ticker: coin.symbol,
           fiat: currency.toLowerCase(),
@@ -98,7 +91,6 @@ const CoinPage = () => {
         },
       ]);
   };
-  console.log(trades, 'trades');
 
   return (
     <CoinContainer>
