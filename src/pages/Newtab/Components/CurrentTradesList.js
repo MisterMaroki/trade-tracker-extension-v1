@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'ticker', headerName: 'Ticker' },
-  { field: 'date', headerName: 'Date', type: 'date' },
+  { field: 'date', headerName: 'Date', type: 'date', width: 200 },
   { field: 'price', headerName: 'Price', type: 'number' },
   { field: 'quantity', headerName: 'Quantity', type: 'number' },
   {
@@ -17,6 +17,20 @@ const columns = [
   { field: 'fiat', headerName: 'Fiat' },
 ];
 
+const formatDate = (date) => {
+  let d = new Date(date);
+  let month = (d.getMonth() + 1).toString();
+  let day = d.getDate().toString();
+  let year = d.getFullYear();
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+  if (day.length < 2) {
+    day = '0' + day;
+  }
+  return [year, month, day].join('-');
+};
+
 //   coin: "solana"
 //   date: "2022-05-07T12:56:22.278Z"
 //   fiat: "usd"
@@ -24,18 +38,6 @@ const columns = [
 //   price: 81.82
 //   quantity: "10"
 //   ticker: "sol"
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
 const CurrentTradesList = () => {
   const { trades, setTrades } = CryptoState();
@@ -56,10 +58,13 @@ const CurrentTradesList = () => {
       {showing && (
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={trades}
+            rows={trades.map((trade) => ({
+              ...trade,
+              date: formatDate(trade.date),
+            }))}
             columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
+            pageSize={4}
+            rowsPerPageOptions={[4]}
             checkboxSelection
           />
         </div>
