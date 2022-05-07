@@ -40,7 +40,10 @@ const Navbar = () => {
             <option value={'GBP'}>GBP</option>
           </NativeSelect>
         </FormControl>
-        <IconButton style={{ color: '#05595b' }} onClick={() => navigate('/')}>
+        <IconButton
+          style={{ color: '#05595b' }}
+          onClick={() => navigate('newtab.html/')}
+        >
           <Home />
         </IconButton>
 

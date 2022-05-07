@@ -5,13 +5,19 @@ const CryptoContext = ({ children }) => {
   const [currency, setCurrency] = useState('USD');
   const [symbol, setSymbol] = useState('$');
 
+  const [trades, setTrades] = useState(
+    JSON.parse(localStorage.getItem('trades'))
+  );
+
   useEffect(() => {
     if (currency === 'USD') setSymbol('$');
     else if (currency === 'GBP') setSymbol('£');
   }, [currency]);
 
   return (
-    <Crypto.Provider value={{ currency, setCurrency, symbol }}>
+    <Crypto.Provider
+      value={{ currency, setCurrency, symbol, trades, setTrades }}
+    >
       {children}
     </Crypto.Provider>
   );

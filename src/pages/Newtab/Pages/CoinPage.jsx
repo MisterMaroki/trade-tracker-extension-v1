@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import {
+  Button,
   CircularProgress,
   Container,
+  Input,
   LinearProgress,
   Typography,
 } from '@mui/material';
@@ -42,30 +44,66 @@ const CoinContainer = styled(Container)`
   background: #f5f5f5ee;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
+  place-content: center;
   @media screen and (max-width: 768px) {
     flex-direction: column;
     align-items: center;
   }
 `;
 const CoinPage = () => {
+  const { currency, setCurrency, symbol, trades, setTrades } = CryptoState();
   const { id } = useParams();
   const [coin, setCoin] = useState();
+  // const [trades, setTrades] = useState(
+  //   JSON.parse(localStorage.getItem('trades'))
+  // );
+  const [quantity, setQuantity] = useState(0);
 
   const fetchCoin = async () => {
     const data = await axios.get(SingleCoin(id));
-
     if (coin?.id !== data.data.id) setCoin(data.data);
   };
+
   useEffect(() => {
     fetchCoin();
   }, [coin]);
 
-  const { currency, symbol } = CryptoState();
+  useEffect(() => {
+    localStorage.setItem('trades', JSON.stringify(trades));
+  }, [trades]);
+
+  console.log(
+    '🚀 ~ file: CoinPage.jsx ~ line 69 ~ CoinPage ~ currency',
+    currency
+  );
+
+  const buyNow = async () => {
+    console.log(coin);
+
+    quantity &&
+      setTrades((prevTrades) => [
+        ...prevTrades,
+        {
+          coin: coin.id,
+          ticker: coin.symbol,
+          fiat: currency.toLowerCase(),
+          price: coin.market_data.current_price[currency.toLowerCase()],
+          date: new Date(),
+          quantity: quantity,
+          invested: numberWithCommas(
+            quantity * coin.market_data.current_price[currency.toLowerCase()]
+          ),
+        },
+      ]);
+  };
+  console.log(trades, 'trades');
 
   return (
     <CoinContainer>
       {!coin ? (
-        <LinearProgress sx={{ color: '#05595b' }} />
+        <CircularProgress sx={{ color: '#05595b' }} />
       ) : (
         <>
           <Sidebar>
@@ -134,6 +172,14 @@ const CoinPage = () => {
                   M
                 </Typography>
               </span>
+            </div>
+            <div className="flex">
+              <button onClick={buyNow}>Buy Now</button>
+              <Input
+                type="number"
+                onChange={(e) => setQuantity(e.target.value)}
+              ></Input>
+              <button onClick={buyNow}>Buy Now</button>
             </div>
           </Sidebar>
 
