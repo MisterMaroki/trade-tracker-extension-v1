@@ -7,6 +7,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Container } from '@mui/material';
 import styled from '@emotion/styled';
+import TradesPage from './Pages/TradesPage';
 
 const NewtabContainer = styled(Container)`
   width: 100%;
@@ -31,6 +32,7 @@ const Newtab = () => {
           <Route path="/newTab.html" element={<CoinDashboard />} />
           <Route path="/" element={<CoinDashboard />} />
           <Route path="/coins/:id" element={<CoinPage />} exact />
+          <Route path="/trades" element={<TradesPage />} exact />
         </Routes>
       </NewtabContainer>
     </BrowserRouter>

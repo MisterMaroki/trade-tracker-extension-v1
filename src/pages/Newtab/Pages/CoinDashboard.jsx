@@ -4,7 +4,7 @@ import React from 'react';
 import Banner from '../Components/banner/Banner';
 import CoinsTable from '../Components/CoinsTable';
 
-const DashboardContainer = styled(Container)`
+export const DashboardContainer = styled(Container)`
   margin-top: 5rem;
   /* height: 88vh; */
   min-height: 88vh;

@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../../Content/config/api';
 import { numberWithCommas } from '../Components/banner/Carousel';
@@ -33,7 +34,7 @@ const Sidebar = styled(Container)`
   }
 `;
 
-const CoinContainer = styled(Container)`
+export const CoinContainer = styled(Container)`
   margin-top: 5rem;
   /* height: 88vh; */
   min-height: 88vh;
@@ -99,12 +100,14 @@ const CoinPage = () => {
       ) : (
         <>
           <Sidebar>
-            <img
-              src={coin?.image?.large}
-              alt={coin?.name}
-              height="120"
-              style={{ marginBottom: 20 }}
-            />
+            <Link to={'/trades'}>
+              <img
+                src={coin?.image?.large}
+                alt={coin?.name}
+                height="120"
+                style={{ marginBottom: 20 }}
+              />
+            </Link>
             <Typography
               variant="h4"
               className="heading"

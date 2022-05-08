@@ -56,17 +56,19 @@ const CurrentTradesList = () => {
         {showing ? 'Hide' : 'Show'} Open Trades
       </button>
       {showing && (
-        <div style={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={trades.map((trade) => ({
-              ...trade,
-              date: formatDate(trade.date),
-            }))}
-            columns={columns}
-            pageSize={4}
-            rowsPerPageOptions={[4]}
-            checkboxSelection
-          />
+        <div style={{ height: 400, width: '100%', display: 'flex' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              rows={trades.map((trade) => ({
+                ...trade,
+                date: formatDate(trade.date),
+              }))}
+              columns={columns}
+              pageSize={4}
+              rowsPerPageOptions={[4]}
+              checkboxSelection
+            />
+          </div>
         </div>
       )}
     </div>

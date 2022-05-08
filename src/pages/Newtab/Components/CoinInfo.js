@@ -48,7 +48,7 @@ const CoinInfo = ({ coin }) => {
         <CircularProgress sx={{ color: '#05595b' }} />
       ) : (
         <>
-          <CurrentTradesList />
+          {/* <CurrentTradesList /> */}
           <Line
             data={{
               labels: historicalData.map((coin) => {
