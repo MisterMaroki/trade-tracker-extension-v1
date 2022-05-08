@@ -1,4 +1,7 @@
+import { ArrowCircleDown } from '@mui/icons-material';
+import { ArrowCircleUp } from '@mui/icons-material';
 import {
+  Chip,
   Container,
   LinearProgress,
   Pagination,
@@ -23,7 +26,12 @@ const TradesTable = () => {
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState([]);
 
-  const { currency, symbol, trades, setTrades } = CryptoState();
+  const { currency, symbol, trades, setTrades, coins, setCoins } =
+    CryptoState();
+  console.log(
+    '🚀 ~ file: TradesTable.js ~ line 30 ~ TradesTable ~ coins',
+    coins
+  );
 
   const navigate = useNavigate();
 
@@ -31,9 +39,7 @@ const TradesTable = () => {
     setRows(() =>
       trades.map((trade) => {
         //here I want the PromiseResult
-        findProfits(trade, 'current-value').then((value) => {
-          console.log(value);
-        });
+        findProfits(trade, 'current-value');
 
         return {
           ...trade,
@@ -46,15 +52,18 @@ const TradesTable = () => {
   }, [trades]);
 
   const findProfits = async (trade, type) => {
-    const data = await axios.get(SingleCoin(trade.coin));
+    const { data } = await axios.get(SingleCoin(trade.coin));
     const differenceMultiplier =
-      (await data.data.market_data.current_price[trade.fiat]) / trade.price;
+      (await data?.market_data.current_price.usd) / trade.price;
+
     const currentValue = trade.invested * differenceMultiplier;
     if (type === 'current-value') {
       //this returns a promise when i call it on line 79
       return currentValue;
     }
   };
+  const currentValue = async (trade) =>
+    await findProfits(trade, 'current-value');
 
   const handleSearch = () => {
     if (rows.length) {
@@ -89,6 +98,7 @@ const TradesTable = () => {
               <TableRow style={{ borderRadius: '10px' }}>
                 {[
                   'Ticker',
+                  'PnL',
                   'Date',
                   'Price',
                   'Quantity',
@@ -101,12 +111,12 @@ const TradesTable = () => {
                       borderRadius:
                         index === 0
                           ? '10px 0 0 10px'
-                          : index === 5
+                          : index === 6
                           ? '0 10px 10px 0'
                           : '0',
                     }}
                     key={head}
-                    align={head === 'Coin' ? 'center' : 'right'}
+                    align={head === 'Ticker' ? 'left' : 'right'}
                   >
                     {head}
                   </TableCell>
@@ -117,11 +127,6 @@ const TradesTable = () => {
               {handleSearch()
                 ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
                 .map((row) => {
-                  console.log(
-                    '🚀 ~ file: TradesTable.js ~ line 121 ~ .map ~ row',
-                    row
-                  );
-
                   return (
                     <TableRow
                       className="table-row"
@@ -134,7 +139,8 @@ const TradesTable = () => {
                         style={{
                           display: 'flex',
                           gap: 15,
-                          justifyContent: 'center',
+                          justifyContent: 'flex-start',
+                          width: 50,
                         }}
                       >
                         <div className="flex col">
@@ -150,11 +156,24 @@ const TradesTable = () => {
                         </div>
                         <div className="flex">
                           {row?.direction === 'buy' ? (
-                            <span style={{ color: ' #05595b' }}>Buy</span>
+                            <Chip
+                              label="buy"
+                              color="success"
+                              size="small"
+                              icon={<ArrowCircleUp />}
+                            />
                           ) : (
-                            <span>Sell</span>
+                            <Chip
+                              label="sell"
+                              color="warning"
+                              icon={<ArrowCircleDown />}
+                              size="small"
+                            />
                           )}
                         </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        {async () => JSON.stringify(await currentValue(row))}
                       </TableCell>
                       <TableCell align="right">
                         {formatDate(row?.date)}

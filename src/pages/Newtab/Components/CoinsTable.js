@@ -21,15 +21,15 @@ import { CryptoState } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
 
 const CoinsTable = () => {
-  const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
-  const { currency, symbol } = CryptoState();
+  const { currency, symbol, coins, setCoins } = CryptoState();
 
   const fetchCoins = async () => {
     setLoading(true);
+
     const data = await axios.get(CoinList(currency));
     if (data.data !== coins) setCoins(data.data);
     setLoading(false);
@@ -42,8 +42,8 @@ const CoinsTable = () => {
   }, [currency]);
 
   const handleSearch = () => {
-    if (coins.length > 20 && !loading) {
-      return coins.filter(
+    if (coins?.length > 20 && !loading) {
+      return coins?.filter(
         (coin) =>
           coin.name.toLowerCase().includes(search) ||
           coin.symbol.toLowerCase().includes(search)

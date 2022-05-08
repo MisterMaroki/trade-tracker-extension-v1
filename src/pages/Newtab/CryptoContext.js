@@ -4,6 +4,7 @@ const Crypto = createContext();
 const CryptoContext = ({ children }) => {
   const [currency, setCurrency] = useState('USD');
   const [symbol, setSymbol] = useState('$');
+  const [coins, setCoins] = useState([]);
 
   const [trades, setTrades] = useState(
     JSON.parse(localStorage.getItem('trades')) || []
@@ -25,6 +26,8 @@ const CryptoContext = ({ children }) => {
         setTrades,
         coin,
         setCoin,
+        coins,
+        setCoins,
       }}
     >
       {children}
