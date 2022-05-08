@@ -8,6 +8,7 @@ const CryptoContext = ({ children }) => {
   const [trades, setTrades] = useState(
     JSON.parse(localStorage.getItem('trades')) || []
   );
+  const [coin, setCoin] = useState();
 
   useEffect(() => {
     if (currency === 'USD') setSymbol('$');
@@ -16,7 +17,15 @@ const CryptoContext = ({ children }) => {
 
   return (
     <Crypto.Provider
-      value={{ currency, setCurrency, symbol, trades, setTrades }}
+      value={{
+        currency,
+        setCurrency,
+        symbol,
+        trades,
+        setTrades,
+        coin,
+        setCoin,
+      }}
     >
       {children}
     </Crypto.Provider>

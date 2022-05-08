@@ -8,6 +8,7 @@ import {
   InputLabel,
   NativeSelect,
 } from '@mui/material';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { CryptoState } from '../CryptoContext';
 import { Home } from '@mui/icons-material';
 
@@ -47,6 +48,12 @@ const Navbar = () => {
           <Home />
         </IconButton>
 
+        <IconButton
+          style={{ color: '#05595b' }}
+          onClick={() => navigate('/trades')}
+        >
+          <CurrencyExchangeIcon />
+        </IconButton>
         <IconButton
           style={{ color: '#05595b' }}
           onClick={() => setshowTenziesGame(!showTenziesGame)}

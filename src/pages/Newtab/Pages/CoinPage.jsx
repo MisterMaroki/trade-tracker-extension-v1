@@ -55,9 +55,9 @@ export const CoinContainer = styled(Container)`
   }
 `;
 const CoinPage = () => {
-  const { currency, setCurrency, symbol, trades, setTrades } = CryptoState();
+  const { currency, setCurrency, symbol, trades, setTrades, coin, setCoin } =
+    CryptoState();
   const { id } = useParams();
-  const [coin, setCoin] = useState();
 
   const [quantity, setQuantity] = useState(0);
 
@@ -86,9 +86,8 @@ const CoinPage = () => {
           price: coin.market_data.current_price[currency.toLowerCase()],
           date: new Date(),
           quantity: quantity,
-          invested: numberWithCommas(
-            quantity * coin.market_data.current_price[currency.toLowerCase()]
-          ),
+          invested:
+            quantity * coin.market_data.current_price[currency.toLowerCase()],
         },
       ]);
   };
