@@ -9,7 +9,6 @@ import { CryptoState } from '../CryptoContext';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { chartDays } from '../../Content/config/data';
-import CurrentTradesList from './CurrentTradesList';
 
 const InfoContainer = styled(Container)`
   width: 75%;
@@ -29,18 +28,21 @@ const InfoContainer = styled(Container)`
 const CoinInfo = ({ coin }) => {
   const [historicalData, setHistoricalData] = useState();
   const [days, setDays] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const { currency, trades, setTrades } = CryptoState();
 
   const fetchHistoricalData = async () => {
+    setLoading(true);
     const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
 
     setHistoricalData(data.prices);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchHistoricalData();
-  }, [currency, days]);
+  }, [currency, days, coin]);
 
   return (
     <InfoContainer>

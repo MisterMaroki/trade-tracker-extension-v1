@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import CurrentTradesList from '../Components/CurrentTradesList';
+import TradesTable from '../Components/TradesTable';
 import { DashboardContainer } from './CoinDashboard';
 
 const TradesContainer = styled(DashboardContainer)`
@@ -11,7 +11,7 @@ const TradesContainer = styled(DashboardContainer)`
 const TradesPage = () => {
   return (
     <TradesContainer>
-      <CurrentTradesList />
+      <TradesTable />
     </TradesContainer>
   );
 };

@@ -16,6 +16,7 @@ import { SingleCoin } from '../../Content/config/api';
 import { numberWithCommas } from '../Components/banner/Carousel';
 import CoinInfo from '../Components/CoinInfo';
 import { CryptoState } from '../CryptoContext';
+import { useNavigate } from 'react-router-dom';
 const parse = require('html-react-parser');
 
 const Sidebar = styled(Container)`
@@ -66,6 +67,8 @@ const CoinPage = () => {
     if (coin?.id !== data.data.id) setCoin(data.data);
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchCoin();
   }, [coin]);
@@ -74,7 +77,7 @@ const CoinPage = () => {
     localStorage.setItem('trades', JSON.stringify(trades));
   }, [trades]);
 
-  const buyNow = async () => {
+  const tradeNow = async (buy) => {
     quantity &&
       setTrades((prevTrades) => [
         ...prevTrades,
@@ -86,6 +89,7 @@ const CoinPage = () => {
           price: coin.market_data.current_price[currency.toLowerCase()],
           date: new Date(),
           quantity: quantity,
+          direction: buy === 'buy' ? 'buy' : 'sell',
           invested:
             quantity * coin.market_data.current_price[currency.toLowerCase()],
         },
@@ -168,12 +172,15 @@ const CoinPage = () => {
               </span>
             </div>
             <div className="flex">
-              <button onClick={buyNow}>Buy Now</button>
+              <button onClick={() => tradeNow('buy')}>Buy</button>
               <Input
                 type="number"
                 onChange={(e) => setQuantity(e.target.value)}
               ></Input>
-              <button onClick={buyNow}>Buy Now</button>
+              <button onClick={() => tradeNow('sell')}>Sell</button>
+            </div>
+            <div className="flex">
+              <button onClick={() => navigate('/trades')}>View Trades</button>
             </div>
           </Sidebar>
 
