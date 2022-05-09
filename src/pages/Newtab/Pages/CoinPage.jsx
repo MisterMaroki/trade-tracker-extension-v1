@@ -177,6 +177,7 @@ const CoinPage = () => {
                 direction="buy"
                 func={tradeNow}
                 quantity={quantity}
+                ticker={coin?.symbol}
               />
               <Input
                 type="number"
@@ -186,6 +187,7 @@ const CoinPage = () => {
                 direction="sell"
                 func={tradeNow}
                 quantity={quantity}
+                ticker={coin?.symbol}
               />
             </div>
             <div className="flex">

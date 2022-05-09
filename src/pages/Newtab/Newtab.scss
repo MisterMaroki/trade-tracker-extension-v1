@@ -124,12 +124,6 @@ button:active {
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
-.green {
-  color: green;
-}
-.red {
-  color: red;
-}
 .carousel {
   background-image: url(../../assets/img/dots.svg);
   background-repeat: no-repeat;
@@ -192,4 +186,11 @@ button:active {
 
   font-weight: 600;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
 }

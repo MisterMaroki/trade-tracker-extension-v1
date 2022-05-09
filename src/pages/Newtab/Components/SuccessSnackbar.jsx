@@ -8,7 +8,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function CustomizedSnackbars({ direction, func, quantity }) {
+export default function CustomizedSnackbars({
+  direction,
+  func,
+  quantity,
+  ticker,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -26,9 +31,12 @@ export default function CustomizedSnackbars({ direction, func, quantity }) {
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Button variant="outlined" onClick={handleClick}>
+      <button
+        className={`direction-tag ${direction === 'buy' ? 'green' : 'red'}`}
+        onClick={handleClick}
+      >
         {direction === 'buy' ? 'Buy' : 'Sell'}
-      </Button>
+      </button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
@@ -36,7 +44,7 @@ export default function CustomizedSnackbars({ direction, func, quantity }) {
           sx={{ width: '100%' }}
         >
           {quantity > 0
-            ? `Trade Placed: ${direction.toUpperCase()} ${quantity} units`
+            ? `Trade Placed: ${direction.toUpperCase()} ${quantity} ${ticker.toUpperCase()}`
             : 'Error: Cannot trade sub-zero amount!'}
         </Alert>
       </Snackbar>
