@@ -1,4 +1,4 @@
-<img src="src/assets/img/icon-34.png" width="64"/>
+<img src="src/assets/img/screencast-nimbus-capture-2022.05.09-22_09_25 (2).gif" width="64"/>
 
 <p align="center">
   <a href="https://example.com/">
