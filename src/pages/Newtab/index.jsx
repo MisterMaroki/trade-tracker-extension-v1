@@ -1,9 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
+import TimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en-GB.json';
 
 import Newtab from './Newtab';
 import './index.css';
 import CryptoContext from './CryptoContext';
+TimeAgo.addDefaultLocale(en);
 
 render(
   <CryptoContext>

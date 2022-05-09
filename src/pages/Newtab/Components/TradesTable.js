@@ -17,6 +17,7 @@ import {
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReactTimeAgo from 'react-time-ago';
 import { SingleCoin } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
@@ -28,33 +29,29 @@ const TradesTable = () => {
 
   const { currency, symbol, trades, setTrades, coins, setCoins } =
     CryptoState();
-  console.log(
-    '🚀 ~ file: TradesTable.js ~ line 30 ~ TradesTable ~ coins',
-    coins
-  );
 
   const navigate = useNavigate();
 
   useEffect(() => {
     // setRows(() =>
-    async function setData() {
-      let x = await Promise.all(
+    async function rowDataEnrichment() {
+      let enrichedRows = await Promise.all(
         trades.map(async (trade) => {
-          //here I want the PromiseResult
-          let j = await findProfits(trade, 'current-value');
-          console.log('🚀 ~ file: TradesTable.js ~ line 43 ~ x ~ j', j);
+          const currentMarketValue = await findProfits(trade, 'current-value');
+          const percentChange = await findProfits(trade, 'percent-change');
 
           return {
             ...trade,
-            invested: numberWithCommas(trade.quantity * trade.price),
-            date: formatDate(trade.date),
-            value: j,
+            invested: trade.quantity * trade.price,
+            value: currentMarketValue,
+            change: percentChange,
           };
         })
       );
-      console.log('🚀 ~ file: TradesTable.js ~ line 53 ~ x ~ x', x);
+
+      setRows(enrichedRows);
     }
-    setData();
+    rowDataEnrichment();
     // );
   }, [trades]);
 
@@ -65,12 +62,20 @@ const TradesTable = () => {
 
     const currentValue = trade.invested * differenceMultiplier;
     if (type === 'current-value') {
-      //this returns a promise when i call it on line 79
       return currentValue;
     }
+    if (type === 'percent-change') {
+      return differenceMultiplier;
+    }
   };
-  const currentValue = async (trade) =>
-    await findProfits(trade, 'current-value');
+
+  const renderPnl = (row) => {
+    let data =
+      row.direction === 'buy'
+        ? (row.value - row.invested).toFixed(2)
+        : (row.invested - row.value).toFixed(2);
+    return data;
+  };
 
   const handleSearch = () => {
     if (rows.length) {
@@ -106,6 +111,7 @@ const TradesTable = () => {
                 {[
                   'Ticker',
                   'PnL',
+                  '% Change',
                   'Date',
                   'Price',
                   'Quantity',
@@ -118,7 +124,7 @@ const TradesTable = () => {
                       borderRadius:
                         index === 0
                           ? '10px 0 0 10px'
-                          : index === 6
+                          : index === 7
                           ? '0 10px 10px 0'
                           : '0',
                     }}
@@ -179,15 +185,34 @@ const TradesTable = () => {
                           )}
                         </div>
                       </TableCell>
-                      <TableCell align="right">
-                        {async () => JSON.stringify(await currentValue(row))}
+                      <TableCell
+                        align="right"
+                        style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
+                      >
+                        {numberWithCommas(renderPnl(row))}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
+                      >
+                        {`${(
+                          (row.change > 0 ? row.change - 1 : 1 - row?.change) *
+                          100
+                        ).toFixed(2)}%`}
                       </TableCell>
                       <TableCell align="right">
                         {formatDate(row?.date)}
+                        <div>
+                          Opened: <ReactTimeAgo date={row?.date} />
+                        </div>
                       </TableCell>
-                      <TableCell align="right">{row?.price}</TableCell>
+                      <TableCell align="right">
+                        {parseFloat(row?.price)?.toFixed(2)}
+                      </TableCell>
                       <TableCell align="right">{row?.quantity}</TableCell>
-                      <TableCell align="right">{row?.invested}</TableCell>
+                      <TableCell align="right">
+                        {numberWithCommas(row?.invested.toFixed(2))}
+                      </TableCell>
                       <TableCell align="right">
                         {row?.fiat?.toUpperCase()}
                       </TableCell>

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import CustomizedSnackbars from '../Components/SuccessSnackbar';
 import {
   Button,
   CircularProgress,
@@ -77,10 +78,9 @@ const CoinPage = () => {
     localStorage.setItem('trades', JSON.stringify(trades));
   }, [trades]);
 
-  const tradeNow = async (buy) => {
+  const tradeNow = async (direction) => {
     quantity &&
       setTrades((prevTrades) => [
-        ...prevTrades,
         {
           id: nanoid(),
           coin: coin.id,
@@ -89,10 +89,11 @@ const CoinPage = () => {
           price: coin.market_data.current_price[currency.toLowerCase()],
           date: new Date(),
           quantity: quantity,
-          direction: buy === 'buy' ? 'buy' : 'sell',
+          direction: direction === 'buy' ? 'buy' : 'sell',
           invested:
             quantity * coin.market_data.current_price[currency.toLowerCase()],
         },
+        ...prevTrades,
       ]);
   };
 
@@ -172,12 +173,20 @@ const CoinPage = () => {
               </span>
             </div>
             <div className="flex">
-              <button onClick={() => tradeNow('buy')}>Buy</button>
+              <CustomizedSnackbars
+                direction="buy"
+                func={tradeNow}
+                quantity={quantity}
+              />
               <Input
                 type="number"
                 onChange={(e) => setQuantity(e.target.value)}
               ></Input>
-              <button onClick={() => tradeNow('sell')}>Sell</button>
+              <CustomizedSnackbars
+                direction="sell"
+                func={tradeNow}
+                quantity={quantity}
+              />
             </div>
             <div className="flex">
               <button onClick={() => navigate('/trades')}>View Trades</button>
