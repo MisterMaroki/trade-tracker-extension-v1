@@ -1,6 +1,7 @@
 import { ArrowCircleDown } from '@mui/icons-material';
 import { ArrowCircleUp } from '@mui/icons-material';
 import {
+  Button,
   Chip,
   Container,
   LinearProgress,
@@ -26,6 +27,7 @@ const TradesTable = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState([]);
+  const [filter, setFilter] = useState();
 
   const { currency, symbol, trades, setTrades, coins, setCoins } =
     CryptoState();
@@ -87,14 +89,23 @@ const TradesTable = () => {
     }
   };
 
+  const handleFilter = () => {
+    filter === 'all' ? setFilter('') : setFilter('all');
+  };
+
   return (
     <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
-      <Typography
-        variant="h6"
-        style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
-      >
-        Trades History
-      </Typography>
+      <div className="flex" style={{ justifyContent: 'space-between' }}>
+        <Typography
+          variant="h6"
+          style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
+        >
+          {filter === 'all' ? 'Active Trades' : 'All Trades'}
+        </Typography>
+        <Button onClick={handleFilter}>
+          Show {filter === 'all' ? 'Active Trades' : 'All Trades'}
+        </Button>
+      </div>
 
       <TextField
         variant="outlined"
@@ -138,6 +149,9 @@ const TradesTable = () => {
             </TableHead>
             <TableBody>
               {handleSearch()
+                ?.filter((item) =>
+                  filter === 'all' ? {} : item.active === true
+                )
                 ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
                 .map((row) => {
                   return (

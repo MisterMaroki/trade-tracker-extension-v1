@@ -92,6 +92,7 @@ const CoinPage = () => {
           direction: direction === 'buy' ? 'buy' : 'sell',
           invested:
             quantity * coin.market_data.current_price[currency.toLowerCase()],
+          active: true,
         },
         ...prevTrades,
       ]);
