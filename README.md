@@ -1,8 +1,8 @@
-<img src="src/assets/img/screencast-nimbus-capture-2022.05.09-22_09_25 (2).gif" width="64"/>
+    <img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
 
 <p align="center">
   <a href="https://example.com/">
-    <img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
+    <img src="src/assets/img/screencast-nimbus-capture-2022.05.09-22_09_25 (2).gif" width="64"/>
   </a>
 
   <h3 align="center">Chrome Dashboard</h3>
