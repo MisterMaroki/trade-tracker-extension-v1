@@ -36,19 +36,26 @@ const TradesTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setRows(() =>
-      trades.map((trade) => {
-        //here I want the PromiseResult
-        findProfits(trade, 'current-value');
+    // setRows(() =>
+    async function setData() {
+      let x = await Promise.all(
+        trades.map(async (trade) => {
+          //here I want the PromiseResult
+          let j = await findProfits(trade, 'current-value');
+          console.log('🚀 ~ file: TradesTable.js ~ line 43 ~ x ~ j', j);
 
-        return {
-          ...trade,
-          invested: numberWithCommas(trade.quantity * trade.price),
-          date: formatDate(trade.date),
-          value: '500',
-        };
-      })
-    );
+          return {
+            ...trade,
+            invested: numberWithCommas(trade.quantity * trade.price),
+            date: formatDate(trade.date),
+            value: j,
+          };
+        })
+      );
+      console.log('🚀 ~ file: TradesTable.js ~ line 53 ~ x ~ x', x);
+    }
+    setData();
+    // );
   }, [trades]);
 
   const findProfits = async (trade, type) => {
