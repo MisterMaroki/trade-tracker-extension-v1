@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../../Content/config/api';
 import { numberWithCommas } from '../Components/banner/Carousel';
 import CoinInfo from '../Components/CoinInfo';
-import { CryptoState } from '../CryptoContext';
+import { CryptoState, deepEqual } from '../CryptoContext';
 import { useNavigate } from 'react-router-dom';
 const parse = require('html-react-parser');
 
@@ -74,12 +74,8 @@ const CoinPage = () => {
     fetchCoin();
   }, [coin]);
 
-  useEffect(() => {
-    localStorage.setItem('trades', JSON.stringify(trades));
-  }, [trades]);
-
-  const tradeNow = async (direction) => {
-    quantity &&
+  const tradeNow = (direction) => {
+    quantity > 0 &&
       setTrades((prevTrades) => [
         {
           id: nanoid(),

@@ -21,13 +21,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 import { SingleCoin } from '../../Content/config/api';
-import { CryptoState } from '../CryptoContext';
+import { CryptoState, deepEqual } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
 
 const TradesTable = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [rows, setRows] = useState([]);
+  //   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState();
 
   const { currency, symbol, trades, setTrades, coins, setCoins } =
@@ -52,11 +52,18 @@ const TradesTable = () => {
         })
       );
 
-      setRows(enrichedRows);
+      setTrades(enrichedRows);
     }
     rowDataEnrichment();
     // );
   }, [trades]);
+
+  //   useEffect(() => {
+  //     localStorage.getItem('trades')
+  //       ? !deepEqual(trades, JSON.parse(localStorage.getItem('trades'))) &&
+  //         localStorage.setItem('trades', JSON.stringify(trades))
+  //       : localStorage.setItem('trades', []);
+  //   }, [trades]);
 
   const findProfits = async (trade, type) => {
     const { data } = await axios.get(SingleCoin(trade.coin));
@@ -81,8 +88,8 @@ const TradesTable = () => {
   };
 
   const handleSearch = () => {
-    if (rows.length) {
-      return rows.filter(
+    if (trades.length) {
+      return trades.filter(
         (trade) =>
           trade.coin.toLowerCase().includes(search) ||
           trade.ticker.toLowerCase().includes(search)
@@ -91,15 +98,12 @@ const TradesTable = () => {
   };
 
   const deleteRow = (row) => {
-    console.log(
-      '🚀 ~ file: TradesTable.js ~ line 94 ~ deleteRow ~ row',
-      row.id
-    );
-    setRows((prevRows) =>
-      prevRows.map((trade) =>
-        trade.id !== row.id ? { ...trade, active: false } : trade
-      )
-    );
+    row.active &&
+      setTrades((prevRows) =>
+        prevRows.map((trade) =>
+          trade.id === row.id ? { ...trade, active: false } : trade
+        )
+      );
   };
 
   const handleFilter = () => {
@@ -113,7 +117,7 @@ const TradesTable = () => {
           variant="h6"
           style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
         >
-          {filter === 'all' ? 'Active Trades' : 'All Trades'}
+          {filter === 'all' ? 'All Trades' : 'Active Trades'}
         </Typography>
         <Button onClick={handleFilter}>
           Show {filter === 'all' ? 'Active Trades' : 'All Trades'}
@@ -163,7 +167,7 @@ const TradesTable = () => {
             <TableBody>
               {handleSearch()
                 ?.filter((item) =>
-                  filter === 'all' ? {} : item.active === true
+                  filter === 'all' ? { item } : item.active === true
                 )
                 ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
                 .map((row) => {
@@ -237,13 +241,15 @@ const TradesTable = () => {
                             justifyContent: 'space-between',
                           }}
                         >
-                          <Chip
-                            label="close"
-                            color="primary"
-                            icon={<DeleteOutlined />}
-                            size="small"
-                            onClick={() => deleteRow(row)}
-                          />
+                          {filter !== 'all' && (
+                            <Chip
+                              label="close"
+                              color="primary"
+                              icon={<DeleteOutlined />}
+                              size="small"
+                              onClick={() => deleteRow(row)}
+                            />
+                          )}
                           {`${(
                             (row.change > 0
                               ? row.change - 1

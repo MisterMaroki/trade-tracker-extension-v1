@@ -30,9 +30,9 @@ const Newtab = () => {
 
         <Routes>
           <Route path="/newTab.html" element={<CoinDashboard />} />
-          <Route path="/" element={<CoinDashboard />} />
-          <Route path="/coins/:id" element={<CoinPage />} exact />
-          <Route path="/trades" element={<TradesPage />} exact />
+          <Route path="/" element={<CoinDashboard />} exact />
+          <Route path="/coins/:id" element={<CoinPage />} />
+          <Route path="/trades" element={<TradesPage />} />
         </Routes>
       </NewtabContainer>
     </BrowserRouter>

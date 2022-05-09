@@ -21,11 +21,11 @@ import { CryptoState } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
 
 const CoinsTable = () => {
-  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
-  const { currency, symbol, coins, setCoins } = CryptoState();
+  const { currency, symbol, coins, setCoins, loading, setLoading } =
+    CryptoState();
 
   const fetchCoins = async () => {
     setLoading(true);
