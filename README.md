@@ -8,11 +8,16 @@
   <h3 align="center">Chrome Dashboard</h3>
 
   <p align="center">
-    This is a Chrome Extension that consists of a Crypto dashboard that features a newTab app, and a popup. I built this with the help of:
+     I wanted to build something that felt like an integrated part of the browser and served a real purpose. So far, I use it every day and it saves me many many clicks and searches on different exchanges: instead, I just mark trades on either the POPUP or the NEWTAB, and every time I open a new tab, all my active trades(including live PnL, %-change, account tracking, and more...) are right there... 
+  
+  This is a Chrome Extension that features a Crypto dashboard, Trade tracking(full CRUD capabilities), Account tracking(with some pretty charts to come soon) that is available to users via a newTab, and a popup. I built this with the help of:
     - coinGecko API
     - alice slider
     - react-chartjs 
+    - useContext as main state method
+    - MUI material,labs,core
     
+  
     I also implemented a popup tenzies game and will continue to add features to this as I'm using it as my current newtab for chrome.
     <br>
    
