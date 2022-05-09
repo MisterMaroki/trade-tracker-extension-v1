@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const Crypto = createContext();
@@ -7,6 +8,7 @@ const CryptoContext = ({ children }) => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [quantity, setQuantity] = useState(0);
 
   const [trades, setTrades] = useState(
     JSON.parse(localStorage.getItem('trades')) || []
@@ -24,6 +26,26 @@ const CryptoContext = ({ children }) => {
       : localStorage.setItem('trades', []);
   }, []);
 
+  const tradeNow = (direction) => {
+    quantity > 0 &&
+      setTrades((prevTrades) => [
+        {
+          id: nanoid(),
+          coin: coin.id,
+          ticker: coin.symbol,
+          fiat: currency.toLowerCase(),
+          price: coin.market_data.current_price[currency.toLowerCase()],
+          date: new Date(),
+          quantity: quantity,
+          direction: direction === 'buy' ? 'buy' : 'sell',
+          invested:
+            quantity * coin.market_data.current_price[currency.toLowerCase()],
+          active: true,
+        },
+        ...prevTrades,
+      ]);
+  };
+
   return (
     <Crypto.Provider
       value={{
@@ -38,6 +60,9 @@ const CryptoContext = ({ children }) => {
         setCoins,
         loading,
         setLoading,
+        quantity,
+        setQuantity,
+        tradeNow,
       }}
     >
       {children}

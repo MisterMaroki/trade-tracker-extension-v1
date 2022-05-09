@@ -57,11 +57,19 @@ export const CoinContainer = styled(Container)`
   }
 `;
 const CoinPage = () => {
-  const { currency, setCurrency, symbol, trades, setTrades, coin, setCoin } =
-    CryptoState();
+  const {
+    currency,
+    setCurrency,
+    symbol,
+    trades,
+    setTrades,
+    coin,
+    setCoin,
+    tradeNow,
+    quantity,
+    setQuantity,
+  } = CryptoState();
   const { id } = useParams();
-
-  const [quantity, setQuantity] = useState(0);
 
   const fetchCoin = async () => {
     const data = await axios.get(SingleCoin(id));
@@ -73,26 +81,6 @@ const CoinPage = () => {
   useEffect(() => {
     fetchCoin();
   }, [coin]);
-
-  const tradeNow = (direction) => {
-    quantity > 0 &&
-      setTrades((prevTrades) => [
-        {
-          id: nanoid(),
-          coin: coin.id,
-          ticker: coin.symbol,
-          fiat: currency.toLowerCase(),
-          price: coin.market_data.current_price[currency.toLowerCase()],
-          date: new Date(),
-          quantity: quantity,
-          direction: direction === 'buy' ? 'buy' : 'sell',
-          invested:
-            quantity * coin.market_data.current_price[currency.toLowerCase()],
-          active: true,
-        },
-        ...prevTrades,
-      ]);
-  };
 
   return (
     <CoinContainer>

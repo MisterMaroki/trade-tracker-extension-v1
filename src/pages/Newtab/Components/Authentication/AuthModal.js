@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 // web.cjs is required for IE11 support
 import { useSpring, animated } from 'react-spring';
+import { IconButton } from '@mui/material';
+import { LoginOutlined } from '@mui/icons-material';
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -58,7 +60,9 @@ export default function AuthModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <IconButton onClick={handleOpen}>
+        <LoginOutlined />
+      </IconButton>
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
