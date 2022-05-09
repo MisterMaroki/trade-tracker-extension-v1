@@ -1,4 +1,5 @@
 import { ArrowCircleDown } from '@mui/icons-material';
+import { DeleteOutlined } from '@mui/icons-material';
 import { ArrowCircleUp } from '@mui/icons-material';
 import {
   Button,
@@ -89,6 +90,18 @@ const TradesTable = () => {
     }
   };
 
+  const deleteRow = (row) => {
+    console.log(
+      '🚀 ~ file: TradesTable.js ~ line 94 ~ deleteRow ~ row',
+      row.id
+    );
+    setRows((prevRows) =>
+      prevRows.map((trade) =>
+        trade.id !== row.id ? { ...trade, active: false } : trade
+      )
+    );
+  };
+
   const handleFilter = () => {
     filter === 'all' ? setFilter('') : setFilter('all');
   };
@@ -158,7 +171,14 @@ const TradesTable = () => {
                     <TableRow
                       className="table-row"
                       key={row?.id}
-                      onClick={() => navigate(`/coins/${row?.coin}`)}
+                      onClick={(e) => {
+                        var element = e.target.textContent;
+                        if (element === 'close') {
+                          deleteRow(row);
+                        } else {
+                          navigate(`/coins/${row?.coin}`);
+                        }
+                      }}
                     >
                       <TableCell
                         component="th"
@@ -207,12 +227,29 @@ const TradesTable = () => {
                       </TableCell>
                       <TableCell
                         align="right"
-                        style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
+                        style={{
+                          color: renderPnl(row) >= 0 ? 'green' : 'red',
+                        }}
                       >
-                        {`${(
-                          (row.change > 0 ? row.change - 1 : 1 - row?.change) *
-                          100
-                        ).toFixed(2)}%`}
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <Chip
+                            label="close"
+                            color="primary"
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            onClick={() => deleteRow(row)}
+                          />
+                          {`${(
+                            (row.change > 0
+                              ? row.change - 1
+                              : 1 - row?.change) * 100
+                          ).toFixed(2)}%`}
+                        </div>
                       </TableCell>
                       <TableCell align="right">
                         {formatDate(row?.date)}
@@ -254,7 +291,7 @@ const TradesTable = () => {
 
 export default TradesTable;
 
-const formatDate = (date) => {
+export const formatDate = (date) => {
   let d = new Date(date);
   let month = (d.getMonth() + 1).toString();
   let day = d.getDate().toString();
