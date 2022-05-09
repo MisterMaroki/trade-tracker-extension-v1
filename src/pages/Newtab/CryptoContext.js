@@ -6,6 +6,7 @@ const CryptoContext = ({ children }) => {
   const [symbol, setSymbol] = useState('$');
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   const [trades, setTrades] = useState(
     JSON.parse(localStorage.getItem('trades')) || []

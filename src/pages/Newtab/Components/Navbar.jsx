@@ -11,6 +11,7 @@ import {
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { CryptoState } from '../CryptoContext';
 import { Home } from '@mui/icons-material';
+import AuthModal from './Authentication/AuthModal';
 
 const Navbar = () => {
   const [showTenziesGame, setshowTenziesGame] = useState(false);
@@ -60,6 +61,7 @@ const Navbar = () => {
         >
           <GamepadIcon />
         </IconButton>
+        <AuthModal />
       </header>
       {showTenziesGame && <DiceGame />}
     </>
