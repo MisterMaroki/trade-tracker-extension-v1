@@ -5,7 +5,6 @@ import {
   Button,
   Chip,
   Container,
-  LinearProgress,
   Pagination,
   Table,
   TableBody,
@@ -30,33 +29,18 @@ const TradesTable = () => {
   //   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState();
 
-  const { currency, symbol, trades, setTrades, coins, setCoins } =
-    CryptoState();
+  const {
+    currency,
+    symbol,
+    trades,
+    setTrades,
+    coins,
+    setCoins,
+    deleteRow,
+    rowDataEnrichment,
+  } = CryptoState();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // setRows(() =>
-    async function rowDataEnrichment() {
-      let enrichedRows = await Promise.all(
-        trades.map(async (trade) => {
-          const currentMarketValue = await findProfits(trade, 'current-value');
-          const percentChange = await findProfits(trade, 'percent-change');
-
-          return {
-            ...trade,
-            invested: trade.quantity * trade.price,
-            value: currentMarketValue,
-            change: percentChange,
-          };
-        })
-      );
-
-      setTrades(enrichedRows);
-    }
-    rowDataEnrichment();
-    // );
-  }, [trades]);
 
   //   useEffect(() => {
   //     localStorage.getItem('trades')
@@ -65,19 +49,9 @@ const TradesTable = () => {
   //       : localStorage.setItem('trades', []);
   //   }, [trades]);
 
-  const findProfits = async (trade, type) => {
-    const { data } = await axios.get(SingleCoin(trade.coin));
-    const differenceMultiplier =
-      (await data?.market_data.current_price.usd) / trade.price;
-
-    const currentValue = trade.invested * differenceMultiplier;
-    if (type === 'current-value') {
-      return currentValue;
-    }
-    if (type === 'percent-change') {
-      return differenceMultiplier;
-    }
-  };
+  useEffect(() => {
+    rowDataEnrichment();
+  }, [filter]);
 
   const renderPnl = (row) => {
     let data =
@@ -88,22 +62,13 @@ const TradesTable = () => {
   };
 
   const handleSearch = () => {
-    if (trades.length) {
+    if (search !== '') {
       return trades.filter(
         (trade) =>
           trade.coin.toLowerCase().includes(search) ||
           trade.ticker.toLowerCase().includes(search)
       );
-    }
-  };
-
-  const deleteRow = (row) => {
-    row.active &&
-      setTrades((prevRows) =>
-        prevRows.map((trade) =>
-          trade.id === row.id ? { ...trade, active: false } : trade
-        )
-      );
+    } else return trades;
   };
 
   const handleFilter = () => {
@@ -268,7 +233,9 @@ const TradesTable = () => {
                       </TableCell>
                       <TableCell align="right">{row?.quantity}</TableCell>
                       <TableCell align="right">
-                        {numberWithCommas(row?.invested.toFixed(2))}
+                        {numberWithCommas(
+                          (row?.quantity * row?.price).toFixed(2)
+                        )}
                       </TableCell>
                       <TableCell align="right">
                         {row?.fiat?.toUpperCase()}

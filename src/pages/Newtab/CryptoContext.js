@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { SingleCoin } from '../Content/config/api';
 
 const Crypto = createContext();
 const CryptoContext = ({ children }) => {
@@ -24,7 +26,7 @@ const CryptoContext = ({ children }) => {
     localStorage.getItem('trades')
       ? localStorage.setItem('trades', JSON.stringify(trades))
       : localStorage.setItem('trades', []);
-  }, []);
+  }, [trades]);
 
   const tradeNow = (direction) => {
     quantity > 0 &&
@@ -46,6 +48,50 @@ const CryptoContext = ({ children }) => {
       ]);
   };
 
+  const deleteRow = async (row) => {
+    if (row.active) {
+      setTrades((prevRows) =>
+        prevRows.map((trade) =>
+          trade.id === row.id ? { ...trade, active: false } : trade
+        )
+      );
+    }
+  };
+
+  // setRows(() =>
+  const rowDataEnrichment = async () => {
+    let enrichedRows = await Promise.all(
+      trades.map(async (trade) => {
+        const currentMarketValue = await findProfits(trade, 'current-value');
+        const percentChange = await findProfits(trade, 'percent-change');
+
+        return {
+          ...trade,
+          value: currentMarketValue,
+          change: percentChange,
+        };
+      })
+    );
+
+    setTrades([...enrichedRows]);
+  };
+
+  // );
+
+  const findProfits = async (trade, type) => {
+    const { data } = await axios.get(SingleCoin(trade.coin));
+    const differenceMultiplier =
+      (await data?.market_data.current_price.usd) / trade.price;
+
+    const currentValue = trade.invested * differenceMultiplier;
+    if (type === 'current-value') {
+      return currentValue;
+    }
+    if (type === 'percent-change') {
+      return differenceMultiplier;
+    }
+  };
+
   return (
     <Crypto.Provider
       value={{
@@ -63,6 +109,8 @@ const CryptoContext = ({ children }) => {
         quantity,
         setQuantity,
         tradeNow,
+        deleteRow,
+        rowDataEnrichment,
       }}
     >
       {children}
