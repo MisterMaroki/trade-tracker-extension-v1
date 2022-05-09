@@ -1,4 +1,4 @@
-    <img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
+<img src="src/assets/img/icon-128.png" alt="Logo" width=72 height=72>
 
 <p align="center">
   <a href="https://example.com/">
