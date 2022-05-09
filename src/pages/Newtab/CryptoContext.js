@@ -12,8 +12,14 @@ const CryptoContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
-  const [trades, setTrades] = useState(
-    JSON.parse(localStorage.getItem('trades')) || []
+  const [trades, setTrades] = useState(() =>
+    localStorage.getItem('trades')?.length > 1
+      ? JSON.parse(localStorage.getItem('trades'))
+      : []
+  );
+  console.log(
+    '🚀 ~ file: CryptoContext.js ~ line 20 ~ CryptoContext ~ trades',
+    trades
   );
   const [coin, setCoin] = useState();
 
@@ -23,9 +29,9 @@ const CryptoContext = ({ children }) => {
   }, [currency]);
 
   useEffect(() => {
-    localStorage.getItem('trades')
+    trades?.length >= 1
       ? localStorage.setItem('trades', JSON.stringify(trades))
-      : localStorage.setItem('trades', []);
+      : localStorage.setItem('trades', ['']);
   }, [trades]);
 
   const tradeNow = (direction) => {
@@ -40,20 +46,22 @@ const CryptoContext = ({ children }) => {
           date: new Date(),
           quantity: quantity,
           direction: direction === 'buy' ? 'buy' : 'sell',
+          active: true,
           invested:
             quantity * coin.market_data.current_price[currency.toLowerCase()],
-          active: true,
         },
         ...prevTrades,
       ]);
   };
 
-  const deleteRow = async (row) => {
+  const closeTrade = async (row) => {
     if (row.active) {
-      setTrades((prevRows) =>
-        prevRows.map((trade) =>
-          trade.id === row.id ? { ...trade, active: false } : trade
-        )
+      setTrades((prevTrades) =>
+        prevTrades.map((trade) => {
+          return trade.id === row.id
+            ? { ...trade, active: false, closed: new Date() }
+            : trade;
+        })
       );
     }
   };
@@ -65,15 +73,16 @@ const CryptoContext = ({ children }) => {
         const currentMarketValue = await findProfits(trade, 'current-value');
         const percentChange = await findProfits(trade, 'percent-change');
 
-        return {
-          ...trade,
-          value: currentMarketValue,
-          change: percentChange,
-        };
+        return trade.active
+          ? {
+              ...trade,
+              value: currentMarketValue,
+              change: percentChange,
+            }
+          : trade;
       })
     );
-
-    setTrades([...enrichedRows]);
+    setTrades(enrichedRows);
   };
 
   // );
@@ -109,7 +118,7 @@ const CryptoContext = ({ children }) => {
         quantity,
         setQuantity,
         tradeNow,
-        deleteRow,
+        closeTrade,
         rowDataEnrichment,
       }}
     >

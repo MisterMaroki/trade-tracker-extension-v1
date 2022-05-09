@@ -36,7 +36,7 @@ const TradesTable = () => {
     setTrades,
     coins,
     setCoins,
-    deleteRow,
+    closeTrade,
     rowDataEnrichment,
   } = CryptoState();
 
@@ -72,7 +72,8 @@ const TradesTable = () => {
   };
 
   const handleFilter = () => {
-    filter === 'all' ? setFilter('') : setFilter('all');
+    filter === 'closed' ? setFilter('') : setFilter('closed');
+    setPage(1);
   };
 
   return (
@@ -82,11 +83,11 @@ const TradesTable = () => {
           variant="h6"
           style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
         >
-          {filter === 'all' ? 'All Trades' : 'Active Trades'}
+          {filter === 'closed' ? 'Closed Trades' : 'Active Trades'}
         </Typography>
-        <Button onClick={handleFilter}>
-          Show {filter === 'all' ? 'Active Trades' : 'All Trades'}
-        </Button>
+        <button onClick={handleFilter}>
+          Show {filter === 'closed' ? 'Active Trades' : 'Closed Trades'}
+        </button>
       </div>
 
       <TextField
@@ -109,6 +110,7 @@ const TradesTable = () => {
                   'Price',
                   'Quantity',
                   'Invested',
+                  `${filter === 'closed' ? 'Closed' : 'Current'} Value`,
                   'Fiat',
                 ].map((head, index) => (
                   <TableCell
@@ -117,7 +119,7 @@ const TradesTable = () => {
                       borderRadius:
                         index === 0
                           ? '10px 0 0 10px'
-                          : index === 7
+                          : index === 8
                           ? '0 10px 10px 0'
                           : '0',
                     }}
@@ -132,8 +134,13 @@ const TradesTable = () => {
             <TableBody>
               {handleSearch()
                 ?.filter((item) =>
-                  filter === 'all' ? { item } : item.active === true
+                  filter === 'closed' ? !item.active : item.active
                 )
+                ?.sort((a, b) => {
+                  return filter === 'closed'
+                    ? b.closed - a.closed
+                    : b.date - a.date;
+                })
                 ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
                 .map((row) => {
                   return (
@@ -143,7 +150,7 @@ const TradesTable = () => {
                       onClick={(e) => {
                         var element = e.target.textContent;
                         if (element === 'close') {
-                          deleteRow(row);
+                          closeTrade(row);
                         } else {
                           navigate(`/coins/${row?.coin}`);
                         }
@@ -206,13 +213,13 @@ const TradesTable = () => {
                             justifyContent: 'space-between',
                           }}
                         >
-                          {filter !== 'all' && (
+                          {filter !== 'closed' && (
                             <Chip
                               label="close"
                               color="primary"
                               icon={<DeleteOutlined />}
                               size="small"
-                              onClick={() => deleteRow(row)}
+                              onClick={() => closeTrade(row)}
                             />
                           )}
                           {`${(
@@ -225,7 +232,12 @@ const TradesTable = () => {
                       <TableCell align="right">
                         {formatDate(row?.date)}
                         <div>
-                          Opened: <ReactTimeAgo date={row?.date} />
+                          {row?.active ? 'Opened: ' : 'Closed: '}
+                          {
+                            <ReactTimeAgo
+                              date={row?.active ? row?.date : row?.closed}
+                            />
+                          }
                         </div>
                       </TableCell>
                       <TableCell align="right">
@@ -237,6 +249,11 @@ const TradesTable = () => {
                           (row?.quantity * row?.price).toFixed(2)
                         )}
                       </TableCell>
+                      {row?.value && (
+                        <TableCell align="right">
+                          {numberWithCommas(row.value.toFixed(2))}
+                        </TableCell>
+                      )}
                       <TableCell align="right">
                         {row?.fiat?.toUpperCase()}
                       </TableCell>
@@ -251,7 +268,11 @@ const TradesTable = () => {
         <Pagination
           className="flex"
           style={{ padding: 10 }}
-          count={Math.ceil(handleSearch()?.length / 8)}
+          count={Math.ceil(
+            handleSearch()?.filter((item) =>
+              filter === 'closed' ? !item.active : item.active
+            )?.length / 8
+          )}
           onChange={(_, value) => {
             setPage(value);
             window.scroll(0, 120);
