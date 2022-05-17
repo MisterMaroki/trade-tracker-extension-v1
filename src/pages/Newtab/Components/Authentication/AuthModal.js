@@ -79,6 +79,7 @@ export default function AuthModal() {
             <Typography id="spring-modal-title" variant="h6" component="h2">
               Text in a modal
             </Typography>
+            <Button>Click me!</Button>
             <Typography id="spring-modal-description" sx={{ mt: 2 }}>
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>

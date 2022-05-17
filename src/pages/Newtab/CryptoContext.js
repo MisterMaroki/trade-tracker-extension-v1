@@ -17,10 +17,7 @@ const CryptoContext = ({ children }) => {
       ? JSON.parse(localStorage.getItem('trades'))
       : []
   );
-  console.log(
-    '🚀 ~ file: CryptoContext.js ~ line 20 ~ CryptoContext ~ trades',
-    trades
-  );
+
   const [coin, setCoin] = useState();
 
   useEffect(() => {
@@ -78,6 +75,7 @@ const CryptoContext = ({ children }) => {
               ...trade,
               value: currentMarketValue,
               change: percentChange,
+              exit: currentMarketValue / trade.quantity,
             }
           : trade;
       })
@@ -88,6 +86,7 @@ const CryptoContext = ({ children }) => {
   // );
 
   const findProfits = async (trade, type) => {
+    
     const { data } = await axios.get(SingleCoin(trade.coin));
     const differenceMultiplier =
       (await data?.market_data.current_price.usd) / trade.price;

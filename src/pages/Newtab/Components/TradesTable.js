@@ -138,7 +138,7 @@ const TradesTable = () => {
                 )
                 ?.sort((a, b) => {
                   return filter === 'closed'
-                    ? b.closed - a.closed
+                    ? a.closed - b.closed
                     : b.date - a.date;
                 })
                 ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
@@ -251,7 +251,14 @@ const TradesTable = () => {
                       </TableCell>
                       {row?.value && (
                         <TableCell align="right">
-                          {numberWithCommas(row.value.toFixed(2))}
+                          {row.direction === 'buy'
+                            ? numberWithCommas(row.value.toFixed(2))
+                            : numberWithCommas(
+                                (
+                                  row.invested +
+                                  (row.invested - row.value)
+                                ).toFixed(2)
+                              )}
                         </TableCell>
                       )}
                       <TableCell align="right">
