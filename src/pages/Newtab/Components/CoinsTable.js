@@ -55,7 +55,7 @@ const CoinsTable = () => {
     <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
       <Typography
         variant="h6"
-        style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
+        style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Ubuntu' }}
       >
         By Market Cap
       </Typography>

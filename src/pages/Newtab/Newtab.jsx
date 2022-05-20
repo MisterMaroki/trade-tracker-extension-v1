@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Newtab.css';
+import './styles/Newtab.css';
 import Navbar from './Components/Navbar';
 import CoinPage from './Pages/CoinPage';
 import CoinDashboard from './Pages/CoinDashboard';

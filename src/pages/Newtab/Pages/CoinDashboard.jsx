@@ -15,9 +15,6 @@ export const DashboardContainer = styled(Container)`
   align-items: center;
   width: 95%;
   max-width: 1800px !important;
-
-  border-radius: 10px;
-  background: #f5f5f5ee;
 `;
 const CoinDashboard = () => {
   return (

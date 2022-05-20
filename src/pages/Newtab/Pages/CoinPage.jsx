@@ -45,7 +45,6 @@ export const CoinContainer = styled(Container)`
   max-width: 1800px !important;
   padding: 0 !important;
   border-radius: 10px;
-  background: #f5f5f5ee;
 
   display: flex;
   justify-content: center;
@@ -56,6 +55,7 @@ export const CoinContainer = styled(Container)`
     align-items: center;
   }
 `;
+
 const CoinPage = () => {
   const {
     currency,

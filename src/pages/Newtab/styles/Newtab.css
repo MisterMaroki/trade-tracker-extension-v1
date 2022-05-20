@@ -1,12 +1,11 @@
 body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: #062c30;
-  font-family: "Karla", sans-serif !important;
+  background-color: #101724;
   font-size: 2rem;
-  color: #6b7688;
+  color: whitesmoke;
+}
+
+body * {
+  font-family: "Ubuntu", sans-serif !important;
 }
 
 #app-container {
@@ -32,15 +31,15 @@ body {
 
 a {
   text-decoration: none;
-  color: #030303;
+  color: #11ece5;
 }
 
 .newTab__whitebg {
-  background-color: #f5f5f5;
+  background-color: #091019;
 }
 
 .newTab__primarybg {
-  background-color: #062c30;
+  background-color: #030303;
 }
 
 .flex {
@@ -61,8 +60,8 @@ a {
 }
 
 .flex button.selected {
-  background-color: #05595b !important;
-  color: #f5f5f5;
+  background-color: #11ece5 !important;
+  color: #101724;
 }
 
 .col {
@@ -93,15 +92,19 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: #030303;
-  background-color: #f5f5f5;
-  -webkit-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
-          box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.133);
+  color: #c5d3e7;
+  background-color: #101724;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+          box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
 }
 
 header button {
   height: 50px;
   width: 50px;
+}
+
+.select {
+  background: #091019;
 }
 
 button {
@@ -110,7 +113,7 @@ button {
   background-color: whitesmoke !important;
   color: #3e3e3e;
   font-size: 1.2rem;
-  font-family: 'Karla', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -127,7 +130,7 @@ button {
 
 aside button {
   width: 150px;
-  background-color: #e2d784 !important;
+  background-color: #11ece5 !important;
 }
 
 button:focus {
@@ -147,7 +150,7 @@ button:active {
 }
 
 .carousel {
-  background-image: url(../../assets/img/dots.svg);
+  background-image: url(../../../assets/img/dots.svg);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -191,7 +194,8 @@ button:active {
 }
 
 .table-row:hover {
-  background: rgba(255, 255, 255, 0.117);
+  -webkit-backdrop-filter: brightness(1.2);
+          backdrop-filter: brightness(1.2);
 }
 
 .coin-container {
@@ -250,13 +254,13 @@ button:active {
   color: #fff;
   border-radius: 10px;
   padding: 5px 8px;
-  font-weight: 600;
+  font-weight: 700;
   -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .green {
-  color: green;
+  color: #11ece5;
 }
 
 .red {

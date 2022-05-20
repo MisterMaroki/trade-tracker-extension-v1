@@ -9,7 +9,6 @@ const CryptoContext = ({ children }) => {
   const [symbol, setSymbol] = useState('$');
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   const [quantity, setQuantity] = useState(0);
 
   const [trades, setTrades] = useState(() =>
@@ -86,7 +85,6 @@ const CryptoContext = ({ children }) => {
   // );
 
   const findProfits = async (trade, type) => {
-    
     const { data } = await axios.get(SingleCoin(trade.coin));
     const differenceMultiplier =
       (await data?.market_data.current_price.usd) / trade.price;

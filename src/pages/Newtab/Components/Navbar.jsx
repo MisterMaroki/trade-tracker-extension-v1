@@ -1,53 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GamepadIcon from '@mui/icons-material/Gamepad';
 import { useNavigate } from 'react-router-dom';
 import DiceGame from '../Components/tenzies/DiceGame';
-import {
-  FormControl,
-  IconButton,
-  InputLabel,
-  NativeSelect,
-} from '@mui/material';
+// import Select from 'react-select';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { CryptoState } from '../CryptoContext';
 import { Home } from '@mui/icons-material';
-import AuthModal from './Authentication/AuthModal';
-
+import { IconButton } from '@mui/material';
+import MySelect from './MySelect';
 const Navbar = () => {
   const [showTenziesGame, setshowTenziesGame] = useState(false);
 
   const navigate = useNavigate();
 
-  const { currency, setCurrency } = CryptoState();
-
   return (
     <>
       <header>
         <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
-          Hi, Omar!
+          NAME
         </h6>
-        <FormControl>
-          <InputLabel variant="standard" htmlFor="controlled-native">
-            Currency
-          </InputLabel>
-          <NativeSelect
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            inputProps={{
-              name: 'currency',
-              id: 'controlled-native',
-            }}
-          >
-            <option value={'USD'}>USD</option>
-            <option value={'GBP'}>GBP</option>
-          </NativeSelect>
-        </FormControl>
-        <IconButton
-          style={{ color: '#05595b' }}
-          onClick={() => navigate('newtab.html/')}
-        >
-          <Home />
-        </IconButton>
+
+        <MySelect />
 
         <IconButton
           style={{ color: '#05595b' }}
@@ -61,7 +34,6 @@ const Navbar = () => {
         >
           <GamepadIcon />
         </IconButton>
-        <AuthModal />
       </header>
       {showTenziesGame && <DiceGame />}
     </>

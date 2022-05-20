@@ -81,7 +81,7 @@ const TradesTable = () => {
       <div className="flex" style={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
-          style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Karla' }}
+          style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Ubuntu' }}
         >
           {filter === 'closed' ? 'Closed Trades' : 'Active Trades'}
         </Typography>
