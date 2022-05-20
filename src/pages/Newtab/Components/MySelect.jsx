@@ -25,11 +25,20 @@ const dot = (color = 'transparent') => ({
 });
 
 const colourStyles = {
-  control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: '#091019',
+    fontSize: '12px',
+    outline: 'none',
+    border: 'none',
+  }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     const color = chroma(data.color);
     return {
       ...styles,
+      outline: 'none',
+      border: 'none',
+
       backgroundColor: isDisabled
         ? undefined
         : isSelected
@@ -42,7 +51,7 @@ const colourStyles = {
         : isSelected
         ? chroma.contrast(color, 'white') > 2
           ? 'white'
-          : 'black'
+          : 'whitesmoke'
         : data.color,
       cursor: isDisabled ? 'not-allowed' : 'default',
 
@@ -56,9 +65,20 @@ const colourStyles = {
       },
     };
   },
-  input: (styles) => ({ ...styles, ...dot() }),
-  placeholder: (styles) => ({ ...styles, ...dot('#ccc') }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+  input: (styles) => ({
+    ...styles,
+    maxWidth: '100px',
+    color: 'whitesmoke',
+    border: 'none',
+    outline: 'none',
+    ...dot(),
+  }),
+  placeholder: (styles) => ({ ...styles, color: 'whitesmoke', ...dot('#ccc') }),
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    color: 'whitesmoke',
+    ...dot(data.color),
+  }),
 };
 
 const MySelect = () => {
@@ -76,6 +96,7 @@ const MySelect = () => {
       styles={colourStyles}
       value={selectedOption}
       onChange={setSelectedOption}
+      style={{ color: '#05595b' }}
     />
   );
 };
