@@ -9,6 +9,7 @@ import { CryptoState } from '../CryptoContext';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { chartDays } from '../../Content/config/data';
+import Dashboard from './CoinCharts';
 
 const InfoContainer = styled(Container)`
   width: 75%;
@@ -49,56 +50,57 @@ const CoinInfo = ({ coin }) => {
       {!historicalData ? (
         <CircularProgress sx={{ color: '#05595b' }} />
       ) : (
-        <>
-          {/* <CurrentTradesList /> */}
-          <Line
-            data={{
-              labels: historicalData.map((coin) => {
-                let date = new Date(coin[0]);
+        // <>
+        //   {/* <CurrentTradesList /> */}
+        //   <Line
+        //     data={{
+        //       labels: historicalData.map((coin) => {
+        //         let date = new Date(coin[0]);
 
-                let time =
-                  date.getHours() > 12
-                    ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-                    : `${date.getHours()}:${date.getMinutes()} AM`;
+        //         let time =
+        //           date.getHours() > 12
+        //             ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+        //             : `${date.getHours()}:${date.getMinutes()} AM`;
 
-                return days === 1 ? time : date.toLocaleDateString();
-              }),
+        //         return days === 1 ? time : date.toLocaleDateString();
+        //       }),
 
-              datasets: [
-                {
-                  data: historicalData.map((coin) => coin[1]),
-                  label: `Price (Past ${days} days) in ${currency}`,
-                  borderColor: '#05595b',
-                },
-              ],
-            }}
-            options={{
-              elements: {
-                point: {
-                  radius: 1,
-                },
-              },
-            }}
-          />
-          <div
-            className="flex"
-            style={{
-              marginTop: 20,
-              justifyContent: 'space-around',
-              width: '100%',
-            }}
-          >
-            {chartDays.map((day) => (
-              <button
-                key={day.label}
-                onClick={() => setDays(day.value)}
-                className={days === day.value ? 'selected' : ''}
-              >
-                {day.label}
-              </button>
-            ))}
-          </div>
-        </>
+        //       datasets: [
+        //         {
+        //           data: historicalData.map((coin) => coin[1]),
+        //           label: `Price (Past ${days} days) in ${currency}`,
+        //           borderColor: '#05595b',
+        //         },
+        //       ],
+        //     }}
+        //     options={{
+        //       elements: {
+        //         point: {
+        //           radius: 1,
+        //         },
+        //       },
+        //     }}
+        //   />
+        //   <div
+        //     className="flex"
+        //     style={{
+        //       marginTop: 20,
+        //       justifyContent: 'space-around',
+        //       width: '100%',
+        //     }}
+        //   >
+        //     {chartDays.map((day) => (
+        //       <button
+        //         key={day.label}
+        //         onClick={() => setDays(day.value)}
+        //         className={days === day.value ? 'selected' : ''}
+        //       >
+        //         {day.label}
+        //       </button>
+        //     ))}
+        //   </div>
+        // </>
+        <Dashboard />
       )}
     </InfoContainer>
   );
