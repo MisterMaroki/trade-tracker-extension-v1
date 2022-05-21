@@ -23,7 +23,7 @@ import { CryptoState, deepEqual } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
 
 const TradesTable = () => {
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   //   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState();
@@ -39,6 +39,8 @@ const TradesTable = () => {
     rowDataEnrichment,
     setId,
     setShowTrades,
+    search,
+    setSearch,
   } = CryptoState();
 
   //   useEffect(() => {
@@ -88,13 +90,6 @@ const TradesTable = () => {
           Show {filter === 'closed' ? 'Active Trades' : 'Closed Trades'}
         </button>
       </div>
-
-      <TextField
-        variant="outlined"
-        label="Search for a coin..."
-        style={{ marginBottom: 20, width: '100%' }}
-        onChange={(e) => setSearch(e.target.value)}
-      />
 
       <TableContainer>
         {

@@ -116,7 +116,7 @@ export default function CoinGrid({ row }) {
               ath
             </span>
             <span style={{ color: 'darkgrey', fontSize: 18 }}>
-              {numberWithCommas(row.ath.toString())}
+              {numberWithCommas(row.ath.toFixed(2).toString())}
             </span>
           </div>
         </Grid>

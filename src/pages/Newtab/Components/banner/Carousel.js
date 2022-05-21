@@ -32,7 +32,11 @@ const Carousel = () => {
     let profit = coin.price_change_percentage_24h >= 0;
 
     return (
-      <div className="carousel-item" onClick={() => setId(coin.id)}>
+      <div
+        className="carousel-item"
+        onClick={() => setId(coin.id)}
+        style={{ cursor: 'pointer' }}
+      >
         <>
           {' '}
           <img

@@ -19,7 +19,13 @@ const Navbar = () => {
       <div style={{ height: '1rem' }} />
       <header>
         {user ? (
-          <h6 style={{ cursor: 'pointer' }} onClick={() => setId('')}>
+          <h6
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              setId('');
+              setShowTrades(false);
+            }}
+          >
             <span>{user}'s Dashboard</span>
           </h6>
         ) : (
