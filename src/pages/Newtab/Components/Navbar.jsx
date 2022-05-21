@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
@@ -11,13 +11,18 @@ import {
   tertiary,
   textFieldSx,
 } from '../styles/themeVariables';
-import { Cancel, CancelOutlined } from '@mui/icons-material';
+import {
+  Cancel,
+  CancelOutlined,
+  ThumbUpOffAltOutlined,
+} from '@mui/icons-material';
 import { UserState } from '../UserContext';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
   const { search, setSearch } = CryptoState();
   const navigate = useNavigate();
+  const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
   return (
     <>
@@ -25,21 +30,20 @@ const Navbar = () => {
       <header>
         {user ? (
           <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
-            <span>Hi, {user}</span>
+            <span>{user}'s Dashboard</span>
           </h6>
         ) : (
           <TextField
-            clearable
-            value={search}
-            label="Search for a coin..."
+            label="What's your name?"
+            value={nameInput}
             sx={textFieldSx}
             size="small"
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setNameInput(e.target.value)}
             InputProps={{
-              endAdornment: search.length > 0 && (
+              endAdornment: nameInput.length > 0 && (
                 <IconButton
                   variant="outlined"
-                  onClick={() => setSearch('')}
+                  onClick={(e) => setUser(nameInput)}
                   sx={{
                     padding: 0,
                     position: 'absolute',
@@ -47,7 +51,9 @@ const Navbar = () => {
                     top: 8,
                   }}
                 >
-                  <CancelOutlined sx={{ color: tertiary }} />
+                  <ThumbUpOffAltOutlined
+                    sx={{ color: tertiary, fontSize: 20 }}
+                  />
                 </IconButton>
               ),
             }}
