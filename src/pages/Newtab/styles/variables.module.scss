@@ -1,0 +1,25 @@
+$fontBase: 'Ubuntu', sans-serif;
+$primary--bg: #101724;
+$primary--text: #c0cee2;
+$secondary--bg: #091019;
+$secondary--text: whitesmoke;
+$tertiary: #11ece5;
+$tertiary2: #b8f7f3;
+$white: #f5f5f5;
+$black: #030303;
+$lightGray: #e4e4e4;
+$gray: #6b7688;
+
+:export {
+  fontbase: $fontBase;
+  primarybg: $primary--bg;
+  primarytext: $primary--text;
+  secondarybg: $secondary--bg;
+  secondarytext: whitesmoke;
+  tertiary: #11ece5;
+  tertiaryalt: #b8f7f3;
+  white: #f5f5f5;
+  black: #030303;
+  lightgray: #e4e4e4;
+  gray: #6b7688;
+}

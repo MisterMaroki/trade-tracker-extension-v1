@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import { Skeleton, Stack } from '@mui/material';
+import { Skeleton, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import { Link } from 'react-router-dom';
 import { TrendingCoins } from '../../../Content/config/api';
 import { CryptoState } from '../../CryptoContext';
+import { primarytext } from '../../styles/themeVariables';
 
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -41,17 +42,20 @@ const Carousel = () => {
             height="60"
             style={{ marginBottom: 10 }}
           />
-          <span>
-            {coin?.symbol.toUpperCase()}
-            &nbsp;
-            <span className={profit ? 'green' : 'red'}>
+          <Stack direction="row" spacing={2}>
+            <Typography sx={{ color: primarytext }}>
+              {coin?.symbol.toUpperCase()}
+            </Typography>
+            <Typography className={profit ? 'green' : 'red'}>
               {profit && '+'}
               {coin?.price_change_percentage_24h?.toFixed(2)}%
-            </span>
-          </span>
-          <span style={{ fontSize: 22, fontWeight: 500 }}>
+            </Typography>
+          </Stack>
+          <Typography
+            sx={{ fontSize: 22, fontWeight: 500, color: primarytext }}
+          >
             {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
-          </span>
+          </Typography>
         </>
       </Link>
     );

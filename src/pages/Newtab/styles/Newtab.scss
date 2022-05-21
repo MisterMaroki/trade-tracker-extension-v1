@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables.module';
 
 body {
   // background-color: #0b2434;
@@ -75,9 +75,8 @@ header {
   background-color: $primary--bg;
 
   box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
-  button {
-    height: 50px;
-    width: 50px;
+  h6 span {
+    color: $tertiary2;
   }
 }
 .select {
@@ -86,9 +85,7 @@ header {
 button {
   border: none;
   border-radius: 6px;
-  background-color: whitesmoke !important;
 
-  color: rgb(62, 62, 62);
   font-size: 1.2rem;
   font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
@@ -140,11 +137,13 @@ button:active {
     justify-content: center;
   }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////
 .table-row {
   &:hover {
     backdrop-filter: brightness(1.2);
   }
 }
+
 .coin-container {
   margin: 0;
   padding: 0;

@@ -18,6 +18,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CoinList } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
+import {
+  secondarybg,
+  secondarytext,
+  tertiaryalt,
+} from '../styles/themeVariables';
+import { SectionContainer } from './banner/Banner';
 import { numberWithCommas } from './banner/Carousel';
 
 const CoinsTable = () => {
@@ -52,7 +58,7 @@ const CoinsTable = () => {
   };
 
   return (
-    <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
+    <SectionContainer>
       <Typography
         variant="h6"
         style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Ubuntu' }}
@@ -69,10 +75,10 @@ const CoinsTable = () => {
 
       <TableContainer>
         {loading ? (
-          <LinearProgress sx={{ color: '#05595b' }} />
+          <LinearProgress sx={{ color: tertiaryalt }} />
         ) : (
           <Table>
-            <TableHead style={{ backgroundColor: 'whitesmoke' }}>
+            <TableHead style={{ backgroundColor: secondarybg }}>
               <TableRow style={{ borderRadius: '10px' }}>
                 {['Coin', 'Rank', 'Price', '24h Change', 'Market Cap'].map(
                   (head, index) => (
@@ -164,7 +170,7 @@ const CoinsTable = () => {
           }}
         />
       )}
-    </Container>
+    </SectionContainer>
   );
 };
 
