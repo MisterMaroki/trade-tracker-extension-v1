@@ -4,7 +4,6 @@ import { Skeleton, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
-import { Link } from 'react-router-dom';
 import { TrendingCoins } from '../../../Content/config/api';
 import { CryptoState } from '../../CryptoContext';
 import { primarytext } from '../../styles/themeVariables';
@@ -16,7 +15,7 @@ export function numberWithCommas(x) {
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { currency, symbol } = CryptoState();
+  const { currency, symbol, setId } = CryptoState();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchTrendingCoins = async () => {
@@ -33,7 +32,7 @@ const Carousel = () => {
     let profit = coin.price_change_percentage_24h >= 0;
 
     return (
-      <Link className="carousel-item" to={`/coins/${coin.id}`}>
+      <div className="carousel-item" onClick={() => setId(coin.id)}>
         <>
           {' '}
           <img
@@ -57,7 +56,7 @@ const Carousel = () => {
             {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
           </Typography>
         </>
-      </Link>
+      </div>
     );
   });
 

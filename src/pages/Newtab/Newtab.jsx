@@ -9,6 +9,7 @@ import { Container } from '@mui/material';
 import styled from '@emotion/styled';
 import TradesPage from './Pages/TradesPage';
 import { black } from './styles/themeVariables';
+import { CryptoState } from './CryptoContext';
 
 const NewtabContainer = styled(Container)`
   width: 100%;
@@ -24,17 +25,13 @@ const NewtabContainer = styled(Container)`
 `;
 
 const Newtab = () => {
+  const { id, showTrades } = CryptoState();
   return (
     <BrowserRouter>
       <NewtabContainer className="newTab__primarybg">
         <Navbar />
 
-        <Routes>
-          <Route path="/newTab.html" element={<CoinDashboard />} />
-          <Route path="/" element={<CoinDashboard />} exact />
-          <Route path="/coins/:id" element={<CoinPage />} />
-          <Route path="/trades" element={<TradesPage />} />
-        </Routes>
+        {showTrades ? <TradesPage /> : id ? <CoinPage /> : <CoinDashboard />}
       </NewtabContainer>
     </BrowserRouter>
   );

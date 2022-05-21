@@ -10,6 +10,8 @@ const CryptoContext = ({ children }) => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [id, setId] = useState('');
+  const [showTrades, setShowTrades] = useState('');
 
   const [trades, setTrades] = useState(() =>
     localStorage.getItem('trades')?.length > 1
@@ -120,6 +122,10 @@ const CryptoContext = ({ children }) => {
         rowDataEnrichment,
         search,
         setSearch,
+        id,
+        setId,
+        showTrades,
+        setShowTrades,
       }}
     >
       {children}

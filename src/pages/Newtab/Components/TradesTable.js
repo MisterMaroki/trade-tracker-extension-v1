@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 import { SingleCoin } from '../../Content/config/api';
 import { CryptoState, deepEqual } from '../CryptoContext';
@@ -38,9 +37,9 @@ const TradesTable = () => {
     setCoins,
     closeTrade,
     rowDataEnrichment,
+    setId,
+    setShowTrades,
   } = CryptoState();
-
-  const navigate = useNavigate();
 
   //   useEffect(() => {
   //     localStorage.getItem('trades')
@@ -152,7 +151,7 @@ const TradesTable = () => {
                         if (element === 'close') {
                           closeTrade(row);
                         } else {
-                          navigate(`/coins/${row?.coin}`);
+                          setId(row?.coin);
                         }
                       }}
                     >
@@ -235,7 +234,11 @@ const TradesTable = () => {
                           {row?.active ? 'Opened: ' : 'Closed: '}
                           {
                             <ReactTimeAgo
-                              date={row?.active ? row?.date : row?.closed}
+                              date={
+                                row?.active
+                                  ? formatDate(row?.date)
+                                  : row?.closed
+                              }
                             />
                           }
                         </div>

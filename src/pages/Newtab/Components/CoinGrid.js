@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-import { useNavigate } from 'react-router-dom';
 import { CoinCard, ColorButton, tertiaryalt } from '../styles/themeVariables';
 import { Box, Button } from '@mui/material';
 import { numberWithCommas } from './banner/Carousel';
@@ -12,8 +11,7 @@ import { CryptoState } from '../CryptoContext';
 
 export default function CoinGrid({ row }) {
   console.log('🚀 ~ file: CoinGrid.js ~ line 14 ~ CoinGrid ~ row', row);
-  const { symbol } = CryptoState();
-  const navigate = useNavigate();
+  const { symbol, setId } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
     <CoinCard key={row.name}>
@@ -138,9 +136,7 @@ export default function CoinGrid({ row }) {
           </div>
         </Grid>
         <Grid item>
-          <ColorButton onClick={() => navigate(`/coins/${row.id}`)}>
-            Trade Now
-          </ColorButton>
+          <ColorButton onClick={() => setId(row.id)}>Trade Now</ColorButton>
         </Grid>
       </Grid>
     </CoinCard>

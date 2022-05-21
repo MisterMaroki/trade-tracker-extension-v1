@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 // import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
 import { IconButton, Stack, TextField } from '@mui/material';
 import MySelect from './MySelect';
-import {
-  ColorButton,
-  primarybg,
-  tertiary,
-  textFieldSx,
-} from '../styles/themeVariables';
-import {
-  Cancel,
-  CancelOutlined,
-  ThumbUpOffAltOutlined,
-} from '@mui/icons-material';
+import { ColorButton, tertiary, textFieldSx } from '../styles/themeVariables';
+import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
 import { UserState } from '../UserContext';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
-  const { search, setSearch } = CryptoState();
-  const navigate = useNavigate();
+  const { search, setSearch, setId, showTrades, setShowTrades } = CryptoState();
+
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
   return (
@@ -29,7 +19,7 @@ const Navbar = () => {
       <div style={{ height: '1rem' }} />
       <header>
         {user ? (
-          <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+          <h6 style={{ cursor: 'pointer' }} onClick={() => setId('')}>
             <span>{user}'s Dashboard</span>
           </h6>
         ) : (
@@ -89,9 +79,18 @@ const Navbar = () => {
           <MySelect />
         </Stack>
         <Stack direction="row" spacing={2}>
-          <ColorButton onClick={() => navigate('/')}>Home</ColorButton>
+          <ColorButton
+            onClick={() => {
+              setId('');
+              setShowTrades(false);
+            }}
+          >
+            Home
+          </ColorButton>
 
-          <ColorButton onClick={() => navigate('/trades')}>Trades</ColorButton>
+          <ColorButton onClick={() => setShowTrades(!showTrades)}>
+            Trades
+          </ColorButton>
         </Stack>
       </header>
       {/* {showTenziesGame && <DiceGame />} */}

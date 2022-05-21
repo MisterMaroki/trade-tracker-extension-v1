@@ -33,8 +33,9 @@ const CoinPage = () => {
     tradeNow,
     quantity,
     setQuantity,
+    id,
+    setShowTrades,
   } = CryptoState();
-  const { id } = useParams();
 
   const fetchCoin = async () => {
     const data = await axios.get(SingleCoin(id));
@@ -141,7 +142,7 @@ const CoinPage = () => {
               />
             </div>
             <div className="flex">
-              <button onClick={() => navigate('/trades')}>View Trades</button>
+              <button onClick={() => setShowTrades(true)}>View Trades</button>
             </div>
           </Sidebar>
 
