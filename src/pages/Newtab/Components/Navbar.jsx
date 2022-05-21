@@ -1,32 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import GamepadIcon from '@mui/icons-material/Gamepad';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import DiceGame from '../Components/tenzies/DiceGame';
+// import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
-import { Button, Stack } from '@mui/material';
+import { IconButton, Stack, TextField } from '@mui/material';
 import MySelect from './MySelect';
-import styled from '@emotion/styled';
-import { primarytext } from '../styles/themeVariables';
+import {
+  ColorButton,
+  primarybg,
+  tertiary,
+  textFieldSx,
+} from '../styles/themeVariables';
+import { Cancel, CancelOutlined } from '@mui/icons-material';
 
 const Navbar = () => {
-  const [showTenziesGame, setshowTenziesGame] = useState(false);
-
+  // const [showTenziesGame, setshowTenziesGame] = useState(false);
+  const { search, setSearch } = CryptoState();
   const navigate = useNavigate();
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: primarytext,
-    backgroundColor: 'none',
-    '&:hover': {
-      backgroundColor: '#09111b',
-    },
-  }));
+
   return (
     <>
+      <div style={{ height: '1rem' }} />
       <header>
         <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
           <span>newtab</span>
         </h6>
+
         <Stack direction="row" spacing={2}>
+          <TextField
+            clearable
+            value={search}
+            label="Search for a coin..."
+            sx={textFieldSx}
+            size="small"
+            onChange={(e) => setSearch(e.target.value)}
+            InputProps={{
+              endAdornment: search.length > 0 && (
+                <IconButton
+                  variant="outlined"
+                  onClick={() => setSearch('')}
+                  sx={{
+                    padding: 0,
+                    position: 'absolute',
+                    right: 10,
+                    top: 8,
+                  }}
+                >
+                  <CancelOutlined sx={{ color: tertiary }} />
+                </IconButton>
+              ),
+            }}
+          />
+
           <MySelect />
         </Stack>
         <Stack direction="row" spacing={2}>
@@ -35,7 +60,7 @@ const Navbar = () => {
           <ColorButton onClick={() => navigate('/trades')}>Trades</ColorButton>
         </Stack>
       </header>
-      {showTenziesGame && <DiceGame />}
+      {/* {showTenziesGame && <DiceGame />} */}
     </>
   );
 };

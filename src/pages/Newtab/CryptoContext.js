@@ -16,6 +16,7 @@ const CryptoContext = ({ children }) => {
       ? JSON.parse(localStorage.getItem('trades'))
       : []
   );
+  const [search, setSearch] = useState('');
 
   const [coin, setCoin] = useState();
 
@@ -117,6 +118,8 @@ const CryptoContext = ({ children }) => {
         tradeNow,
         closeTrade,
         rowDataEnrichment,
+        search,
+        setSearch,
       }}
     >
       {children}

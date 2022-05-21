@@ -1,7 +1,8 @@
 $fontBase: 'Ubuntu', sans-serif;
 $primary--bg: #101724;
 $primary--text: #c0cee2;
-$secondary--bg: #091019;
+$secondary--bg: #070e17;
+$light--bg: #1c2a3d;
 $secondary--text: whitesmoke;
 $tertiary: #11ece5;
 $tertiary2: #b8f7f3;
@@ -15,6 +16,7 @@ $gray: #6b7688;
   primarybg: $primary--bg;
   primarytext: $primary--text;
   secondarybg: $secondary--bg;
+  lightbg: $light--bg;
   secondarytext: whitesmoke;
   tertiary: #11ece5;
   tertiaryalt: #b8f7f3;

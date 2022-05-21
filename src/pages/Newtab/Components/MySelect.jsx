@@ -98,7 +98,6 @@ const MySelect = () => {
       styles={colourStyles}
       value={selectedOption}
       onChange={setSelectedOption}
-      style={{ color: '#05595b' }}
     />
   );
 };
