@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import chroma from 'chroma-js';
 
-import Select, { StylesConfig } from 'react-select';
+import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
 
 export const colourOptions = [
@@ -49,7 +49,7 @@ const colourStyles = {
       color: isDisabled
         ? '#ccc'
         : isSelected
-        ? chroma.contrast(color, 'white') > 2
+        ? chroma.contrast(color, '#091019') > 2
           ? 'white'
           : 'whitesmoke'
         : data.color,
@@ -77,12 +77,14 @@ const colourStyles = {
   singleValue: (styles, { data }) => ({
     ...styles,
     color: 'whitesmoke',
+    backgroundColor: '#091019',
+
     ...dot(data.color),
   }),
 };
 
 const MySelect = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(colourOptions[0]);
 
   const { currency, setCurrency } = CryptoState();
 
@@ -91,7 +93,7 @@ const MySelect = () => {
   }, [selectedOption]);
   return (
     <Select
-      defaultValue={colourOptions[2]}
+      defaultValue={colourOptions[0]}
       options={colourOptions}
       styles={colourStyles}
       value={selectedOption}
