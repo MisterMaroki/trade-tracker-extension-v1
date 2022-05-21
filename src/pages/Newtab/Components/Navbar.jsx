@@ -12,19 +12,47 @@ import {
   textFieldSx,
 } from '../styles/themeVariables';
 import { Cancel, CancelOutlined } from '@mui/icons-material';
+import { UserState } from '../UserContext';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
   const { search, setSearch } = CryptoState();
   const navigate = useNavigate();
-
+  const { user, setUser } = UserState();
   return (
     <>
       <div style={{ height: '1rem' }} />
       <header>
-        <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
-          <span>newtab</span>
-        </h6>
+        {user ? (
+          <h6 style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+            <span>Hi, {user}</span>
+          </h6>
+        ) : (
+          <TextField
+            clearable
+            value={search}
+            label="Search for a coin..."
+            sx={textFieldSx}
+            size="small"
+            onChange={(e) => setSearch(e.target.value)}
+            InputProps={{
+              endAdornment: search.length > 0 && (
+                <IconButton
+                  variant="outlined"
+                  onClick={() => setSearch('')}
+                  sx={{
+                    padding: 0,
+                    position: 'absolute',
+                    right: 10,
+                    top: 8,
+                  }}
+                >
+                  <CancelOutlined sx={{ color: tertiary }} />
+                </IconButton>
+              ),
+            }}
+          />
+        )}
 
         <Stack direction="row" spacing={2}>
           <TextField

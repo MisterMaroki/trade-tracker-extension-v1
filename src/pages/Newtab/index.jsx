@@ -7,11 +7,14 @@ import en from 'javascript-time-ago/locale/en-GB.json';
 import Newtab from './Newtab';
 import './index.css';
 import CryptoContext from './CryptoContext';
+import UserContext from './UserContext';
 TimeAgo.addDefaultLocale(en);
 
 render(
   <CryptoContext>
-    <Newtab />
+    <UserContext>
+      <Newtab />
+    </UserContext>
   </CryptoContext>,
   window.document.querySelector('#app-container')
 );

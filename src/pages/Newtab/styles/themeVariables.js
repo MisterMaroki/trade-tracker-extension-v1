@@ -24,6 +24,25 @@ export const SectionContainer = styled(Container)`
   padding: 1rem 0rem 2rem 0rem;
   margin-bottom: 2rem;
 `;
+export const CoinContainer = styled(SectionContainer)`
+  margin-top: 5rem;
+  /* height: 88vh; */
+  min-height: 88vh;
+  /* max-height: none; */
+  width: 95%;
+  max-width: 1800px !important;
+  padding: 0 !important;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  place-content: center;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 export const CoinCard = styled(Container)`
   max-width: none !important;
   background: ${primarybg};
@@ -33,6 +52,21 @@ export const CoinCard = styled(Container)`
   max-width: 600px !important;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+`;
+export const Sidebar = styled(Container)`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  padding-top: 3rem;
+  border-right: 2px solid whitesmoke;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    border: none;
+  }
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({
@@ -53,6 +87,7 @@ export const typographySx = {
 export const textFieldSx = {
   marginBottom: 0,
   width: '100%',
+  maxWidth: '300px',
   padding: 0,
 
   input: {

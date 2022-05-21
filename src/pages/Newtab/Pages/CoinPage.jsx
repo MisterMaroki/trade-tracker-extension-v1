@@ -18,43 +18,8 @@ import { numberWithCommas } from '../Components/banner/Carousel';
 import CoinInfo from '../Components/CoinInfo';
 import { CryptoState, deepEqual } from '../CryptoContext';
 import { useNavigate } from 'react-router-dom';
+import { CoinContainer, Sidebar } from '../styles/themeVariables';
 const parse = require('html-react-parser');
-
-const Sidebar = styled(Container)`
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  padding-top: 3rem;
-  border-right: 2px solid whitesmoke;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    border: none;
-  }
-`;
-
-export const CoinContainer = styled(Container)`
-  margin-top: 5rem;
-  /* height: 88vh; */
-  min-height: 88vh;
-  /* max-height: none; */
-  width: 95%;
-  max-width: 1800px !important;
-  padding: 0 !important;
-  border-radius: 10px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  place-content: center;
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
 
 const CoinPage = () => {
   const {
