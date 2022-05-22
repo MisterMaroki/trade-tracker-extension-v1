@@ -28,6 +28,7 @@ const Navbar = () => {
 
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
+
   return (
     <>
       <header>
@@ -131,10 +132,20 @@ const Navbar = () => {
       </header>
       {search &&
         !showTrades &&
+        handleSearch() &&
         coins.find((x) => x.id.includes(search) || x.symbol.includes(search)) &&
         id && (
           <div className="search-dropdown">
-            <CoinItem row={handleSearch()[0]} />
+            {handleSearch()
+              .slice(0, 3)
+              .map((coin, index) => {
+                return (
+                  <>
+                    <CoinItem row={handleSearch()[index]} />
+                    <div style={{ margin: '2rem' }} />
+                  </>
+                );
+              })}
           </div>
         )}
       {/* {showTenziesGame && <DiceGame />} */}
