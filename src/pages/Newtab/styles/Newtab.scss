@@ -63,6 +63,8 @@ a {
   background: $secondary--bg;
   border-radius: 5px;
   min-width: 120px;
+  min-height: 45px;
+  max-height: 45px;
   width: min-content;
   padding: 5px 10px;
 }

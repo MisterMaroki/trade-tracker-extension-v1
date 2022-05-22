@@ -38,7 +38,7 @@ export default function CoinItem({ row }) {
               style={{
                 color: 'darkgrey',
                 fontSize:
-                  row.name.length > 10 ? (row.name.length > 20 ? 12 : 15) : 18,
+                  row.name.length > 10 ? (row.name.length > 13 ? 10 : 15) : 18,
               }}
             >
               {row.name}
