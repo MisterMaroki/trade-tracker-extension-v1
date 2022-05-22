@@ -131,7 +131,6 @@ const Navbar = () => {
       </header>
       {search &&
         !showTrades &&
-        handleSearch() &&
         coins.find((x) => x.id.includes(search) || x.symbol.includes(search)) &&
         id && (
           <div className="search-dropdown">
