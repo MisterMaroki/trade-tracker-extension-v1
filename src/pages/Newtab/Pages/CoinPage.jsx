@@ -1,46 +1,23 @@
-import styled from '@emotion/styled';
 import CustomizedSnackbars from '../Components/SuccessSnackbar';
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Input,
-  LinearProgress,
-  Typography,
-} from '@mui/material';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { SingleCoin } from '../../Content/config/api';
+import { CircularProgress, Input, Typography } from '@mui/material';
+import React from 'react';
 import { numberWithCommas } from '../Components/banner/Carousel';
 import CoinChart from '../Components/CoinChart';
-import { CryptoState, deepEqual } from '../CryptoContext';
-import { useNavigate } from 'react-router-dom';
+import { CryptoState } from '../CryptoContext';
 import { CoinContainer, Sidebar, tertiaryalt } from '../styles/themeVariables';
-import CoinItem from '../Components/CoinItem';
 const parse = require('html-react-parser');
 
 const CoinPage = () => {
   const {
     currency,
-    setCurrency,
-    search,
     symbol,
-    trades,
-    setTrades,
     coin,
-    setCoin,
-    coins,
     tradeNow,
     quantity,
     setQuantity,
-    id,
     setShowTrades,
-    handleSearch,
-    fetchCoin,
   } = CryptoState();
+  console.log('🚀 ~ file: CoinPage.jsx ~ line 20 ~ CoinPage ~ coin', coin);
 
   return (
     <>
@@ -138,9 +115,6 @@ const CoinPage = () => {
               <div className="flex">
                 <button onClick={() => setShowTrades(true)}>View Trades</button>
               </div>
-              {/* {coin && (
-                <CoinItem row={coins.filter((x) => x.id === coin?.id)[0]} />
-              )} */}
             </Sidebar>
 
             <CoinChart coin={coin} />

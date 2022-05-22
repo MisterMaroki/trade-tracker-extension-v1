@@ -86,11 +86,11 @@ const colourStyles = {
 const MySelect = () => {
   const [selectedOption, setSelectedOption] = useState(colourOptions[0]);
 
-  const { currency, setCurrency } = CryptoState();
+  const { setCurrency, showTrades } = CryptoState();
 
   useEffect(() => {
     selectedOption && setCurrency(selectedOption?.value);
-  }, [selectedOption]);
+  }, [selectedOption, setCurrency]);
   return (
     <Select
       defaultValue={colourOptions[0]}
@@ -98,6 +98,7 @@ const MySelect = () => {
       styles={colourStyles}
       value={selectedOption}
       onChange={setSelectedOption}
+      isDisabled={showTrades}
     />
   );
 };

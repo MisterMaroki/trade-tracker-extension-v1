@@ -2,7 +2,6 @@ import { ArrowCircleDown } from '@mui/icons-material';
 import { DeleteOutlined } from '@mui/icons-material';
 import { ArrowCircleUp } from '@mui/icons-material';
 import {
-  Button,
   Chip,
   Container,
   Pagination,
@@ -12,14 +11,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
-import { SingleCoin } from '../../Content/config/api';
-import { CryptoState, deepEqual } from '../CryptoContext';
+import { CryptoState } from '../CryptoContext';
 import { numberWithCommas } from './banner/Carousel';
 
 const TradesTable = () => {
@@ -28,20 +24,8 @@ const TradesTable = () => {
   //   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState();
 
-  const {
-    currency,
-    symbol,
-    trades,
-    setTrades,
-    coins,
-    setCoins,
-    closeTrade,
-    rowDataEnrichment,
-    setId,
-    setShowTrades,
-    search,
-    setSearch,
-  } = CryptoState();
+  const { trades, closeTrade, rowDataEnrichment, setId, search } =
+    CryptoState();
 
   //   useEffect(() => {
   //     localStorage.getItem('trades')

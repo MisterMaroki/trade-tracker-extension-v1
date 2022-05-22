@@ -1,11 +1,6 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
-import { CoinCard, ColorButton, tertiaryalt } from '../styles/themeVariables';
-import { Box, Button } from '@mui/material';
+import { CoinCard, ColorButton } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 
@@ -16,7 +11,7 @@ export default function CoinSearchItem({ product }) {
   );
   console.log('🚀 ~ file: CoinItem.js ~ line 13 ~ CoinItem ~ product', product);
   // console.log('🚀 ~ file: CoinItem.js ~ line 14 ~ CoinItem ~ product', product);
-  const { symbol, id, setId, setSearch } = CryptoState();
+  const { symbol, setId, setSearch } = CryptoState();
   const profit = product.price_change_percentage_24h >= 0;
   return (
     <CoinCard key={product.name}>

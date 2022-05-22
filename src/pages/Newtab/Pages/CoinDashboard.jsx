@@ -3,7 +3,6 @@ import { Container } from '@mui/material';
 import React from 'react';
 import Banner from '../Components/banner/Banner';
 import CoinsTable from '../Components/CoinsTable';
-import { primarybg } from '../styles/themeVariables';
 
 export const DashboardContainer = styled(Container)`
   margin-top: 5rem;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { SingleCoin } from '../Content/config/api';
+import { CoinList, SingleCoin } from '../Content/config/api';
 
 const Crypto = createContext();
 const CryptoContext = ({ children }) => {
@@ -33,14 +33,25 @@ const CryptoContext = ({ children }) => {
       : localStorage.setItem('trades', ['']);
   }, [trades]);
 
-  const fetchCoin = async () => {
-    const data = await axios.get(SingleCoin(id));
-    if (coin?.id !== data.data.id) setCoin(data.data);
-  };
+  useEffect(() => {
+    const fetchCoin = async () => {
+      const data = await axios.get(SingleCoin(id));
+      if (coin?.id !== data.data.id && data.data.length === undefined)
+        setCoin(data.data);
+    };
+    fetchCoin();
+  }, [id, symbol, coin, search]);
 
   useEffect(() => {
-    fetchCoin();
-  }, [id, symbol, coin, coins]);
+    const fetchCoins = async () => {
+      setLoading(true);
+
+      const data = await axios.get(CoinList(currency));
+      if (data.data !== coins) setCoins(data.data);
+      setLoading(false);
+    };
+    fetchCoins();
+  }, [currency]);
 
   const tradeNow = (direction) => {
     quantity > 0 &&
@@ -145,7 +156,6 @@ const CryptoContext = ({ children }) => {
         showTrades,
         setShowTrades,
         handleSearch,
-        fetchCoin,
       }}
     >
       {children}

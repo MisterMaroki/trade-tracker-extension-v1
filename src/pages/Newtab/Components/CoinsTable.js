@@ -1,42 +1,14 @@
-import { LinearProgress, Pagination, Typography } from '@mui/material';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { CoinList } from '../../Content/config/api';
+import { LinearProgress, Pagination } from '@mui/material';
+import React, { useState } from 'react';
 import { CryptoState } from '../CryptoContext';
-import {
-  linearProgressSx,
-  primarytext,
-  SectionContainer,
-  tertiaryalt,
-  typographySx,
-} from '../styles/themeVariables';
+import { linearProgressSx, primarytext } from '../styles/themeVariables';
 
 import CoinItem from './CoinItem';
 
 const CoinsTable = () => {
   const [page, setPage] = useState(1);
 
-  const {
-    currency,
-    coins,
-    setCoins,
-    loading,
-    setLoading,
-    search,
-    handleSearch,
-  } = CryptoState();
-
-  const fetchCoins = async () => {
-    setLoading(true);
-
-    const data = await axios.get(CoinList(currency));
-    if (data.data !== coins) setCoins(data.data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCoins();
-  }, [currency]);
+  const { loading, handleSearch } = CryptoState();
 
   return (
     <>

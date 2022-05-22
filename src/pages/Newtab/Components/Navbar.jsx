@@ -4,13 +4,7 @@ import React, { useState } from 'react';
 import { CryptoState } from '../CryptoContext';
 import { Button, IconButton, Stack, TextField } from '@mui/material';
 import MySelect from './MySelect';
-import {
-  ColorButton,
-  primarytext,
-  tertiary,
-  tertiaryalt,
-  textFieldSx,
-} from '../styles/themeVariables';
+import { primarytext, tertiary, textFieldSx } from '../styles/themeVariables';
 import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
 import { UserState } from '../UserContext';
 import CoinItem from './CoinItem';
@@ -147,10 +141,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-// export const ColorButton = styled(Button)(({ theme }) => ({
-//   color: primarytext,
-//   backgroundColor: 'none',
-//   '&:hover': {
-//     backgroundColor: '#09111b',
-//   },
-// }));
