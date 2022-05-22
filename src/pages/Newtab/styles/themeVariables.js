@@ -22,7 +22,7 @@ export const SectionContainer = styled(Container)`
   border-radius: 0.5rem;
   border: 1px solid ${lightbg};
   padding: 0 !important;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 `;
 
 export const DashboardContainer = styled(Container)`
@@ -48,21 +48,7 @@ export const TradesContainer = styled(DashboardContainer)`
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
 `;
-export const CoinPageContainer = styled(SectionContainer)`
-  margin-top: 4rem;
-  height: 88vh;
-  /* min-height: 80vh; */
-  /* max-height: none; */
-  width: 95%;
-  max-width: 1800px !important;
-  padding: 0 !important;
-  border-radius: 0.5rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  place-content: center;
-`;
+export const CoinPageContainer = styled(DashboardContainer)``;
 export const CoinCard = styled(Container)`
   background: ${primarybg};
   border-radius: 0.5rem;

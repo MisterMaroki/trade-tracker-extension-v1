@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import { CoinCard, ColorButton } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
+import MyChip from './MyChip';
 
 export default function CoinItem({ row }) {
   // console.log('🚀 ~ file: CoinItem.js ~ line 14 ~ CoinItem ~ row', row);
@@ -22,39 +23,10 @@ export default function CoinItem({ row }) {
           </div>
         </Grid>
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              {row.symbol}
-            </span>
-            <span
-              style={{
-                fontSize:
-                  row.name.length > 10 ? (row.name.length > 13 ? 12 : 16) : 18,
-              }}
-            >
-              {row.name}
-            </span>
-          </div>
+          <MyChip label={row.symbol} value={row.name} />
         </Grid>
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              Rank
-            </span>
-            <span style={{ fontSize: 18 }}>#{row.market_cap_rank}</span>
-          </div>
+          <MyChip label={'rank'} value={row.market_cap_rank} />
         </Grid>
       </Grid>
 
@@ -66,36 +38,20 @@ export default function CoinItem({ row }) {
         key={row.market_cap_rank}
       >
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              mkt. price
-            </span>
-            <span style={{ fontSize: 18 }}>
-              {symbol} {numberWithCommas(row.current_price.toFixed(2))}
-            </span>
-          </div>
+          <MyChip
+            label={'price'}
+            value={`${symbol} ${numberWithCommas(
+              row.current_price.toFixed(2)
+            )}`}
+          />
         </Grid>
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              mkt. cap
-            </span>
-            <span style={{ fontSize: 18 }}>
-              {numberWithCommas(row.market_cap.toString().slice(0, -6))}M
-            </span>
-          </div>
+          <MyChip
+            label={'market cap'}
+            value={`${numberWithCommas(
+              row.market_cap.toString().slice(0, -6)
+            )}M`}
+          />
         </Grid>
         <Grid item>
           <div className="flex col darkbg">
@@ -119,36 +75,16 @@ export default function CoinItem({ row }) {
 
       <Grid item container direction="column" spacing={2}>
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              ath
-            </span>
-            <span style={{ fontSize: 18 }}>
-              {numberWithCommas(row.ath.toFixed(2).toString())}
-            </span>
-          </div>
+          <MyChip
+            label={'ath'}
+            value={`${numberWithCommas(row.ath.toFixed(2).toString())}`}
+          />
         </Grid>
         <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              % from ath
-            </span>
-            <span style={{ fontSize: 18 }}>
-              {row.ath_change_percentage.toFixed(2)}
-            </span>
-          </div>
+          <MyChip
+            label={'% from ath'}
+            value={`${row.ath_change_percentage.toFixed(2)}`}
+          />
         </Grid>
         <Grid item>
           <ColorButton
