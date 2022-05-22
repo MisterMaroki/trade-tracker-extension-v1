@@ -1,50 +1,53 @@
 import { LinearProgress, Pagination } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { CryptoState } from '../CryptoContext';
 import { linearProgressSx, primarytext } from '../styles/themeVariables';
+import Tilt from 'react-parallax-tilt';
+import FadeIn from 'react-fade-in';
 
 import CoinItem from './CoinItem';
 
 const CoinsTable = () => {
-  const [page, setPage] = useState(1);
-
-  const { loading, handleSearch } = CryptoState();
+  const { loading, handleSearch, page, setPage } = CryptoState();
 
   return (
     <>
-      {/* <SectionContainer>
-        <Typography variant="h6" style={typographySx}>
-          All Coins
-        </Typography>
-      </SectionContainer> */}
-      <>
-        <div className="app__flex two-column">
-          {loading ? (
-            <LinearProgress sx={linearProgressSx} />
-          ) : (
-            <>
-              {handleSearch()
-                ?.slice((page - 1) * 9, (page - 1) * 9 + 9)
-                .map((row) => {
-                  return <CoinItem row={row} />;
-                })}
-            </>
-          )}
-        </div>
-        {handleSearch() && (
-          <Pagination
-            className="flex"
-            style={{ padding: 10, color: primarytext }}
-            page={page}
-            color="secondary"
-            count={Math.floor(handleSearch()?.length / 9)}
-            onChange={(_, value) => {
-              setPage(value);
-              window.scroll(0, 220);
-            }}
-          />
+      <div className="app__flex two-column">
+        {loading ? (
+          <LinearProgress sx={linearProgressSx} />
+        ) : (
+          <>
+            {handleSearch()
+              ?.slice((page - 1) * 6, (page - 1) * 6 + 6)
+              .map((row) => {
+                return (
+                  <Tilt
+                    tiltEnable={false}
+                    glareEnable={true}
+                    glareMaxOpacity={0.03}
+                    glareColor="white"
+                    glarePosition="bottom"
+                  >
+                    <CoinItem row={row} />
+                  </Tilt>
+                );
+              })}
+          </>
         )}
-      </>
+      </div>
+      {handleSearch() && (
+        <Pagination
+          className="flex"
+          style={{ padding: 10, color: primarytext }}
+          page={page}
+          color="secondary"
+          count={Math.floor(handleSearch()?.length / 6)}
+          onChange={(_, value) => {
+            setPage(value);
+            window.scroll(0, 220);
+          }}
+        />
+      )}
     </>
   );
 };

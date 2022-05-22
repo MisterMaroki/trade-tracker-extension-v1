@@ -22,10 +22,16 @@ const TradesTable = () => {
   // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   //   const [rows, setRows] = useState([]);
-  const [filter, setFilter] = useState();
 
-  const { trades, closeTrade, rowDataEnrichment, setId, search } =
-    CryptoState();
+  const {
+    trades,
+    closeTrade,
+    rowDataEnrichment,
+    setId,
+    search,
+    filter,
+    handleFilter,
+  } = CryptoState();
 
   //   useEffect(() => {
   //     localStorage.getItem('trades')
@@ -56,11 +62,6 @@ const TradesTable = () => {
     } else return trades;
   };
 
-  const handleFilter = () => {
-    filter === 'closed' ? setFilter('') : setFilter('closed');
-    setPage(1);
-  };
-
   return (
     <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
       <div className="flex" style={{ justifyContent: 'space-between' }}>
@@ -70,7 +71,7 @@ const TradesTable = () => {
         >
           {filter === 'closed' ? 'Closed Trades' : 'Active Trades'}
         </Typography>
-        <button onClick={handleFilter}>
+        <button onClick={() => handleFilter('')}>
           Show {filter === 'closed' ? 'Active Trades' : 'Closed Trades'}
         </button>
       </div>

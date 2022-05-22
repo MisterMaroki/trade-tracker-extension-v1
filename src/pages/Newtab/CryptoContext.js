@@ -12,15 +12,24 @@ const CryptoContext = ({ children }) => {
   const [quantity, setQuantity] = useState(0);
   const [id, setId] = useState('');
   const [showTrades, setShowTrades] = useState('');
-
+  const [page, setPage] = useState(1);
   const [trades, setTrades] = useState(() =>
     localStorage.getItem('trades')?.length > 1
       ? JSON.parse(localStorage.getItem('trades'))
       : []
   );
   const [search, setSearch] = useState('');
-
   const [coin, setCoin] = useState();
+  const [filter, setFilter] = useState();
+
+  const handleFilter = (type) => {
+    !type
+      ? filter === 'closed'
+        ? setFilter('')
+        : setFilter('closed')
+      : setFilter(type);
+    setPage(1);
+  };
 
   useEffect(() => {
     if (currency === 'USD') setSymbol('$');
@@ -156,6 +165,10 @@ const CryptoContext = ({ children }) => {
         showTrades,
         setShowTrades,
         handleSearch,
+        page,
+        setPage,
+        filter,
+        handleFilter,
       }}
     >
       {children}

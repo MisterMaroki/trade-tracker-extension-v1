@@ -24,10 +24,31 @@ export const SectionContainer = styled(Container)`
   padding: 0 !important;
   margin-bottom: 2rem;
 `;
+
+export const DashboardContainer = styled(Container)`
+  margin-top: 5rem;
+  /* height: 88vh; */
+  min-height: 88vh;
+  /* max-height: none; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  margin-left: 4rem;
+  max-width: 1800px !important;
+`;
+
+export const TradesContainer = styled(DashboardContainer)`
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
 `;
-export const CoinContainer = styled(SectionContainer)`
+export const CoinPageContainer = styled(SectionContainer)`
   margin-top: 4rem;
   height: 88vh;
   /* min-height: 80vh; */
@@ -43,7 +64,6 @@ export const CoinContainer = styled(SectionContainer)`
   place-content: center;
 `;
 export const CoinCard = styled(Container)`
-  max-width: none !important;
   background: ${primarybg};
   border-radius: 0.5rem;
   padding: 1rem;
@@ -52,7 +72,7 @@ export const CoinCard = styled(Container)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 `;
-export const Sidebar = styled(Container)`
+export const Sidebar = styled(CoinPageContainer)`
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -61,11 +81,7 @@ export const Sidebar = styled(Container)`
   gap: 1rem;
   padding: 1rem;
   padding-top: 3rem;
-  border-right: 2px solid whitesmoke;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    border: none;
-  }
+  margin: 0;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({

@@ -9,7 +9,7 @@ export default function CoinItem({ row }) {
   const { symbol, setId, setSearch } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
-    <CoinCard key={row.name}>
+    <CoinCard key={row.name} className="search-dropdown-item">
       <Grid item container direction="column" spacing={2} key={row.name * 2}>
         <Grid item>
           <div className="darkbg nobg">
@@ -21,7 +21,7 @@ export default function CoinItem({ row }) {
             />
           </div>
         </Grid>
-        <Grid item style={{}}>
+        <Grid item>
           <div className="flex col darkbg">
             <span
               style={{
@@ -148,6 +148,7 @@ export default function CoinItem({ row }) {
         </Grid>
         <Grid item>
           <ColorButton
+            className="darkbg"
             onClick={() => {
               setId(row.id);
               setSearch('');

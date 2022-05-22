@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './styles/Newtab.scss';
-import Navbar, { fontbase } from './Components/Navbar';
+import Navbar from './Components/Navbar';
 import CoinPage from './Pages/CoinPage';
 import CoinDashboard from './Pages/CoinDashboard';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Container } from '@mui/material';
 import styled from '@emotion/styled';
 import TradesPage from './Pages/TradesPage';
 import { black } from './styles/themeVariables';
 import { CryptoState } from './CryptoContext';
+import AppWideSidebar from './Components/AppWideSidebar';
 
 const NewtabContainer = styled(Container)`
   width: 100%;
@@ -30,8 +31,9 @@ const Newtab = () => {
     <BrowserRouter>
       <NewtabContainer className="newTab__primarybg">
         <Navbar />
-
+        <AppWideSidebar />
         {showTrades ? <TradesPage /> : id ? <CoinPage /> : <CoinDashboard />}
+        {/* </AppWideSidebar> */}
       </NewtabContainer>
     </BrowserRouter>
   );

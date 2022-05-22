@@ -1,13 +1,7 @@
-import { styled } from '@mui/material';
 import React from 'react';
 import TradesTable from '../Components/TradesTable';
-import { DashboardContainer } from './CoinDashboard';
+import { TradesContainer } from '../styles/themeVariables';
 
-const TradesContainer = styled(DashboardContainer)`
-  width: 90%;
-  justify-content: center;
-  align-items: center;
-`;
 const TradesPage = () => {
   return (
     <TradesContainer>

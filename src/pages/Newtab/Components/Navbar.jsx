@@ -8,6 +8,8 @@ import { primarytext, tertiary, textFieldSx } from '../styles/themeVariables';
 import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
 import { UserState } from '../UserContext';
 import CoinItem from './CoinItem';
+import FadeIn from 'react-fade-in';
+import Tilt from 'react-parallax-tilt';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
@@ -20,11 +22,8 @@ const Navbar = () => {
     coins,
     handleSearch,
     id,
+    setPage,
   } = CryptoState();
-  console.log(
-    '🚀 ~ file: Navbar.jsx ~ line 24 ~ Navbar ~ handleSearchlength',
-    handleSearch()?.length
-  );
 
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
@@ -77,7 +76,10 @@ const Navbar = () => {
             label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
             sx={textFieldSx}
             size="small"
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setPage(1);
+              setSearch(e.target.value);
+            }}
             autoComplete="off"
             InputProps={{
               endAdornment: search.length > 0 && (
@@ -135,21 +137,26 @@ const Navbar = () => {
         handleSearch() &&
         coins.find((x) => x.id.includes(search) || x.symbol.includes(search)) &&
         id && (
-          <div className="search-dropdown">
+          <FadeIn className="search-dropdown" delay={100}>
             {handleSearch()
               .slice(0, 3)
-              .map((coin, index) => {
+              .map((coin, i) => {
                 return (
-                  <>
-                    <CoinItem row={handleSearch()[index]} />
-                    <div style={{ margin: '2rem' }} />
-                  </>
+                  <Tilt
+                    tiltEnable={false}
+                    glareEnable={true}
+                    glareMaxOpacity={0.05}
+                    glareColor="white"
+                    glarePosition="bottom"
+                    style={{ margin: '2rem auto', maxWidth: '500px' }}
+                  >
+                    <CoinItem row={handleSearch()[i]} />
+                  </Tilt>
                 );
               })}
-          </div>
+          </FadeIn>
         )}
       {/* {showTenziesGame && <DiceGame />} */}
-      <div style={{ height: '1rem' }} />
     </>
   );
 };
