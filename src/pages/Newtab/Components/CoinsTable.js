@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { CoinList } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
 import {
+  linearProgressSx,
   primarytext,
   SectionContainer,
   tertiaryalt,
@@ -15,8 +16,15 @@ import CoinItem from './CoinItem';
 const CoinsTable = () => {
   const [page, setPage] = useState(1);
 
-  const { currency, coins, setCoins, loading, setLoading, search } =
-    CryptoState();
+  const {
+    currency,
+    coins,
+    setCoins,
+    loading,
+    setLoading,
+    search,
+    handleSearch,
+  } = CryptoState();
 
   const fetchCoins = async () => {
     setLoading(true);
@@ -30,27 +38,17 @@ const CoinsTable = () => {
     fetchCoins();
   }, [currency]);
 
-  const handleSearch = () => {
-    if (coins?.length > 20 && !loading) {
-      return coins?.filter(
-        (coin) =>
-          coin.name.toLowerCase().includes(search) ||
-          coin.symbol.toLowerCase().includes(search)
-      );
-    }
-  };
-
   return (
     <>
-      <SectionContainer>
+      {/* <SectionContainer>
         <Typography variant="h6" style={typographySx}>
           All Coins
         </Typography>
-      </SectionContainer>
+      </SectionContainer> */}
       <>
         <div className="app__flex two-column">
           {loading ? (
-            <LinearProgress sx={{ color: tertiaryalt }} />
+            <LinearProgress sx={linearProgressSx} />
           ) : (
             <>
               {handleSearch()

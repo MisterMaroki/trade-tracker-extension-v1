@@ -28,23 +28,19 @@ export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
 `;
 export const CoinContainer = styled(SectionContainer)`
-  margin-top: 5rem;
-  /* height: 88vh; */
-  min-height: 88vh;
+  margin-top: 4rem;
+  height: 88vh;
+  /* min-height: 80vh; */
   /* max-height: none; */
   width: 95%;
   max-width: 1800px !important;
   padding: 0 !important;
-  border-radius: 10px;
+  border-radius: 0.5rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
   place-content: center;
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
 `;
 export const CoinCard = styled(Container)`
   max-width: none !important;
@@ -79,6 +75,13 @@ export const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: '#09111b',
   },
 }));
+
+export const linearProgressSx = {
+  backgroundColor: primarybg,
+  '& .MuiLinearProgress-bar': {
+    backgroundColor: tertiaryalt,
+  },
+};
 
 export const typographySx = {
   margin: 15,

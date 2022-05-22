@@ -3,6 +3,7 @@
   "name": "Trade Tracker",
   "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
   "options_page": "options.html",
+  "permissions": ["bookmarks"],
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",

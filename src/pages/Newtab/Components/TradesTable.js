@@ -229,11 +229,11 @@ const TradesTable = () => {
                           {row?.active ? 'Opened: ' : 'Closed: '}
                           {
                             <ReactTimeAgo
-                              date={
+                              date={Date.parse(
                                 row?.active
                                   ? formatDate(row?.date)
                                   : row?.closed
-                              }
+                              )}
                             />
                           }
                         </div>

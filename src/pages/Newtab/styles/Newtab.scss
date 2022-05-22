@@ -12,6 +12,9 @@ body {
 
 #app-container {
   width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,10 +66,13 @@ a {
   background: $secondary--bg;
   border-radius: 5px;
   min-width: 120px;
-  min-height: 45px;
-  max-height: 45px;
+  min-height: 50px;
+  max-height: 50px;
   width: min-content;
   padding: 5px 10px;
+}
+.nobg {
+  background: transparent;
 }
 header {
   position: fixed;
@@ -231,4 +237,45 @@ button:active {
 }
 .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root {
   color: whitesmoke !important;
+}
+
+input:-webkit-autofill#mui-1 {
+  background-color: unset !important;
+  background-image: unset !important;
+  color: unset !important;
+}
+input:autofill#mui-1 {
+  background-color: unset !important;
+  background-image: unset !important;
+  color: unset !important;
+}
+
+.search-dropdown {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #00000087;
+  animation: dropdown 0.3s ease-in-out;
+  // opacity: 0;
+  padding-top: 6rem;
+  left: auto;
+  right: auto;
+  top: 0;
+  z-index: 5;
+}
+
+@keyframes dropdown {
+  0% {
+    padding-top: -3rem;
+    visibility: hidden;
+    opacity: 0.1;
+  }
+  5% {
+    visibility: visible;
+    padding-top: 0rem;
+  }
+  99% {
+    opacity: 1;
+    padding-top: 6rem;
+  }
 }

@@ -33,6 +33,15 @@ const CryptoContext = ({ children }) => {
       : localStorage.setItem('trades', ['']);
   }, [trades]);
 
+  const fetchCoin = async () => {
+    const data = await axios.get(SingleCoin(id));
+    if (coin?.id !== data.data.id) setCoin(data.data);
+  };
+
+  useEffect(() => {
+    fetchCoin();
+  }, [id, symbol, coin, coins]);
+
   const tradeNow = (direction) => {
     quantity > 0 &&
       setTrades((prevTrades) => [
@@ -85,7 +94,15 @@ const CryptoContext = ({ children }) => {
     setTrades(enrichedRows);
   };
 
-  // );
+  const handleSearch = () => {
+    if (coins?.length > 20 && !loading) {
+      return coins?.filter(
+        (coin) =>
+          coin.name.toLowerCase().includes(search) ||
+          coin.symbol.toLowerCase().includes(search)
+      );
+    }
+  };
 
   const findProfits = async (trade, type) => {
     const { data } = await axios.get(SingleCoin(trade.coin));
@@ -127,6 +144,8 @@ const CryptoContext = ({ children }) => {
         setId,
         showTrades,
         setShowTrades,
+        handleSearch,
+        fetchCoin,
       }}
     >
       {children}

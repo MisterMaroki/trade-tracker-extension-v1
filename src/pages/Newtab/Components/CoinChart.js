@@ -25,7 +25,7 @@ const InfoContainer = styled(Container)`
     padding-top: 0;
   }
 `;
-const CoinInfo = ({ coin }) => {
+const CoinChart = ({ coin }) => {
   const [historicalData, setHistoricalData] = useState();
   const [days, setDays] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -104,4 +104,4 @@ const CoinInfo = ({ coin }) => {
   );
 };
 
-export default CoinInfo;
+export default CoinChart;

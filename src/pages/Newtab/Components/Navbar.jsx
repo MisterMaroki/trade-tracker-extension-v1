@@ -2,21 +2,36 @@ import React, { useState } from 'react';
 // import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
-import { IconButton, Stack, TextField } from '@mui/material';
+import { Button, IconButton, Stack, TextField } from '@mui/material';
 import MySelect from './MySelect';
-import { ColorButton, tertiary, textFieldSx } from '../styles/themeVariables';
+import {
+  ColorButton,
+  primarytext,
+  tertiary,
+  tertiaryalt,
+  textFieldSx,
+} from '../styles/themeVariables';
 import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
 import { UserState } from '../UserContext';
+import CoinItem from './CoinItem';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
-  const { search, setSearch, setId, showTrades, setShowTrades } = CryptoState();
+  const {
+    search,
+    setSearch,
+    setId,
+    showTrades,
+    setShowTrades,
+    coins,
+    handleSearch,
+    id,
+  } = CryptoState();
 
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
   return (
     <>
-      <div style={{ height: '1rem' }} />
       <header>
         {user ? (
           <h6
@@ -58,9 +73,9 @@ const Navbar = () => {
 
         <Stack direction="row" spacing={2}>
           <TextField
-            clearable
+            // clearable
             value={search}
-            label="Search for a coin..."
+            label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
             sx={textFieldSx}
             size="small"
             onChange={(e) => setSearch(e.target.value)}
@@ -85,23 +100,57 @@ const Navbar = () => {
           <MySelect />
         </Stack>
         <Stack direction="row" spacing={2}>
-          <ColorButton
+          <Button
+            sx={{
+              color: !showTrades && !id ? tertiary : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
             onClick={() => {
               setId('');
               setShowTrades(false);
             }}
           >
             Home
-          </ColorButton>
+          </Button>
 
-          <ColorButton onClick={() => setShowTrades(!showTrades)}>
+          <Button
+            sx={{
+              color: showTrades ? tertiary : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => setShowTrades(!showTrades)}
+          >
             Trades
-          </ColorButton>
+          </Button>
         </Stack>
       </header>
+      {search &&
+        !showTrades &&
+        handleSearch() &&
+        coins.find(
+          (x) => x.id.includes(search) || x.symbol.includes(search)
+        ) && (
+          <div className="search-dropdown">
+            <CoinItem row={handleSearch()[0]} />
+          </div>
+        )}
       {/* {showTenziesGame && <DiceGame />} */}
+      <div style={{ height: '1rem' }} />
     </>
   );
 };
 
 export default Navbar;
+// export const ColorButton = styled(Button)(({ theme }) => ({
+//   color: primarytext,
+//   backgroundColor: 'none',
+//   '&:hover': {
+//     backgroundColor: '#09111b',
+//   },
+// }));
