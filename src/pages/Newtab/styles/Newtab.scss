@@ -63,7 +63,7 @@ a {
   background: $secondary--bg;
   border-radius: 5px;
   min-width: 120px;
-  width: fit-content;
+  width: min-content;
   padding: 5px 10px;
 }
 header {
@@ -129,7 +129,10 @@ button:active {
   background-repeat: no-repeat;
   background-position: center;
   padding-block: 1rem;
+  padding-top: 1.2rem;
   position: relative;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: #10172480 0px -50px 36px -28px inset;
 }
 .carousel::before {
   content: '';
@@ -223,4 +226,7 @@ button:active {
   justify-content: 'space-between';
   align-items: 'flex-start';
   gap: 1rem;
+}
+.css-19micn4-MuiButtonBase-root-MuiPaginationItem-root {
+  color: whitesmoke !important;
 }

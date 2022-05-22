@@ -9,8 +9,8 @@ import { Box, Button } from '@mui/material';
 import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 
-export default function CoinGrid({ row }) {
-  console.log('🚀 ~ file: CoinGrid.js ~ line 14 ~ CoinGrid ~ row', row);
+export default function CoinItem({ row }) {
+  console.log('🚀 ~ file: CoinItem.js ~ line 14 ~ CoinItem ~ row', row);
   const { symbol, setId } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
@@ -34,7 +34,15 @@ export default function CoinGrid({ row }) {
             >
               {row.symbol}
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>{row.name}</span>
+            <span
+              style={{
+                color: 'darkgrey',
+                fontSize:
+                  row.name.length > 10 ? (row.name.length > 20 ? 12 : 15) : 18,
+              }}
+            >
+              {row.name}
+            </span>
           </div>
         </Grid>
         <Grid item style={{}}>

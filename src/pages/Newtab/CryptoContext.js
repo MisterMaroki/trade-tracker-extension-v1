@@ -90,7 +90,8 @@ const CryptoContext = ({ children }) => {
   const findProfits = async (trade, type) => {
     const { data } = await axios.get(SingleCoin(trade.coin));
     const differenceMultiplier =
-      (await data?.market_data.current_price.usd) / trade.price;
+      (await data?.market_data.current_price[trade.fiat.toLowerCase()]) /
+      trade.price;
 
     const currentValue = trade.invested * differenceMultiplier;
     if (type === 'current-value') {

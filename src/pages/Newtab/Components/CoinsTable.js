@@ -10,7 +10,7 @@ import {
   typographySx,
 } from '../styles/themeVariables';
 
-import CoinGrid from './CoinGrid';
+import CoinItem from './CoinItem';
 
 const CoinsTable = () => {
   const [page, setPage] = useState(1);
@@ -54,9 +54,9 @@ const CoinsTable = () => {
           ) : (
             <>
               {handleSearch()
-                ?.slice((page - 1) * 10, (page - 1) * 10 + 10)
+                ?.slice((page - 1) * 9, (page - 1) * 9 + 9)
                 .map((row) => {
-                  return <CoinGrid row={row} />;
+                  return <CoinItem row={row} />;
                 })}
             </>
           )}
@@ -65,7 +65,9 @@ const CoinsTable = () => {
           <Pagination
             className="flex"
             style={{ padding: 10, color: primarytext }}
-            count={handleSearch()?.length / 10}
+            page={page}
+            color="secondary"
+            count={Math.floor(handleSearch()?.length / 9)}
             onChange={(_, value) => {
               setPage(value);
               window.scroll(0, 220);

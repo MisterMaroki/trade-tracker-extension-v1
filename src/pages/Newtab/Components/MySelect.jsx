@@ -6,7 +6,7 @@ import { CryptoState } from '../CryptoContext';
 
 export const colourOptions = [
   { value: 'USD', label: 'USD', color: '#00B8D9' },
-  { value: 'GBP', label: 'GBP', color: '#5243AA' },
+  { value: 'GBP', label: 'GBP', color: '#9c27b0' },
 ];
 
 const dot = (color = 'transparent') => ({

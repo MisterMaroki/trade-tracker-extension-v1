@@ -21,8 +21,11 @@ export const SectionContainer = styled(Container)`
   background: ${primarybg};
   border-radius: 0.5rem;
   border: 1px solid ${lightbg};
-  padding: 1rem 0rem 2rem 0rem;
+  padding: 0 !important;
   margin-bottom: 2rem;
+`;
+export const CarouselContainer = styled(SectionContainer)`
+  padding: 1rem 0 0 0 !important;
 `;
 export const CoinContainer = styled(SectionContainer)`
   margin-top: 5rem;
