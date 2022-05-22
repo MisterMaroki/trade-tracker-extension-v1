@@ -26,7 +26,7 @@ export const SectionContainer = styled(Container)`
 `;
 
 export const DashboardContainer = styled(Container)`
-  margin-top: 5rem;
+  margin-top: 6rem;
   /* height: 88vh; */
   min-height: 88vh;
   /* max-height: none; */

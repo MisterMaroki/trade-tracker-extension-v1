@@ -27,15 +27,15 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               {row.symbol}
             </span>
             <span
               style={{
-                color: 'darkgrey',
                 fontSize:
-                  row.name.length > 10 ? (row.name.length > 13 ? 10 : 15) : 18,
+                  row.name.length > 10 ? (row.name.length > 13 ? 12 : 16) : 18,
               }}
             >
               {row.name}
@@ -48,13 +48,12 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               Rank
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>
-              #{row.market_cap_rank}
-            </span>
+            <span style={{ fontSize: 18 }}>#{row.market_cap_rank}</span>
           </div>
         </Grid>
       </Grid>
@@ -72,11 +71,12 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               mkt. price
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>
+            <span style={{ fontSize: 18 }}>
               {symbol} {numberWithCommas(row.current_price.toFixed(2))}
             </span>
           </div>
@@ -87,11 +87,12 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               mkt. cap
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>
+            <span style={{ fontSize: 18 }}>
               {numberWithCommas(row.market_cap.toString().slice(0, -6))}M
             </span>
           </div>
@@ -102,6 +103,7 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               24H change
@@ -122,11 +124,12 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               ath
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>
+            <span style={{ fontSize: 18 }}>
               {numberWithCommas(row.ath.toFixed(2).toString())}
             </span>
           </div>
@@ -137,11 +140,12 @@ export default function CoinItem({ row }) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
+                color: 'darkgrey',
               }}
             >
               % from ath
             </span>
-            <span style={{ color: 'darkgrey', fontSize: 18 }}>
+            <span style={{ fontSize: 18 }}>
               {row.ath_change_percentage.toFixed(2)}
             </span>
           </div>

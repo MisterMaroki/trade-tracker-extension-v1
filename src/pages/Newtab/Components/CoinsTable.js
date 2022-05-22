@@ -12,7 +12,7 @@ const CoinsTable = () => {
 
   return (
     <>
-      <div className="app__flex two-column">
+      <div className="app__flex two-column ">
         {loading ? (
           <LinearProgress sx={linearProgressSx} />
         ) : (
@@ -24,7 +24,7 @@ const CoinsTable = () => {
                   <Tilt
                     tiltEnable={false}
                     glareEnable={true}
-                    glareMaxOpacity={0.03}
+                    glareMaxOpacity={0.05}
                     glareColor="white"
                     glarePosition="bottom"
                   >
@@ -38,7 +38,12 @@ const CoinsTable = () => {
       {handleSearch() && (
         <Pagination
           className="flex"
-          style={{ padding: 10, color: primarytext }}
+          style={{
+            padding: 10,
+            color: primarytext,
+            position: 'fixed',
+            bottom: 20,
+          }}
           page={page}
           color="secondary"
           count={Math.floor(handleSearch()?.length / 6)}
