@@ -21,6 +21,10 @@ const Navbar = () => {
     handleSearch,
     id,
   } = CryptoState();
+  console.log(
+    '🚀 ~ file: Navbar.jsx ~ line 24 ~ Navbar ~ handleSearchlength',
+    handleSearch()?.length
+  );
 
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
@@ -73,6 +77,7 @@ const Navbar = () => {
             sx={textFieldSx}
             size="small"
             onChange={(e) => setSearch(e.target.value)}
+            autoComplete="off"
             InputProps={{
               endAdornment: search.length > 0 && (
                 <IconButton
@@ -127,9 +132,8 @@ const Navbar = () => {
       {search &&
         !showTrades &&
         handleSearch() &&
-        coins.find(
-          (x) => x.id.includes(search) || x.symbol.includes(search)
-        ) && (
+        coins.find((x) => x.id.includes(search) || x.symbol.includes(search)) &&
+        id && (
           <div className="search-dropdown">
             <CoinItem row={handleSearch()[0]} />
           </div>
