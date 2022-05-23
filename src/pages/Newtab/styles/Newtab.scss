@@ -49,11 +49,7 @@ a {
 
   button {
     padding: 5px 10px;
-    margin-inline: 1rem;
-  }
-  button.selected {
-    background-color: $tertiary !important;
-    color: $primary--bg;
+    // margin-inline: 1rem;
   }
 }
 .col {

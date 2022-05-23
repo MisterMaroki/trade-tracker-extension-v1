@@ -14,6 +14,7 @@ export const {
   lightgray,
   gray,
   lightbg,
+  pink,
 } = variables;
 export const NewtabContainer = styled(Container)`
   width: 100%;
@@ -64,7 +65,7 @@ export const CarouselContainer = styled(SectionContainer)`
 `;
 export const CoinPageContainer = styled(DashboardContainer)`
   margin-inline: 0;
-  margin-top: 4rem;
+  margin-top: 3.5rem;
   padding: 0 !important;
 `;
 export const TradesPageContainer = styled(DashboardContainer)``;
@@ -102,6 +103,7 @@ export const ChartContainer = styled(CoinPageCoinCard)`
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  padding-bottom: 3rem;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({

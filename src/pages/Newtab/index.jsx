@@ -8,12 +8,15 @@ import Newtab from './Newtab';
 import './index.css';
 import CryptoContext from './CryptoContext';
 import UserContext from './UserContext';
+import ChartContext from './ChartContext';
 TimeAgo.addDefaultLocale(en);
 
 render(
   <CryptoContext>
     <UserContext>
-      <Newtab />
+      <ChartContext>
+        <Newtab />
+      </ChartContext>
     </UserContext>
   </CryptoContext>,
   window.document.querySelector('#app-container')

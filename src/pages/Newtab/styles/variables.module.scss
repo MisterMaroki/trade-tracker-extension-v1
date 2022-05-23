@@ -10,6 +10,7 @@ $white: #f5f5f5 !important;
 $black: #030303 !important;
 $lightGray: #e4e4e4 !important;
 $gray: #6b7688 !important;
+$pink: rgb(255, 99, 132) !important;
 
 :export {
   fontbase: $fontBase;
@@ -17,11 +18,12 @@ $gray: #6b7688 !important;
   primarytext: $primary--text;
   secondarybg: $secondary--bg;
   lightbg: $light--bg;
-  secondarytext: whitesmoke;
-  tertiary: #11ece5;
-  tertiaryalt: #b8f7f3;
-  white: #f5f5f5;
-  black: #030303;
-  lightgray: #e4e4e4;
-  gray: #6b7688;
+  secondarytext: $secondary--text;
+  tertiary: $tertiary;
+  tertiaryalt: $tertiary2;
+  white: $white;
+  black: $black;
+  lightgray: $lightgray;
+  gray: $gray;
+  pink: $pink;
 }

@@ -9,26 +9,20 @@ import { CryptoState } from '../CryptoContext';
 import 'chart.js/auto';
 import { Bar, Chart, Line } from 'react-chartjs-2';
 import { chartDays } from '../../Content/config/data';
-import { ChartContainer } from '../styles/themeVariables';
+import { ChartContainer, pink } from '../styles/themeVariables';
+import { ChartState } from '../ChartContext';
 
-const CoinChart = ({ coin }) => {
-  const [historicalData, setHistoricalData] = useState();
-  const [days, setDays] = useState(1);
-  const [loading, setLoading] = useState(false);
-
-  const { currency, trades, setTrades } = CryptoState();
-
-  const fetchHistoricalData = async () => {
-    setLoading(true);
-    const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
-
-    setHistoricalData(data.prices);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchHistoricalData();
-  }, [currency, days, coin]);
+const CoinChart = () => {
+  const { currency, trades, setTrades, coin } = CryptoState();
+  const {
+    days,
+    setDays,
+    historicalData,
+    setHistoricalData,
+    fetchHistoricalData,
+    loading,
+    setLoading,
+  } = ChartState();
 
   return (
     <ChartContainer>
@@ -38,8 +32,6 @@ const CoinChart = ({ coin }) => {
         <>
           {/* <CurrentTradesList /> */}
           <Line
-            width={100}
-            height={50}
             data={{
               labels: historicalData.map((coin) => {
                 let date = new Date(coin[0]);
@@ -56,11 +48,12 @@ const CoinChart = ({ coin }) => {
                 {
                   data: historicalData.map((coin) => coin[1]),
                   label: `Price (Past ${days} days) in ${currency}`,
-                  borderColor: '#05595b',
+                  borderColor: pink,
                 },
               ],
             }}
             options={{
+              height: '100%',
               maintainAspectRatio: false,
               elements: {
                 point: {
@@ -69,24 +62,6 @@ const CoinChart = ({ coin }) => {
               },
             }}
           />
-          <div
-            className="flex"
-            style={{
-              marginTop: 20,
-              justifyContent: 'space-around',
-              width: '100%',
-            }}
-          >
-            {chartDays.map((day) => (
-              <button
-                key={day.label}
-                onClick={() => setDays(day.value)}
-                className={days === day.value ? 'selected' : ''}
-              >
-                {day.label}
-              </button>
-            ))}
-          </div>
         </>
       )}
     </ChartContainer>
