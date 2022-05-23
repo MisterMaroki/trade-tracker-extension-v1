@@ -42,7 +42,7 @@ const CoinDetails = () => {
       <Typography>
         {parse(`${coin?.description.en.split('. ')[0]}`)}.
       </Typography>
-      <div className="market-data">
+      {/* <div className="market-data">
         <span
           style={{
             display: 'flex',
@@ -91,50 +91,7 @@ const CoinDetails = () => {
             M
           </Typography>
         </span>
-      </div>
-      <div className="flex">
-        <SnackbarButton
-          direction="buy"
-          func={tradeNow}
-          quantity={quantity}
-          ticker={coin?.symbol}
-        />
-
-        <TextField
-          value={quantity}
-          type="number"
-          label={'Set quantity'}
-          sx={textFieldSx}
-          size="small"
-          onChange={(e) => setQuantity(e.target.value)}
-          autoComplete="off"
-          InputProps={{
-            endAdornment: quantity > 0 && (
-              <IconButton
-                variant="outlined"
-                onClick={() => setQuantity(0)}
-                sx={{
-                  padding: 0,
-                  position: 'absolute',
-                  right: 10,
-                  top: 8,
-                }}
-              >
-                <CancelOutlined sx={{ color: tertiary, fontSize: 16 }} />
-              </IconButton>
-            ),
-          }}
-        />
-        <SnackbarButton
-          direction="sell"
-          func={tradeNow}
-          quantity={quantity}
-          ticker={coin?.symbol}
-        />
-      </div>
-      <div className="flex">
-        <button onClick={() => setShowTrades(true)}>View Trades</button>
-      </div>
+      </div> */}
     </ChartContainer>
   );
 };

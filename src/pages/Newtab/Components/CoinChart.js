@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { CircularProgress, Container } from '@mui/material';
 import axios from 'axios';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { HistoricalChart } from '../../Content/config/api';
 import { CryptoState } from '../CryptoContext';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto';
+import 'chart.js/auto';
+import { Bar, Chart, Line } from 'react-chartjs-2';
 import { chartDays } from '../../Content/config/data';
 import { ChartContainer } from '../styles/themeVariables';
 
@@ -38,6 +38,8 @@ const CoinChart = ({ coin }) => {
         <>
           {/* <CurrentTradesList /> */}
           <Line
+            width={100}
+            height={50}
             data={{
               labels: historicalData.map((coin) => {
                 let date = new Date(coin[0]);
@@ -59,6 +61,7 @@ const CoinChart = ({ coin }) => {
               ],
             }}
             options={{
+              maintainAspectRatio: false,
               elements: {
                 point: {
                   radius: 1,

@@ -7,11 +7,13 @@ import {
   CoinPageContainer,
   tertiaryalt,
   GridItem,
+  ChartContainer,
 } from '../styles/themeVariables';
 import CoinDetails from '../Components/CoinDetails';
 import styled from '@mui/material/styles';
 import CoinItem from '../Components/CoinItem';
 import CoinPageCoinItem from '../Components/CoinPageCoinItem';
+import TradeTools from '../Components/TradeTools';
 
 const CoinPage = () => {
   const { coin, coins } = CryptoState();
@@ -25,29 +27,28 @@ const CoinPage = () => {
         <Box sx={{ width: 1 }}>
           <Box
             display="grid"
-            gridTemplateColumns="repeat(12, 1fr)"
-            gridTemplateRows="repeat(12,1fr)"
+            gridTemplateColumns="repeat(16, 1fr)"
+            gridTemplateRows="repeat(16,1fr)"
             height={'90vh'}
-            gap={2}
-            rowGap={2}
+            gap={4}
+            rowGap={4}
           >
-            <Box gridColumn="span 8" gridRow="span 7">
-              <GridItem>
-                <CoinChart coin={coin} />
-              </GridItem>
+            <Box gridColumn="1/11 " gridRow="2/ 12">
+              <CoinChart coin={coin} />
             </Box>
-            <Box gridColumn="span 4" gridRow="span 7">
-              <GridItem>xs=4</GridItem>
+            <Box gridColumn="11/-1" gridRow="2/12">
+              <GridItem></GridItem>
             </Box>
-            <Box gridColumn="span 8" gridRow="span 5">
+            <Box gridColumn="span 8" gridRow="12/-1 ">
               {coin && coins && (
                 <CoinPageCoinItem
                   row={coins.find((item) => item.id === coin.id)}
                 />
               )}
             </Box>
-            <Box gridColumn="span 4" gridRow="span 5">
-              <GridItem>xs=4</GridItem>
+            <Box gridColumn="span 8" gridRow="12/-1">
+              <TradeTools />
+              {/* <CoinDetails />{' '} */}
             </Box>
           </Box>
         </Box>

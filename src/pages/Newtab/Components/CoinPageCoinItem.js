@@ -10,10 +10,6 @@ import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
 
 export default function CoinPageCoinItem({ row }) {
-  console.log(
-    '🚀 ~ file: CoinPageCoinItem.js ~ line 14 ~ CoinPageCoinItem ~ row',
-    row
-  );
   const { symbol, setId, setSearch } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (

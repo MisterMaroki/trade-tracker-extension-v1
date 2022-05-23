@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Container } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import variables from './variables.module.scss';
 export const {
   fontbase,
@@ -64,10 +64,11 @@ export const CarouselContainer = styled(SectionContainer)`
 `;
 export const CoinPageContainer = styled(DashboardContainer)`
   margin-inline: 0;
+  margin-top: 4rem;
   padding: 0 !important;
 `;
 export const TradesPageContainer = styled(DashboardContainer)``;
-export const CoinCard = styled(Container)`
+export const CoinCard = styled(Box)`
   background: ${primarybg};
   border-radius: 0.5rem;
   padding: 1rem;
@@ -82,7 +83,7 @@ export const CoinPageCoinCard = styled(CoinCard)`
   margin: 0;
   max-width: none !important;
 `;
-export const Sidebar = styled(CoinCard)`
+export const Sidebar = styled(CoinPageCoinCard)`
   width: 30%;
   height: 80%;
   display: flex;
@@ -95,8 +96,12 @@ export const Sidebar = styled(CoinCard)`
   margin: 2rem;
 `;
 
-export const ChartContainer = styled(Sidebar)`
+export const ChartContainer = styled(CoinPageCoinCard)`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({
