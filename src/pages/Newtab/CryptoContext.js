@@ -34,6 +34,7 @@ const CryptoContext = ({ children }) => {
   useEffect(() => {
     if (currency === 'USD') setSymbol('$');
     else if (currency === 'GBP') setSymbol('£');
+    else if (currency === 'EUR') setSymbol('€');
   }, [currency]);
 
   useEffect(() => {

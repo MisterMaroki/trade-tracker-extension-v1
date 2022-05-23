@@ -39,7 +39,9 @@ const Navbar = () => {
               setShowTrades(false);
             }}
           >
-            <span>{user}'s Dashboard</span>
+            <span>
+              {user.charAt(0).toUpperCase() + user.slice(1)}'s Dashboard
+            </span>
           </h6>
         ) : (
           <TextField
