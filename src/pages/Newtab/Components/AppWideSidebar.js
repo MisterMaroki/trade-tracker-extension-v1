@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -132,7 +132,9 @@ export default function AppWideSidebar({ children }) {
         return;
     }
   };
-
+  useEffect(() => {
+    showTrades ? handleDrawerOpen() : handleDrawerClose();
+  }, [showTrades]);
   return (
     <>
       <Drawer variant="permanent" open={open}>
@@ -192,7 +194,7 @@ export default function AppWideSidebar({ children }) {
                 }}
                 onClick={() => {
                   setId('');
-                  handleDrawerClose();
+                  index === 0 && handleDrawerClose();
                   switch (index) {
                     case 0:
                       setShowTrades(false);
