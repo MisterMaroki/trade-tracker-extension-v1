@@ -1,16 +1,23 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import { CoinCard, ColorButton } from '../styles/themeVariables';
+import {
+  CoinCard,
+  CoinPageCoinCard,
+  ColorButton,
+} from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
 
-export default function CoinItem({ row }) {
-  console.log('🚀 ~ file: CoinItem.js ~ line 14 ~ CoinItem ~ row', row);
+export default function CoinPageCoinItem({ row }) {
+  console.log(
+    '🚀 ~ file: CoinPageCoinItem.js ~ line 14 ~ CoinPageCoinItem ~ row',
+    row
+  );
   const { symbol, setId, setSearch } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
-    <CoinCard key={row.name} className="search-dropdown-item">
+    <CoinPageCoinCard key={row.name}>
       <Grid item container direction="column" spacing={2} key={row.name * 2}>
         <Grid item>
           <div className="darkbg nobg">
@@ -98,6 +105,6 @@ export default function CoinItem({ row }) {
           </ColorButton>
         </Grid>
       </Grid>
-    </CoinCard>
+    </CoinPageCoinCard>
   );
 }

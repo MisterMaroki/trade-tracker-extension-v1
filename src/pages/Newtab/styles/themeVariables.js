@@ -15,6 +15,18 @@ export const {
   gray,
   lightbg,
 } = variables;
+export const NewtabContainer = styled(Container)`
+  width: 100%;
+  max-width: 1800px !important;
+
+  height: 100vh;
+  margin: 0;
+  padding: 0 !important;
+  background-color: ${black};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const SectionContainer = styled(Container)`
   max-width: none !important;
@@ -23,6 +35,10 @@ export const SectionContainer = styled(Container)`
   border: 1px solid ${lightbg};
   padding: 0 !important;
   margin-bottom: 2.5rem;
+`;
+
+export const GridItem = styled(SectionContainer)`
+  height: 100%;
 `;
 
 export const DashboardContainer = styled(Container)`
@@ -46,7 +62,10 @@ export const TradesContainer = styled(DashboardContainer)`
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
 `;
-export const CoinPageContainer = styled(DashboardContainer)``;
+export const CoinPageContainer = styled(DashboardContainer)`
+  margin-inline: 0;
+  padding: 0 !important;
+`;
 export const TradesPageContainer = styled(DashboardContainer)``;
 export const CoinCard = styled(Container)`
   background: ${primarybg};
@@ -56,6 +75,12 @@ export const CoinCard = styled(Container)`
   max-width: 600px !important;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+`;
+export const CoinPageCoinCard = styled(CoinCard)`
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  max-width: none !important;
 `;
 export const Sidebar = styled(CoinCard)`
   width: 30%;
@@ -72,19 +97,6 @@ export const Sidebar = styled(CoinCard)`
 
 export const ChartContainer = styled(Sidebar)`
   width: 100%;
-`;
-
-export const NewtabContainer = styled(Container)`
-  width: 100%;
-  max-width: 1800px !important;
-
-  height: 100vh;
-  margin: 0;
-  padding: 0 !important;
-  background-color: ${black};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({
