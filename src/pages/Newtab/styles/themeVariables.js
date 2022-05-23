@@ -57,8 +57,9 @@ export const CoinCard = styled(Container)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 `;
-export const Sidebar = styled(CoinPageContainer)`
+export const Sidebar = styled(CoinCard)`
   width: 30%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,7 +67,24 @@ export const Sidebar = styled(CoinPageContainer)`
   gap: 1rem;
   padding: 1rem;
   padding-top: 3rem;
+  margin: 2rem;
+`;
+
+export const ChartContainer = styled(Sidebar)`
+  width: 100%;
+`;
+
+export const NewtabContainer = styled(Container)`
+  width: 100%;
+  max-width: 1800px !important;
+
+  height: 100vh;
   margin: 0;
+  padding: 0 !important;
+  background-color: ${black};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({

@@ -9,19 +9,16 @@ const CoinPage = () => {
   const { coin } = CryptoState();
 
   return (
-    <Stack direction="row" spacing={2} sx>
+    <div class="container">
       {!coin ? (
         <CircularProgress sx={{ color: tertiaryalt }} />
       ) : (
         <>
+          <CoinChart coin={coin} />
           <CoinDetails />
-
-          <CoinCard>
-            <CoinChart coin={coin} />
-          </CoinCard>
         </>
       )}
-    </Stack>
+    </div>
   );
 };
 

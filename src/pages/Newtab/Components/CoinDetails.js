@@ -1,9 +1,15 @@
-import { Input, Typography } from '@mui/material';
+import { CancelOutlined } from '@mui/icons-material';
+import { IconButton, Input, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { CryptoState } from '../CryptoContext';
-import { Sidebar } from '../styles/themeVariables';
+import {
+  ChartContainer,
+  Sidebar,
+  tertiary,
+  textFieldSx,
+} from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
-import CustomizedSnackbars from './SuccessSnackbar';
+import SnackbarButton from './SnackBarButton';
 const parse = require('html-react-parser');
 
 const CoinDetails = () => {
@@ -14,10 +20,11 @@ const CoinDetails = () => {
     tradeNow,
     quantity,
     setQuantity,
+    showTrades,
     setShowTrades,
   } = CryptoState();
   return (
-    <Sidebar>
+    <ChartContainer>
       <img
         src={coin?.image?.large}
         alt={coin?.name}
@@ -86,17 +93,39 @@ const CoinDetails = () => {
         </span>
       </div>
       <div className="flex">
-        <CustomizedSnackbars
+        <SnackbarButton
           direction="buy"
           func={tradeNow}
           quantity={quantity}
           ticker={coin?.symbol}
         />
-        <Input
+
+        <TextField
+          value={quantity}
           type="number"
+          label={'Set quantity'}
+          sx={textFieldSx}
+          size="small"
           onChange={(e) => setQuantity(e.target.value)}
-        ></Input>
-        <CustomizedSnackbars
+          autoComplete="off"
+          InputProps={{
+            endAdornment: quantity > 0 && (
+              <IconButton
+                variant="outlined"
+                onClick={() => setQuantity(0)}
+                sx={{
+                  padding: 0,
+                  position: 'absolute',
+                  right: 10,
+                  top: 8,
+                }}
+              >
+                <CancelOutlined sx={{ color: tertiary, fontSize: 16 }} />
+              </IconButton>
+            ),
+          }}
+        />
+        <SnackbarButton
           direction="sell"
           func={tradeNow}
           quantity={quantity}
@@ -106,7 +135,7 @@ const CoinDetails = () => {
       <div className="flex">
         <button onClick={() => setShowTrades(true)}>View Trades</button>
       </div>
-    </Sidebar>
+    </ChartContainer>
   );
 };
 

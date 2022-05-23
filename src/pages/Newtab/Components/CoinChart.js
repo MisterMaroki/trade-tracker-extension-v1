@@ -9,22 +9,8 @@ import { CryptoState } from '../CryptoContext';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { chartDays } from '../../Content/config/data';
+import { ChartContainer } from '../styles/themeVariables';
 
-const InfoContainer = styled(Container)`
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  padding: 40px;
-  @media screen and (max-width: 768px) {
-    width: 100%;
-    margin-top: 0;
-    padding: 20px;
-    padding-top: 0;
-  }
-`;
 const CoinChart = ({ coin }) => {
   const [historicalData, setHistoricalData] = useState();
   const [days, setDays] = useState(1);
@@ -45,7 +31,7 @@ const CoinChart = ({ coin }) => {
   }, [currency, days, coin]);
 
   return (
-    <InfoContainer>
+    <ChartContainer>
       {!historicalData ? (
         <CircularProgress sx={{ color: '#05595b' }} />
       ) : (
@@ -100,7 +86,7 @@ const CoinChart = ({ coin }) => {
           </div>
         </>
       )}
-    </InfoContainer>
+    </ChartContainer>
   );
 };
 

@@ -77,7 +77,7 @@ const Carousel = () => {
     1100: {
       items: 6,
     },
-    1300: { items: 8 },
+    1400: { items: 8 },
   };
 
   return loading ? (
@@ -94,8 +94,8 @@ const Carousel = () => {
       <AliceCarousel
         mouseTracking
         infinite
-        autoPlayInterval={1000}
-        animationDuration={1500}
+        autoPlayInterval={4000}
+        animationDuration={2500}
         responsive={responsive}
         disableButtonsControls
         disableDotsControls
