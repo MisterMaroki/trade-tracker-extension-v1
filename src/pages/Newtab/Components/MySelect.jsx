@@ -98,7 +98,7 @@ const MySelect = () => {
       styles={colourStyles}
       value={selectedOption}
       onChange={setSelectedOption}
-      isDisabled={showTrades}
+      // isDisabled={showTrades}
     />
   );
 };

@@ -35,20 +35,19 @@ export const DashboardContainer = styled(Container)`
   justify-content: flex-start;
   align-items: center;
   width: 95%;
-  margin-left: 4rem;
+  margin-left: 2.5rem;
   max-width: 1800px !important;
 `;
 
 export const TradesContainer = styled(DashboardContainer)`
-  width: 90%;
-  justify-content: center;
-  align-items: center;
+  margin: 0;
 `;
 
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
 `;
 export const CoinPageContainer = styled(DashboardContainer)``;
+export const TradesPageContainer = styled(DashboardContainer)``;
 export const CoinCard = styled(Container)`
   background: ${primarybg};
   border-radius: 0.5rem;

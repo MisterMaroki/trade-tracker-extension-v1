@@ -29,12 +29,13 @@ const Newtab = () => {
   const { id, showTrades } = CryptoState();
   return (
     <BrowserRouter>
-      <NewtabContainer className="newTab__primarybg">
-        <Navbar />
-        <AppWideSidebar />
-        {showTrades ? <TradesPage /> : id ? <CoinPage /> : <CoinDashboard />}
-        {/* </AppWideSidebar> */}
-      </NewtabContainer>
+      <Navbar />
+      <AppWideSidebar>
+        <NewtabContainer className="newTab__primarybg">
+          {showTrades ? <TradesPage /> : id ? <CoinPage /> : <CoinDashboard />}
+          {/* </AppWideSidebar> */}
+        </NewtabContainer>
+      </AppWideSidebar>
     </BrowserRouter>
   );
 };

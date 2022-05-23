@@ -267,4 +267,18 @@ input:autofill#mui-1 {
 .css-10hburv-MuiTypography-root {
   font-family: $fontBase;
   font-weight: 700 !important;
+  font-size: 0.8125rem !important;
+}
+
+button.MuiPaginationItem-root,
+button.MuiPaginationItem-sizeMedium,
+button.MuiPaginationItem-text,
+button.MuiPaginationItem-circular,
+button.MuiPaginationItem-previousNext,
+button.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
+  font-family: $fontBase;
+  color: $primary--text;
+}
+button.MuiButtonBase-root {
+  font-weight: 600;
 }

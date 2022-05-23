@@ -16,6 +16,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
 import { CryptoState } from '../CryptoContext';
+import { primarytext, TradesPageContainer } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 
 const TradesTable = () => {
@@ -62,8 +63,14 @@ const TradesTable = () => {
     } else return trades;
   };
 
+  const tradesArray = handleSearch()
+    ?.filter((item) => (filter === 'closed' ? !item.active : item.active))
+    ?.sort((a, b) => {
+      return filter === 'closed' ? a.closed - b.closed : b.date - a.date;
+    })
+    ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
   return (
-    <Container style={{ paddingTop: 25, maxWidth: 'none' }}>
+    <TradesPageContainer style={{ paddingTop: 25, maxWidth: 'none' }}>
       <div className="flex" style={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
@@ -111,145 +118,132 @@ const TradesTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {handleSearch()
-                ?.filter((item) =>
-                  filter === 'closed' ? !item.active : item.active
-                )
-                ?.sort((a, b) => {
-                  return filter === 'closed'
-                    ? a.closed - b.closed
-                    : b.date - a.date;
-                })
-                ?.slice((page - 1) * 8, (page - 1) * 8 + 8)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      className="table-row"
-                      key={row?.id}
-                      onClick={(e) => {
-                        var element = e.target.textContent;
-                        if (element === 'close') {
-                          closeTrade(row);
-                        } else {
-                          setId(row?.coin);
-                        }
+              {tradesArray.map((row) => {
+                return (
+                  <TableRow
+                    className="table-row"
+                    key={row?.id}
+                    onClick={(e) => {
+                      var element = e.target.textContent;
+                      if (element === 'close') {
+                        closeTrade(row);
+                      } else {
+                        setId(row?.coin);
+                      }
+                    }}
+                  >
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{
+                        display: 'flex',
+                        gap: 15,
+                        justifyContent: 'flex-start',
+                        width: 50,
                       }}
                     >
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        style={{
-                          display: 'flex',
-                          gap: 15,
-                          justifyContent: 'flex-start',
-                          width: 50,
-                        }}
-                      >
-                        <div className="flex col">
-                          <span
-                            style={{
-                              fontSize: 20,
-                              textTransform: 'uppercase',
-                            }}
-                          >
-                            {row?.ticker}
-                          </span>
-                          <span style={{ color: 'darkgrey' }}>{row?.coin}</span>
-                        </div>
-                        <div className="flex">
-                          {row?.direction === 'buy' ? (
-                            <Chip
-                              label="buy"
-                              color="success"
-                              size="small"
-                              icon={<ArrowCircleUp />}
-                            />
-                          ) : (
-                            <Chip
-                              label="sell"
-                              color="warning"
-                              icon={<ArrowCircleDown />}
-                              size="small"
-                            />
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
-                      >
-                        {numberWithCommas(renderPnl(row))}
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        style={{
-                          color: renderPnl(row) >= 0 ? 'green' : 'red',
-                        }}
-                      >
-                        <div
+                      <div className="flex col">
+                        <span
                           style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
+                            fontSize: 20,
+                            textTransform: 'uppercase',
                           }}
                         >
-                          {filter !== 'closed' && (
-                            <Chip
-                              label="close"
-                              color="primary"
-                              icon={<DeleteOutlined />}
-                              size="small"
-                              onClick={() => closeTrade(row)}
-                            />
-                          )}
-                          {`${(
-                            (row.change > 0
-                              ? row.change - 1
-                              : 1 - row?.change) * 100
-                          ).toFixed(2)}%`}
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        {formatDate(row?.date)}
-                        <div>
-                          {row?.active ? 'Opened: ' : 'Closed: '}
-                          {
-                            <ReactTimeAgo
-                              date={Date.parse(
-                                row?.active
-                                  ? formatDate(row?.date)
-                                  : row?.closed
-                              )}
-                            />
-                          }
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        {parseFloat(row?.price)?.toFixed(2)}
-                      </TableCell>
-                      <TableCell align="right">{row?.quantity}</TableCell>
-                      <TableCell align="right">
-                        {numberWithCommas(
-                          (row?.quantity * row?.price).toFixed(2)
+                          {row?.ticker}
+                        </span>
+                        <span style={{ color: 'darkgrey' }}>{row?.coin}</span>
+                      </div>
+                      <div className="flex">
+                        {row?.direction === 'buy' ? (
+                          <Chip
+                            label="buy"
+                            color="success"
+                            size="small"
+                            icon={<ArrowCircleUp />}
+                          />
+                        ) : (
+                          <Chip
+                            label="sell"
+                            color="warning"
+                            icon={<ArrowCircleDown />}
+                            size="small"
+                          />
                         )}
-                      </TableCell>
-                      {row?.value && (
-                        <TableCell align="right">
-                          {row.direction === 'buy'
-                            ? numberWithCommas(row.value.toFixed(2))
-                            : numberWithCommas(
-                                (
-                                  row.invested +
-                                  (row.invested - row.value)
-                                ).toFixed(2)
-                              )}
-                        </TableCell>
+                      </div>
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
+                    >
+                      {numberWithCommas(renderPnl(row))}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      style={{
+                        color: renderPnl(row) >= 0 ? 'green' : 'red',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        {filter !== 'closed' && (
+                          <Chip
+                            label="close"
+                            color="primary"
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            onClick={() => closeTrade(row)}
+                          />
+                        )}
+                        {`${(
+                          (row.change > 0 ? row.change - 1 : 1 - row?.change) *
+                          100
+                        ).toFixed(2)}%`}
+                      </div>
+                    </TableCell>
+                    <TableCell align="right">
+                      {formatDate(row?.date)}
+                      <div>
+                        {row?.active ? 'Opened: ' : 'Closed: '}
+                        {
+                          <ReactTimeAgo
+                            date={Date.parse(
+                              row?.active ? formatDate(row?.date) : row?.closed
+                            )}
+                          />
+                        }
+                      </div>
+                    </TableCell>
+                    <TableCell align="right">
+                      {parseFloat(row?.price)?.toFixed(2)}
+                    </TableCell>
+                    <TableCell align="right">{row?.quantity}</TableCell>
+                    <TableCell align="right">
+                      {numberWithCommas(
+                        (row?.quantity * row?.price).toFixed(2)
                       )}
+                    </TableCell>
+                    {row?.value && (
                       <TableCell align="right">
-                        {row?.fiat?.toUpperCase()}
+                        {row.direction === 'buy'
+                          ? numberWithCommas(row.value.toFixed(2))
+                          : numberWithCommas(
+                              (
+                                row.invested +
+                                (row.invested - row.value)
+                              ).toFixed(2)
+                            )}
                       </TableCell>
-                    </TableRow>
-                  );
-                })}
+                    )}
+                    <TableCell align="right">
+                      {row?.fiat?.toUpperCase()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         }
@@ -257,7 +251,11 @@ const TradesTable = () => {
       {handleSearch() && (
         <Pagination
           className="flex"
-          style={{ padding: 10 }}
+          style={{
+            padding: 10,
+            color: primarytext,
+          }}
+          color="secondary"
           count={Math.ceil(
             handleSearch()?.filter((item) =>
               filter === 'closed' ? !item.active : item.active
@@ -269,7 +267,7 @@ const TradesTable = () => {
           }}
         />
       )}
-    </Container>
+    </TradesPageContainer>
   );
 };
 

@@ -94,7 +94,7 @@ export default function CoinItem({ row }) {
               setSearch('');
             }}
           >
-            Trade Now
+            Chart
           </ColorButton>
         </Grid>
       </Grid>

@@ -20,7 +20,14 @@ import {
 } from '../styles/themeVariables';
 import { CryptoState } from '../CryptoContext';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import { DataThresholding, Home, PriceChange } from '@mui/icons-material';
+import {
+  DataThresholding,
+  Home,
+  KeyboardDoubleArrowLeft,
+  KeyboardDoubleArrowLeftOutlined,
+  KeyboardDoubleArrowRight,
+  PriceChange,
+} from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -35,6 +42,7 @@ const openedMixin = (theme) => ({
   border: `1px solid ${lightbg}`,
   color: tertiaryalt,
   fontWeight: '500',
+  textTransform: 'uppercase',
 });
 
 const closedMixin = (theme) => ({
@@ -80,7 +88,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function AppWideSidebar() {
+export default function AppWideSidebar({ children }) {
   const {
     search,
     setSearch,
@@ -126,45 +134,15 @@ export default function AppWideSidebar() {
   };
 
   return (
-    <Drawer variant="permanent" open={open}>
-      <DrawerHeader style={{ marginTop: '5rem' }}>
-        <ListItem
-          disablePadding
-          sx={{
-            display: 'block',
-            backgroundColor: primarybg,
-            color: tertiaryalt,
-            '&:hover': {
-              backgroundColor: secondarybg,
-              color: tertiaryalt,
-            },
-          }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            onClick={open ? handleDrawerClose : handleDrawerOpen}
-          >
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </ListItemButton>
-        </ListItem>
-      </DrawerHeader>
-      <Divider />
-      <List>
-        {['Home', 'Active Trades', 'Trade History'].map((text, index) => (
+    <>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader style={{ marginTop: '5rem' }}>
           <ListItem
-            key={text}
             disablePadding
             sx={{
               display: 'block',
-              backgroundColor: decideBackground(index),
-              color:
-                decideBackground(index) === tertiaryalt
-                  ? primarybg
-                  : tertiaryalt,
+              backgroundColor: primarybg,
+              color: tertiaryalt,
               '&:hover': {
                 backgroundColor: secondarybg,
                 color: tertiaryalt,
@@ -177,81 +155,120 @@ export default function AppWideSidebar() {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              onClick={() => {
-                setId('');
-                handleDrawerClose();
-                switch (index) {
-                  case 0:
-                    setShowTrades(false);
-                    break;
-                  case 1:
-                  case 2:
-                    setShowTrades(true);
-                    handleFilter(index === 1 ? 'all' : 'closed');
-                    break;
-                  default:
-                    return;
-                }
-              }}
+              onClick={open ? handleDrawerClose : handleDrawerOpen}
             >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: 'unset',
-                }}
-              >
-                {index === 0 ? (
-                  <Home />
-                ) : index === 1 ? (
-                  <PriceCheckIcon />
-                ) : (
-                  <PriceChange />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              {open ? (
+                <KeyboardDoubleArrowLeft />
+              ) : (
+                <KeyboardDoubleArrowRight />
+              )}
             </ListItemButton>
           </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Account Overview', 'Support'].map((text, index) => (
-          <ListItem
-            key={text}
-            disablePadding
-            sx={{
-              display: 'block',
-              '&:hover': {
-                backgroundColor: secondarybg,
-              },
-            }}
-          >
-            <ListItemButton
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {['Home', 'Active Trades', 'Trade History'].map((text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
+                display: 'block',
+                backgroundColor: decideBackground(index),
+                color:
+                  decideBackground(index) === tertiaryalt
+                    ? primarybg
+                    : tertiaryalt,
+                '&:hover': {
+                  backgroundColor: secondarybg,
+                  color: tertiaryalt,
+                },
               }}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: 'unset',
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+                onClick={() => {
+                  setId('');
+                  handleDrawerClose();
+                  switch (index) {
+                    case 0:
+                      setShowTrades(false);
+                      break;
+                    case 1:
+                    case 2:
+                      setShowTrades(true);
+                      handleFilter(index === 1 ? 'all' : 'closed');
+                      break;
+                    default:
+                      return;
+                  }
                 }}
               >
-                {index === 0 ? <DataThresholding /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
-
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    color: 'unset',
+                  }}
+                >
+                  {index === 0 ? (
+                    <Home />
+                  ) : index === 1 ? (
+                    <PriceCheckIcon />
+                  ) : (
+                    <PriceChange />
+                  )}
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  sx={{ opacity: open ? 1 : 0, fontSize: '14px !important' }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['Account Overview', 'Support'].map((text, index) => (
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{
+                display: 'block',
+                '&:hover': {
+                  backgroundColor: secondarybg,
+                },
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    color: 'unset',
+                  }}
+                >
+                  {index === 0 ? <DataThresholding /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      {children}
+    </>
     // </Box>
   );
 }
