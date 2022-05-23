@@ -84,9 +84,17 @@ const colourStyles = {
 };
 
 const MySelect = () => {
-  const [selectedOption, setSelectedOption] = useState(colourOptions[0]);
+  const [selectedOption, setSelectedOption] = useState(
+    () => JSON.parse(localStorage.getItem('option')) || colourOptions[0]
+  );
 
-  const { setCurrency } = CryptoState();
+  const { currency, setCurrency } = CryptoState();
+
+  useEffect(() => {
+    localStorage?.getItem('option') === JSON.stringify(selectedOption)
+      ? setSelectedOption(() => JSON.parse(localStorage.getItem('option')))
+      : localStorage.setItem('option', JSON.stringify(selectedOption));
+  }, [currency]);
 
   useEffect(() => {
     selectedOption && setCurrency(selectedOption?.value);
