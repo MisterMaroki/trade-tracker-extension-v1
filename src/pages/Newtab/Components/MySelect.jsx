@@ -3,12 +3,19 @@ import chroma from 'chroma-js';
 
 import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
-import { blue, purple, yellow } from '../styles/themeVariables';
+import {
+  blue,
+  primarybg,
+  purple,
+  secondarybg,
+  tertiary,
+  yellow,
+} from '../styles/themeVariables';
 
 export const colourOptions = [
   { value: 'USD', label: 'USD', color: blue },
   { value: 'GBP', label: 'GBP', color: purple },
-  { value: 'EUR', label: 'EUR', color: yellow },
+  { value: 'EUR', label: 'EUR', color: tertiary },
 ];
 
 const dot = (color = 'transparent') => ({
@@ -74,6 +81,10 @@ const colourStyles = {
     border: 'none',
     outline: 'none',
     ...dot(),
+  }),
+  menu: (styles) => ({
+    ...styles,
+    background: secondarybg,
   }),
   placeholder: (styles) => ({ ...styles, color: 'whitesmoke', ...dot('#ccc') }),
   singleValue: (styles, { data }) => ({
