@@ -1,10 +1,6 @@
 import {
   Box,
-  Button,
-  ButtonGroup,
   CircularProgress,
-  Paper,
-  Stack,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
@@ -12,35 +8,26 @@ import React from 'react';
 import CoinChart from '../Components/CoinChart';
 import { CryptoState } from '../CryptoContext';
 import {
-  CoinCard,
   CoinPageContainer,
   tertiaryalt,
   GridItem,
-  ChartContainer,
-  tertiary,
   primarytext,
-  ColorButton,
-  pink,
   purple,
   primarybg,
 } from '../styles/themeVariables';
-import CoinDetails from '../Components/CoinDetails';
-import styled from '@mui/material/styles';
-import CoinItem from '../Components/CoinItem';
 import CoinPageCoinItem from '../Components/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
-import { ChartComponent, initialData } from '../Components/ChartComponent';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
 
 const CoinPage = () => {
-  const { coin, coins } = CryptoState();
+  const { coin, coins, currentColor } = CryptoState();
   const { days, setDays, historicalData } = ChartState();
 
   return (
     <CoinPageContainer>
       {!coin ? (
-        <CircularProgress sx={{ color: tertiaryalt }} />
+        <CircularProgress sx={{ color: currentColor }} />
       ) : (
         <>
           <Box
@@ -71,9 +58,9 @@ const CoinPage = () => {
                 {chartDays.map((day) => (
                   <ToggleButton
                     value={day.value}
-                    exclusive
+                    exclusive={true}
                     style={{
-                      color: day.value === days ? purple : primarytext,
+                      color: day.value === days ? currentColor : primarytext,
                       backgroundColor: primarybg,
                       '&:hover': {
                         backgroundColor: '#09111b',

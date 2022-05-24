@@ -253,7 +253,7 @@ button:active {
   gap: 1rem;
 }
 .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root {
-  color: whitesmoke !important;
+  // color: whitesmoke !important;
 }
 
 input:-webkit-autofill#mui-1 {
@@ -293,7 +293,6 @@ button.MuiPaginationItem-circular,
 button.MuiPaginationItem-previousNext,
 button.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
   font-family: $fontBase;
-  color: $primary--text;
 }
 button.MuiButtonBase-root {
   font-weight: 600;

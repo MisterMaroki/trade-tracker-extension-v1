@@ -13,7 +13,7 @@ import { ChartContainer, primarytext, purple } from '../styles/themeVariables';
 import { ChartState } from '../ChartContext';
 
 const CoinChart = () => {
-  const { currency, trades, setTrades, coin } = CryptoState();
+  const { currency, trades, setTrades, coin, currentColor } = CryptoState();
   const {
     days,
     setDays,
@@ -48,8 +48,7 @@ const CoinChart = () => {
                 {
                   data: historicalData.map((coin) => coin[1]),
                   label: ``,
-                  borderColor: purple,
-                  color: primarytext,
+                  borderColor: currentColor,
                 },
               ],
             }}

@@ -1,6 +1,6 @@
 import { CancelOutlined } from '@mui/icons-material';
-import { IconButton, TextField } from '@mui/material';
-import React from 'react';
+import { Grid, IconButton, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { CryptoState } from '../CryptoContext';
 import {
   CoinPageCoinCard,
@@ -18,53 +18,66 @@ const TradeTools = () => {
     quantity,
     setQuantity,
     showTrades,
+    currentColor,
     setShowTrades,
   } = CryptoState();
+  const [tempQuantity, setTempQuantity] = useState(0);
+  const func = (direction) => {
+    tradeNow(direction);
+  };
+
   return (
     <CoinPageCoinCard>
-      <div className="flex">
-        <SnackbarButton
-          direction="buy"
-          func={tradeNow}
-          quantity={quantity}
-          ticker={coin?.symbol}
-        />
+      <Grid item container direction="column" spacing={2} key={quantity * 123}>
+        <Grid item>
+          <TextField
+            value={tempQuantity}
+            label={'Set quantity'}
+            type="number"
+            sx={textFieldSx}
+            className="carousel"
+            size="small"
+            onChange={(e) => setTempQuantity(() => e.target.value)}
+            autoComplete="off"
+            InputProps={{
+              endAdornment: tempQuantity > 0 && (
+                <IconButton
+                  variant="outlined"
+                  onClick={() => setTempQuantity(0)}
+                  sx={{
+                    padding: 0,
+                    position: 'absolute',
+                    right: 40,
+                    top: 8,
+                  }}
+                >
+                  <CancelOutlined sx={{ color: currentColor, fontSize: 16 }} />
+                </IconButton>
+              ),
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <SnackbarButton
+            direction="buy"
+            func={() => func('buy')}
+            quantity={tempQuantity}
+            ticker={coin?.symbol}
+          />
+        </Grid>
+        <Grid item>
+          <SnackbarButton
+            direction="sell"
+            func={() => func('sell')}
+            quantity={tempQuantity}
+            ticker={coin?.symbol}
+          />
+        </Grid>
+      </Grid>
 
-        <TextField
-          value={quantity}
-          type="number"
-          label={'Set quantity'}
-          sx={textFieldSx}
-          size="small"
-          onChange={(e) => setQuantity(e.target.value)}
-          autoComplete="off"
-          InputProps={{
-            endAdornment: quantity > 0 && (
-              <IconButton
-                variant="outlined"
-                onClick={() => setQuantity(0)}
-                sx={{
-                  padding: 0,
-                  position: 'absolute',
-                  right: 10,
-                  top: 8,
-                }}
-              >
-                <CancelOutlined sx={{ color: tertiary, fontSize: 16 }} />
-              </IconButton>
-            ),
-          }}
-        />
-        <SnackbarButton
-          direction="sell"
-          func={tradeNow}
-          quantity={quantity}
-          ticker={coin?.symbol}
-        />
-      </div>
-      <div className="flex">
+      <Grid item>
         <button onClick={() => setShowTrades(true)}>View Trades</button>
-      </div>
+      </Grid>
     </CoinPageCoinCard>
   );
 };

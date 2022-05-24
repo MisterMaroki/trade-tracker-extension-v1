@@ -35,13 +35,6 @@ const TradesTable = () => {
     handleFilter,
   } = CryptoState();
 
-  //   useEffect(() => {
-  //     localStorage.getItem('trades')
-  //       ? !deepEqual(trades, JSON.parse(localStorage.getItem('trades'))) &&
-  //         localStorage.setItem('trades', JSON.stringify(trades))
-  //       : localStorage.setItem('trades', []);
-  //   }, [trades]);
-
   useEffect(() => {
     rowDataEnrichment();
   }, [filter]);

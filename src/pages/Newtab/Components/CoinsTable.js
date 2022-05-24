@@ -1,14 +1,20 @@
 import { LinearProgress, Pagination } from '@mui/material';
 import React from 'react';
 import { CryptoState } from '../CryptoContext';
-import { linearProgressSx, primarytext } from '../styles/themeVariables';
+import {
+  black,
+  linearProgressSx,
+  primarytext,
+  white,
+} from '../styles/themeVariables';
 import Tilt from 'react-parallax-tilt';
 import FadeIn from 'react-fade-in';
 
 import CoinItem from './CoinItem';
+import chroma from 'chroma-js';
 
 const CoinsTable = () => {
-  const { loading, handleSearch, page, setPage } = CryptoState();
+  const { loading, handleSearch, page, setPage, currentColor } = CryptoState();
 
   return (
     <>
@@ -41,9 +47,16 @@ const CoinsTable = () => {
           className="flex"
           style={{
             padding: 10,
-            color: primarytext,
             position: 'fixed',
             bottom: 20,
+            color: 'white',
+          }}
+          sx={{
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
+              { backgroundColor: currentColor, color: `${black} !important` },
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root': {
+              color: white,
+            },
           }}
           page={page}
           color="secondary"

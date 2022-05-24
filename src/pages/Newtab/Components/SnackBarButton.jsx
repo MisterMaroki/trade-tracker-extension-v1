@@ -4,36 +4,47 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { CryptoState } from '../CryptoContext';
+import { ColorButton } from '../styles/themeVariables';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function SnackbarButton({ direction, func, quantity, ticker }) {
   const [open, setOpen] = React.useState(false);
-  const { setShowTrades, setId } = CryptoState();
+  const { setShowTrades, setId, setQuantity } = CryptoState();
+  const [tapped, setTapped] = React.useState(false);
 
   const handleClick = () => {
-    func(direction);
-    setOpen(true);
+    setTapped(true);
+
+    console.log('first');
+    if (tapped) {
+      func(direction);
+      setOpen(true);
+      setTapped(false);
+    }
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  React.useEffect(() => {
+    setTapped(false);
+  }, [quantity, direction]);
 
+  const handleClose = (event, reason) => {
     setOpen(false);
   };
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <button
+      <ColorButton
         className={`direction-tag }`}
         style={{ backgroundColor: direction === 'buy' ? 'green' : 'red' }}
-        onClick={handleClick}
+        onClick={() => {
+          setTapped(!tapped);
+          handleClick();
+        }}
       >
-        {direction === 'buy' ? 'Buy' : 'Sell'}
-      </button>
+        {tapped ? 'Are you sure?' : direction === 'buy' ? 'Buy' : 'Sell'}
+      </ColorButton>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}

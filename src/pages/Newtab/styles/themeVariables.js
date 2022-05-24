@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Box, Button, Container } from '@mui/material';
+import { CryptoState } from '../CryptoContext';
 import variables from './variables.module.scss';
 export const {
   fontbase,
@@ -133,40 +134,43 @@ export const typographySx = {
   fontFamily: 'Ubuntu',
 };
 
-export const textFieldSx = {
-  marginBottom: 0,
-  width: '100%',
-  maxWidth: '300px',
-  padding: 0,
+export const textFieldSx = () => {
+  const { currentColor } = CryptoState();
+  return {
+    marginBottom: 0,
+    width: '100%',
+    maxWidth: '300px',
+    padding: 0,
 
-  input: {
-    background: secondarybg,
-    borderRadius: 1,
-    color: tertiaryalt,
-  },
-  '& .MuiOutlinedInput-root.Mui-focused': {
-    '& > fieldset': {
-      borderColor: tertiaryalt,
+    input: {
+      background: secondarybg,
+      borderRadius: 1,
+      color: currentColor,
     },
-  },
-  '& label.Mui-focused': {
-    color: tertiary,
-  },
-  '& label': {
-    color: primarytext,
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: tertiary,
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'trnsparent',
+    '& .MuiOutlinedInput-root.Mui-focused': {
+      '& > fieldset': {
+        borderColor: currentColor,
+      },
     },
-    '&:hover fieldset': {
-      borderColor: tertiaryalt,
+    '& label.Mui-focused': {
+      color: currentColor,
     },
-    '&.Mui-focused fieldset': {
-      borderColor: tertiary,
+    '& label': {
+      color: primarytext,
     },
-  },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: currentColor,
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'trnsparent',
+      },
+      '&:hover fieldset': {
+        borderColor: currentColor,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: currentColor,
+      },
+    },
+  };
 };

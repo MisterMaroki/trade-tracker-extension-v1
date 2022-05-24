@@ -2,14 +2,16 @@ import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CoinList, SingleCoin } from '../Content/config/api';
+import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
 
 const Crypto = createContext();
+
 const CryptoContext = ({ children }) => {
   const [currency, setCurrency] = useState('USD');
   const [symbol, setSymbol] = useState('$');
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState('');
   const [id, setId] = useState('');
   const [showTrades, setShowTrades] = useState('');
   const [page, setPage] = useState(1);
@@ -21,7 +23,7 @@ const CryptoContext = ({ children }) => {
   const [search, setSearch] = useState('');
   const [coin, setCoin] = useState();
   const [filter, setFilter] = useState();
-
+  const [currentColor, setCurrentColor] = useState(gray);
   const handleFilter = (type) => {
     !type
       ? filter === 'closed'
@@ -32,9 +34,16 @@ const CryptoContext = ({ children }) => {
   };
 
   useEffect(() => {
-    if (currency === 'USD') setSymbol('$');
-    else if (currency === 'GBP') setSymbol('£');
-    else if (currency === 'EUR') setSymbol('€');
+    if (currency === 'USD') {
+      setSymbol('$');
+      setCurrentColor(blue);
+    } else if (currency === 'GBP') {
+      setSymbol('£');
+      setCurrentColor(purple);
+    } else if (currency === 'EUR') {
+      setSymbol('€');
+      setCurrentColor(yellow);
+    }
   }, [currency]);
 
   useEffect(() => {
@@ -64,7 +73,7 @@ const CryptoContext = ({ children }) => {
   }, [currency]);
 
   const tradeNow = (direction) => {
-    quantity > 0 &&
+    +quantity > 0 &&
       setTrades((prevTrades) => [
         {
           id: nanoid(),
@@ -73,7 +82,7 @@ const CryptoContext = ({ children }) => {
           fiat: currency.toLowerCase(),
           price: coin.market_data.current_price[currency.toLowerCase()],
           date: new Date(),
-          quantity: quantity,
+          quantity: +quantity,
           direction: direction === 'buy' ? 'buy' : 'sell',
           active: true,
           invested:
@@ -82,6 +91,7 @@ const CryptoContext = ({ children }) => {
         ...prevTrades,
       ]);
   };
+  console.log(trades);
 
   const closeTrade = async (row) => {
     if (row.active) {
@@ -95,21 +105,23 @@ const CryptoContext = ({ children }) => {
     }
   };
 
-  // setRows(() =>
-  const rowDataEnrichment = async () => {
+  const rowDataEnrichment = async (trade) => {
     let enrichedRows = await Promise.all(
-      trades.map(async (trade) => {
-        const currentMarketValue = await findProfits(trade, 'current-value');
-        const percentChange = await findProfits(trade, 'percent-change');
+      trades.map(async (item, trade) => {
+        if (trade.id === item.id) {
+          const currentMarketValue = await findProfits(trade, 'current-value');
+          const percentChange = await findProfits(trade, 'percent-change');
 
-        return trade.active
-          ? {
-              ...trade,
-              value: currentMarketValue,
-              change: percentChange,
-              exit: currentMarketValue / trade.quantity,
-            }
-          : trade;
+          return trade.active
+            ? {
+                ...trade,
+
+                value: currentMarketValue,
+                change: percentChange,
+                exit: currentMarketValue / trade.quantity,
+              }
+            : trade;
+        }
       })
     );
     setTrades(enrichedRows);
@@ -170,6 +182,7 @@ const CryptoContext = ({ children }) => {
         setPage,
         filter,
         handleFilter,
+        currentColor,
       }}
     >
       {children}

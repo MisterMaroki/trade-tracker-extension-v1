@@ -22,6 +22,7 @@ const Navbar = () => {
     coins,
     handleSearch,
     id,
+    currentColor,
     setPage,
   } = CryptoState();
 
@@ -33,7 +34,7 @@ const Navbar = () => {
       <header>
         {user ? (
           <h6
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: currentColor }}
             onClick={() => {
               setId('');
               setShowTrades(false);
@@ -63,7 +64,7 @@ const Navbar = () => {
                   }}
                 >
                   <ThumbUpOffAltOutlined
-                    sx={{ color: tertiary, fontSize: 20 }}
+                    sx={{ color: currentColor, fontSize: 20 }}
                   />
                 </IconButton>
               ),
@@ -80,7 +81,7 @@ const Navbar = () => {
             size="small"
             onChange={(e) => {
               setPage(1);
-              setSearch(e.target.value);
+              setSearch(e.target.value.toLowerCase());
             }}
             autoComplete="off"
             InputProps={{
@@ -95,7 +96,7 @@ const Navbar = () => {
                     top: 8,
                   }}
                 >
-                  <CancelOutlined sx={{ color: tertiary }} />
+                  <CancelOutlined sx={{ color: currentColor }} />
                 </IconButton>
               ),
             }}
@@ -106,7 +107,7 @@ const Navbar = () => {
         <Stack direction="row" spacing={2}>
           <Button
             sx={{
-              color: !showTrades && !id ? tertiary : primarytext,
+              color: !showTrades && !id ? currentColor : primarytext,
               backgroundColor: 'none',
               '&:hover': {
                 backgroundColor: '#09111b',
@@ -122,7 +123,7 @@ const Navbar = () => {
 
           <Button
             sx={{
-              color: showTrades ? tertiary : primarytext,
+              color: showTrades ? currentColor : primarytext,
               backgroundColor: 'none',
               '&:hover': {
                 backgroundColor: '#09111b',

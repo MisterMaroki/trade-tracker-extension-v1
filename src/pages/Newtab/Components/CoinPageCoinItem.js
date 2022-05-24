@@ -10,10 +10,6 @@ import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
 
 const getTimeSince = (date) => {
-  console.log(
-    '🚀 ~ file: CoinPageCoinItem.js ~ line 13 ~ getTimeSince ~ date',
-    date
-  );
   let date_now = new Date();
   let date_ath = Date.parse(date);
 
@@ -30,13 +26,11 @@ const getTimeSince = (date) => {
   minutes = minutes - days * 24 * 60 - hours * 60;
   seconds = seconds - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60;
 
-  console.log(months + ' months, ' + weeks + ' weeks.');
   return months + ' months, ' + weeks + ' weeks.';
 };
 
 export default function CoinPageCoinItem({ row }) {
   const { symbol, setId, setSearch, coin, currency } = CryptoState();
-  console.log(coin);
   const profit = row.price_change_percentage_24h >= 0;
   const profit7 =
     coin.market_data.price_change_percentage_7d_in_currency[

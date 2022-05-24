@@ -15,7 +15,7 @@ import {
 export const colourOptions = [
   { value: 'USD', label: 'USD', color: blue },
   { value: 'GBP', label: 'GBP', color: purple },
-  { value: 'EUR', label: 'EUR', color: tertiary },
+  { value: 'EUR', label: 'EUR', color: yellow },
 ];
 
 const dot = (color = 'transparent') => ({
@@ -59,7 +59,7 @@ const colourStyles = {
         ? '#ccc'
         : isSelected
         ? chroma.contrast(color, '#091019') > 2
-          ? 'white'
+          ? secondarybg
           : 'whitesmoke'
         : data.color,
       cursor: isDisabled ? 'not-allowed' : 'default',
