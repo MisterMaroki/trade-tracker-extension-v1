@@ -9,7 +9,7 @@ import { CryptoState } from '../CryptoContext';
 import 'chart.js/auto';
 import { Bar, Chart, Line } from 'react-chartjs-2';
 import { chartDays } from '../../Content/config/data';
-import { ChartContainer, pink } from '../styles/themeVariables';
+import { ChartContainer, primarytext, purple } from '../styles/themeVariables';
 import { ChartState } from '../ChartContext';
 
 const CoinChart = () => {
@@ -40,15 +40,16 @@ const CoinChart = () => {
                   date.getHours() > 12
                     ? `${date.getHours() - 12}:${date.getMinutes()} PM`
                     : `${date.getHours()}:${date.getMinutes()} AM`;
-
+                return ' ';
                 return days === 1 ? time : date.toLocaleDateString();
               }),
 
               datasets: [
                 {
                   data: historicalData.map((coin) => coin[1]),
-                  label: `Price (Past ${days} days) in ${currency}`,
-                  borderColor: pink,
+                  label: ``,
+                  borderColor: purple,
+                  color: primarytext,
                 },
               ],
             }}

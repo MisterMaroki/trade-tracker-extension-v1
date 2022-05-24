@@ -28,8 +28,6 @@ export const ChartComponent = () => {
 
   // string=22/05/2022, expected format=yyyy-mm-dd
 
-  console.log('🚀 ~ file: ChartComponent.js ~ line 28 ~ data ~ data', data);
-
   // data={{
   //   labels: historicalData.map((coin) => {
   //     let date = new Date(coin[0]);

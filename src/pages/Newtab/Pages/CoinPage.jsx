@@ -20,6 +20,9 @@ import {
   tertiary,
   primarytext,
   ColorButton,
+  pink,
+  purple,
+  primarybg,
 } from '../styles/themeVariables';
 import CoinDetails from '../Components/CoinDetails';
 import styled from '@mui/material/styles';
@@ -39,7 +42,7 @@ const CoinPage = () => {
       {!coin ? (
         <CircularProgress sx={{ color: tertiaryalt }} />
       ) : (
-        <Box sx={{ width: 1 }}>
+        <>
           <Box
             display="grid"
             gridTemplateColumns="repeat(16, 1fr)"
@@ -48,24 +51,30 @@ const CoinPage = () => {
             gap={4}
             rowGap={4}
           >
-            <Box gridColumn="1/11 " gridRow="2/ 12">
-              <CoinChart />
+            <Box gridColumn="1/11 " gridRow="2/ 12" className="chart-container">
               {/* {historicalData && <ChartComponent />} */}
-            </Box>
-            <Box
+              {/* </Box> */}
+              {/* <Box
               gridColumn="1/11 "
               gridRow="11/ 12"
               className="flex"
               justifyContent={'center'}
-            >
-              <ToggleButtonGroup value={days}>
+            > */}
+              <ToggleButtonGroup
+                value={days}
+                sx={{
+                  position: 'absolute',
+                  top: '2px',
+                  transform: 'translateX(2px)',
+                }}
+              >
                 {chartDays.map((day) => (
                   <ToggleButton
                     value={day.value}
                     exclusive
                     style={{
-                      color: day.value === days ? tertiary : primarytext,
-                      backgroundColor: 'none',
+                      color: day.value === days ? purple : primarytext,
+                      backgroundColor: primarybg,
                       '&:hover': {
                         backgroundColor: '#09111b',
                       },
@@ -77,9 +86,14 @@ const CoinPage = () => {
                   </ToggleButton>
                 ))}
               </ToggleButtonGroup>
+              <CoinChart />
             </Box>
             <Box gridColumn="11/-1" gridRow="2/12">
-              <GridItem></GridItem>
+              <GridItem className="carousel ">
+                Carousel banner style container, scrollable list of trades of
+                this coin. Each trade will show a snapshot of the chart at that
+                time!
+              </GridItem>
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1 ">
               {coin && coins && (
@@ -93,7 +107,7 @@ const CoinPage = () => {
               {/* <CoinDetails />{' '} */}
             </Box>
           </Box>
-        </Box>
+        </>
       )}
     </CoinPageContainer>
   );

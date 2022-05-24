@@ -3,11 +3,12 @@ import chroma from 'chroma-js';
 
 import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
+import { blue, purple, yellow } from '../styles/themeVariables';
 
 export const colourOptions = [
-  { value: 'USD', label: 'USD', color: '#00B8D9' },
-  { value: 'GBP', label: 'GBP', color: '#9c27b0' },
-  { value: 'EUR', label: 'EUR', color: '#ede331' },
+  { value: 'USD', label: 'USD', color: blue },
+  { value: 'GBP', label: 'GBP', color: purple },
+  { value: 'EUR', label: 'EUR', color: yellow },
 ];
 
 const dot = (color = 'transparent') => ({

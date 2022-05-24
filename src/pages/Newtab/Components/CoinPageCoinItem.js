@@ -9,9 +9,43 @@ import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
 
+const getTimeSince = (date) => {
+  console.log(
+    '🚀 ~ file: CoinPageCoinItem.js ~ line 13 ~ getTimeSince ~ date',
+    date
+  );
+  let date_now = new Date();
+  let date_ath = Date.parse(date);
+
+  let seconds = Math.floor((date_now - date_ath) / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  let days = Math.floor(hours / 24);
+  let weeks = Math.floor(days / 7);
+  let months = Math.floor(weeks / 4);
+
+  weeks = weeks - months * 4;
+  days = days - weeks * 7;
+  hours = hours - days * 24;
+  minutes = minutes - days * 24 * 60 - hours * 60;
+  seconds = seconds - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60;
+
+  console.log(months + ' months, ' + weeks + ' weeks.');
+  return months + ' months, ' + weeks + ' weeks.';
+};
+
 export default function CoinPageCoinItem({ row }) {
-  const { symbol, setId, setSearch } = CryptoState();
+  const { symbol, setId, setSearch, coin, currency } = CryptoState();
+  console.log(coin);
   const profit = row.price_change_percentage_24h >= 0;
+  const profit7 =
+    coin.market_data.price_change_percentage_7d_in_currency[
+      currency.toLowerCase()
+    ] >= 0;
+  const profit30 =
+    coin.market_data.price_change_percentage_30d_in_currency[
+      currency.toLowerCase()
+    ] >= 0;
   return (
     <CoinPageCoinCard key={row.name}>
       <Grid item container direction="column" spacing={2} key={row.name * 2}>
@@ -80,7 +114,9 @@ export default function CoinPageCoinItem({ row }) {
         <Grid item>
           <MyChip
             label={'ath'}
-            value={`${numberWithCommas(row.ath.toFixed(2).toString())}`}
+            value={`${symbol} ${numberWithCommas(
+              row.ath.toFixed(2).toString()
+            )}`}
           />
         </Grid>
         <Grid item>
@@ -90,15 +126,89 @@ export default function CoinPageCoinItem({ row }) {
           />
         </Grid>
         <Grid item>
-          <ColorButton
-            className="darkbg"
-            onClick={() => {
-              setId(row.id);
-              setSearch('');
-            }}
-          >
-            Chart
-          </ColorButton>
+          <MyChip
+            label={'Time Since ATH'}
+            value={getTimeSince(coin?.market_data?.ath_date.usd)}
+          />
+        </Grid>
+      </Grid>
+      <Grid item container direction="column" spacing={2}>
+        <Grid item>
+          <MyChip
+            label={'atl'}
+            value={`${symbol} ${numberWithCommas(
+              row.atl.toFixed(2).toString()
+            )}`}
+          />
+        </Grid>
+        <Grid item>
+          <MyChip
+            label={'% from atl'}
+            value={`${numberWithCommas(row.atl_change_percentage.toFixed(2))}`}
+          />
+        </Grid>
+        <Grid item>
+          <MyChip
+            label={'Time Since ATL'}
+            value={getTimeSince(coin?.market_data?.atl_date.usd)}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container direction="column" spacing={2}>
+        <Grid item>
+          <div className="flex col darkbg">
+            <span
+              style={{
+                fontSize: 12,
+                textTransform: 'uppercase',
+                color: 'darkgrey',
+              }}
+            >
+              7d change
+            </span>
+
+            <span
+              className={profit7 ? 'green' : 'red'}
+              style={{ fontSize: 18 }}
+            >
+              {profit7 && '+'}
+              {coin.market_data.price_change_percentage_7d_in_currency[
+                currency.toLowerCase()
+              ].toFixed(2)}
+              %
+            </span>
+          </div>
+        </Grid>
+        <Grid item>
+          <div className="flex col darkbg">
+            <span
+              style={{
+                fontSize: 12,
+                textTransform: 'uppercase',
+                color: 'darkgrey',
+              }}
+            >
+              30d change
+            </span>
+
+            <span
+              className={profit30 ? 'green' : 'red'}
+              style={{ fontSize: 18 }}
+            >
+              {profit30 && '+'}
+              {coin.market_data.price_change_percentage_30d_in_currency[
+                currency.toLowerCase()
+              ].toFixed(2)}
+              %
+            </span>
+          </div>
+        </Grid>
+        <Grid item>
+          <MyChip
+            label="dev score"
+            value={coin?.developer_data.developer_score || coin.coingecko_score}
+          />
         </Grid>
       </Grid>
     </CoinPageCoinCard>

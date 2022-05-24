@@ -11,6 +11,9 @@ $black: #030303 !important;
 $lightGray: #e4e4e4 !important;
 $gray: #6b7688 !important;
 $pink: rgb(255, 99, 132) !important;
+$blue: #00b8d9;
+$purple: #9c27b0;
+$yellow: #ede331;
 
 :export {
   fontbase: $fontBase;
@@ -23,7 +26,10 @@ $pink: rgb(255, 99, 132) !important;
   tertiaryalt: $tertiary2;
   white: $white;
   black: $black;
-  lightgray: $lightgray;
+  lightgray: $lightGray;
   gray: $gray;
   pink: $pink;
+  blue: $blue;
+  purple: $purple;
+  yellow: $yellow;
 }

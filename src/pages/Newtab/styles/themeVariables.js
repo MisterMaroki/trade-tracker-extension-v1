@@ -15,6 +15,9 @@ export const {
   gray,
   lightbg,
   pink,
+  blue,
+  purple,
+  yellow,
 } = variables;
 export const NewtabContainer = styled(Container)`
   width: 100%;
@@ -103,7 +106,9 @@ export const ChartContainer = styled(CoinPageCoinCard)`
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  padding-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 0;
+  background: unset;
 `;
 
 export const ColorButton = styled(Button)(({ theme }) => ({

@@ -15,7 +15,7 @@ import AppWideSidebar from './Components/AppWideSidebar';
 const Newtab = () => {
   const { id, showTrades } = CryptoState();
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <AppWideSidebar>
         <NewtabContainer>
@@ -23,7 +23,7 @@ const Newtab = () => {
           {/* </AppWideSidebar> */}
         </NewtabContainer>
       </AppWideSidebar>
-    </BrowserRouter>
+    </>
   );
 };
 

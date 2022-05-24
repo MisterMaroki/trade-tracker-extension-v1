@@ -6,10 +6,7 @@ import { CryptoState } from './CryptoContext';
 const Chart = createContext();
 const ChartContext = ({ children }) => {
   const [historicalData, setHistoricalData] = useState();
-  console.log(
-    '🚀 ~ file: CoinChart.js ~ line 16 ~ CoinChart ~ historicalData',
-    historicalData
-  );
+
   const [days, setDays] = useState(1);
   const [loading, setLoading] = useState(false);
   const { currency, coin } = CryptoState();
