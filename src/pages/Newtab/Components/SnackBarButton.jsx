@@ -19,7 +19,7 @@ export default function SnackbarButton({ direction, func, quantity, ticker }) {
 
     console.log('first');
     if (tapped) {
-      func(direction);
+      func(direction, quantity);
       setOpen(true);
       setTapped(false);
     }
@@ -60,7 +60,7 @@ export default function SnackbarButton({ direction, func, quantity, ticker }) {
           }}
         >
           {quantity > 0
-            ? `Trade Placed: ${direction.toUpperCase()} ${quantity} ${ticker.toUpperCase()}`
+            ? `Trade Placed: ${direction.toUpperCase()} ${+quantity} ${ticker.toUpperCase()}`
             : 'Error: Cannot trade sub-zero amount!'}
         </Alert>
       </Snackbar>

@@ -31,6 +31,7 @@ const TradesTable = () => {
     rowDataEnrichment,
     setId,
     search,
+    setShowTrades,
     filter,
     handleFilter,
   } = CryptoState();
@@ -124,6 +125,7 @@ const TradesTable = () => {
                           closeTrade(row);
                         } else {
                           setId(row?.coin);
+                          setShowTrades(false);
                         }
                       }}
                     >
@@ -131,39 +133,46 @@ const TradesTable = () => {
                         component="th"
                         scope="row"
                         style={{
-                          display: 'flex',
-                          gap: 15,
-                          justifyContent: 'flex-start',
-                          width: 50,
+                          background: 'whitesmoke',
                         }}
                       >
-                        <div className="flex col">
-                          <span
-                            style={{
-                              fontSize: 20,
-                              textTransform: 'uppercase',
-                            }}
-                          >
-                            {row?.ticker}
-                          </span>
-                          <span style={{ color: 'darkgrey' }}>{row?.coin}</span>
-                        </div>
-                        <div className="flex">
-                          {row?.direction === 'buy' ? (
-                            <Chip
-                              label="buy"
-                              color="success"
-                              size="small"
-                              icon={<ArrowCircleUp />}
-                            />
-                          ) : (
-                            <Chip
-                              label="sell"
-                              color="warning"
-                              icon={<ArrowCircleDown />}
-                              size="small"
-                            />
-                          )}
+                        <div
+                          className="flex"
+                          style={{
+                            justifyContent: 'flex-start',
+                            width: '100%',
+                          }}
+                        >
+                          <div className="flex col">
+                            <span
+                              style={{
+                                fontSize: 20,
+                                textTransform: 'uppercase',
+                              }}
+                            >
+                              {row?.ticker}
+                            </span>
+                            <span style={{ color: 'darkgrey' }}>
+                              {row?.coin}
+                            </span>
+                          </div>
+                          <div className="flex">
+                            {row?.direction === 'buy' ? (
+                              <Chip
+                                label="buy"
+                                color="success"
+                                size="small"
+                                icon={<ArrowCircleUp />}
+                              />
+                            ) : (
+                              <Chip
+                                label="sell"
+                                color="warning"
+                                icon={<ArrowCircleDown />}
+                                size="small"
+                              />
+                            )}
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell

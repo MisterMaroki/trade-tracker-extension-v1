@@ -72,7 +72,7 @@ const CryptoContext = ({ children }) => {
     fetchCoins();
   }, [currency]);
 
-  const tradeNow = (direction) => {
+  const tradeNow = (direction, quantity) => {
     +quantity > 0 &&
       setTrades((prevTrades) => [
         {
@@ -98,30 +98,32 @@ const CryptoContext = ({ children }) => {
       setTrades((prevTrades) =>
         prevTrades.map((trade) => {
           return trade.id === row.id
-            ? { ...trade, active: false, closed: new Date() }
+            ? {
+                ...trade,
+                active: false,
+                closed: new Date(),
+                exit: trade.value / trade.quantity,
+              }
             : trade;
         })
       );
     }
   };
 
-  const rowDataEnrichment = async (trade) => {
+  const rowDataEnrichment = async () => {
     let enrichedRows = await Promise.all(
-      trades.map(async (item, trade) => {
-        if (trade.id === item.id) {
-          const currentMarketValue = await findProfits(trade, 'current-value');
-          const percentChange = await findProfits(trade, 'percent-change');
+      trades?.map(async (trade) => {
+        const currentMarketValue = await findProfits(trade, 'current-value');
+        const percentChange = await findProfits(trade, 'percent-change');
 
-          return trade.active
-            ? {
-                ...trade,
+        return trade?.active
+          ? {
+              ...trade,
 
-                value: currentMarketValue,
-                change: percentChange,
-                exit: currentMarketValue / trade.quantity,
-              }
-            : trade;
-        }
+              value: currentMarketValue,
+              change: percentChange,
+            }
+          : trade;
       })
     );
     setTrades(enrichedRows);

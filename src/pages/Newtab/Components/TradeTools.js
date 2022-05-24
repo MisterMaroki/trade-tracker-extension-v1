@@ -22,8 +22,8 @@ const TradeTools = () => {
     setShowTrades,
   } = CryptoState();
   const [tempQuantity, setTempQuantity] = useState(0);
-  const func = (direction) => {
-    tradeNow(direction);
+  const func = (direction, quantity) => {
+    tradeNow(direction, quantity);
   };
 
   return (
@@ -60,7 +60,7 @@ const TradeTools = () => {
         <Grid item>
           <SnackbarButton
             direction="buy"
-            func={() => func('buy')}
+            func={() => func('buy', tempQuantity)}
             quantity={tempQuantity}
             ticker={coin?.symbol}
           />
@@ -68,7 +68,7 @@ const TradeTools = () => {
         <Grid item>
           <SnackbarButton
             direction="sell"
-            func={() => func('sell')}
+            func={() => func('sell', tempQuantity)}
             quantity={tempQuantity}
             ticker={coin?.symbol}
           />
