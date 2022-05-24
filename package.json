@@ -46,7 +46,8 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.3.2",
     "react-spring": "^8.x",
-    "react-time-ago": "^7.1.9"
+    "react-time-ago": "^7.1.9",
+    "recharts": "^2.1.10"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",

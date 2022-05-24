@@ -87,7 +87,6 @@ const Drawer = styled(MuiDrawer, {
     '& .MuiDrawer-paper': closedMixin(theme),
   }),
 }));
-
 export default function AppWideSidebar({ children }) {
   const {
     search,

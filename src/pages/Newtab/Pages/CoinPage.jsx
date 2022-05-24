@@ -19,6 +19,7 @@ import CoinPageCoinItem from '../Components/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
+import PerformanceChart from '../Components/PerformanceChart';
 
 const CoinPage = () => {
   const { coin, coins, currentColor } = CryptoState();
@@ -77,9 +78,10 @@ const CoinPage = () => {
             </Box>
             <Box gridColumn="11/-1" gridRow="2/12">
               <GridItem className="carousel ">
-                Carousel banner style container, scrollable list of trades of
+                {/* Carousel banner style container, scrollable list of trades of
                 this coin. Each trade will show a snapshot of the chart at that
-                time!
+                time! */}
+                <PerformanceChart />
               </GridItem>
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1 ">
