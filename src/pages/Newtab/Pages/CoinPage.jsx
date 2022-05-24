@@ -78,10 +78,10 @@ const CoinPage = () => {
             </Box>
             <Box gridColumn="11/-1" gridRow="2/12">
               <GridItem className="carousel ">
-                {/* Carousel banner style container, scrollable list of trades of
+                Carousel banner style container, scrollable list of trades of
                 this coin. Each trade will show a snapshot of the chart at that
-                time! */}
-                <PerformanceChart />
+                time!
+                {/* <PerformanceChart /> */}
               </GridItem>
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1 ">
@@ -93,7 +93,6 @@ const CoinPage = () => {
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1">
               <TradeTools />
-              {/* <CoinDetails />{' '} */}
             </Box>
           </Box>
         </>

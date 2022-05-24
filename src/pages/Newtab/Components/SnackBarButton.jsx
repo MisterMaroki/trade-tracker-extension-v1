@@ -43,7 +43,7 @@ export default function SnackbarButton({ direction, func, quantity, ticker }) {
           handleClick();
         }}
       >
-        {tapped ? 'Are you sure?' : direction === 'buy' ? 'Buy' : 'Sell'}
+        {tapped ? 'Confirm' : direction === 'buy' ? 'Buy' : 'Sell'}
       </ColorButton>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
