@@ -16,7 +16,12 @@ import {
 import React, { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
 import { CryptoState } from '../CryptoContext';
-import { primarytext, TradesPageContainer } from '../styles/themeVariables';
+import {
+  black,
+  primarytext,
+  TradesPageContainer,
+  white,
+} from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import FadeIn from 'react-fade-in';
 
@@ -34,6 +39,7 @@ const TradesTable = () => {
     setShowTrades,
     filter,
     handleFilter,
+    currentColor,
   } = CryptoState();
 
   useEffect(() => {
@@ -61,11 +67,13 @@ const TradesTable = () => {
   const tradesArray = handleSearch()
     ?.filter((item) => (filter === 'closed' ? !item.active : item.active))
     ?.sort((a, b) => {
-      return filter === 'closed' ? a.closed - b.closed : b.date - a.date;
+      return filter === 'closed'
+        ? Date.parse(b.closed) - Date.parse(a.closed)
+        : Date.parse(b.date) - Date.parse(a.date);
     })
     ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
   return (
-    <TradesPageContainer style={{ paddingTop: 25, maxWidth: 'none' }}>
+    <TradesPageContainer>
       <div className="flex" style={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
@@ -216,9 +224,7 @@ const TradesTable = () => {
                           {
                             <ReactTimeAgo
                               date={Date.parse(
-                                row?.active
-                                  ? formatDate(row?.date)
-                                  : row?.closed
+                                row?.active ? row?.date : row?.closed
                               )}
                             />
                           }
@@ -261,7 +267,16 @@ const TradesTable = () => {
           className="flex"
           style={{
             padding: 10,
-            color: primarytext,
+            position: 'fixed',
+            bottom: 20,
+            color: 'white',
+          }}
+          sx={{
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
+              { backgroundColor: currentColor, color: `${black} !important` },
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root': {
+              color: white,
+            },
           }}
           color="secondary"
           count={Math.ceil(
