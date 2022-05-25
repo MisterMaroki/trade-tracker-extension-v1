@@ -7,7 +7,6 @@ import AliceCarousel from 'react-alice-carousel';
 import { TrendingCoins } from '../../../Content/config/api';
 import { CryptoState } from '../../CryptoContext';
 import { primarytext } from '../../styles/themeVariables';
-
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -49,7 +48,7 @@ const Carousel = () => {
             <Typography sx={{ color: primarytext }}>
               {coin?.symbol.toUpperCase()}
             </Typography>
-            <Typography className={profit ? 'green' : 'red'}>
+            <Typography style={{ color: profit ? 'green' : 'red' }}>
               {profit && '+'}
               {coin?.price_change_percentage_24h?.toFixed(2)}%
             </Typography>

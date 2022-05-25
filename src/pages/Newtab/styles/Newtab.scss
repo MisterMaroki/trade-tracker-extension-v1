@@ -245,11 +245,11 @@ td.css-177gid-MuiTableCell-root {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
-.green {
+*.green {
   color: $tertiary;
 }
-.red {
-  color: red;
+*.red {
+  color: red !important;
 }
 .grid-item-container {
   width: 100%;
@@ -285,7 +285,9 @@ input:autofill#mui-1 {
   top: 0;
   z-index: 5;
 }
-.css-10hburv-MuiTypography-root {
+span.css-10hburv-MuiTypography-root,
+span.MuiListItemText-primary,
+span.css-yb0lig {
   font-family: $fontBase;
   font-weight: 700 !important;
   font-size: 0.8125rem !important;
@@ -298,6 +300,7 @@ button.MuiPaginationItem-circular,
 button.MuiPaginationItem-previousNext,
 button.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
   font-family: $fontBase;
+  color: whitesmoke;
 }
 button.MuiButtonBase-root {
   font-weight: 600;

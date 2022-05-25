@@ -78,13 +78,10 @@ const CryptoContext = ({ children }) => {
     fetchCoins();
   }, [currency]);
 
-  useEffect(() => {
-    console.log('again');
-    rowDataEnrichment();
-  }, [filter, trades.length]);
+  const [count, setCount] = useState(0);
 
   const tradeNow = (direction, quantity) => {
-    +quantity > 0 &&
+    if (+quantity > 0) {
       setTrades((prevTrades) => [
         {
           id: nanoid(),
@@ -102,6 +99,11 @@ const CryptoContext = ({ children }) => {
         },
         ...prevTrades,
       ]);
+      setCount(count + 1);
+    }
+    setTimeout(() => {
+      setFilter('open');
+    }, 1000);
   };
 
   useEffect(() => {
@@ -122,7 +124,7 @@ const CryptoContext = ({ children }) => {
                 ...trade,
                 active: false,
                 closed: new Date(),
-                exit: trade.value / trade.quantity,
+                exit: trade.current_price,
               }
             : trade;
         })
@@ -139,15 +141,37 @@ const CryptoContext = ({ children }) => {
         return trade?.active
           ? {
               ...trade,
-
-              value: currentMarketValue,
-              change: percentChange,
+              current_price: +currentMarketValue / +trade.quantity,
+              value: +currentMarketValue,
+              change: +percentChange,
             }
           : trade;
       })
     );
     setTrades(enrichedRows);
   };
+
+  useEffect(() => {
+    const rowDataEnrichment = async () => {
+      let enrichedRows = await Promise.all(
+        trades?.map(async (trade) => {
+          const currentMarketValue = await findProfits(trade, 'current-value');
+          const percentChange = await findProfits(trade, 'percent-change');
+
+          return trade?.active
+            ? {
+                ...trade,
+                current_price: +currentMarketValue / +trade.quantity,
+                value: +currentMarketValue,
+                change: +percentChange,
+              }
+            : trade;
+        })
+      );
+      count !== 0 && setTrades(enrichedRows);
+    };
+    rowDataEnrichment();
+  }, [count, filter]);
 
   const handleSearch = () => {
     if (coins?.length > 20 && !loading) {
@@ -192,7 +216,6 @@ const CryptoContext = ({ children }) => {
         setQuantity,
         tradeNow,
         closeTrade,
-        rowDataEnrichment,
         search,
         setSearch,
         id,
@@ -207,6 +230,7 @@ const CryptoContext = ({ children }) => {
         currentColor,
         whichCoinsToShow,
         setWhichCoinsToShow,
+        rowDataEnrichment,
       }}
     >
       {children}

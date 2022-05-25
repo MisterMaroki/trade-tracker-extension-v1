@@ -15,9 +15,6 @@ export default function SnackbarButton({ direction, func, quantity, ticker }) {
   const [tapped, setTapped] = React.useState(false);
 
   const handleClick = () => {
-    setTapped(true);
-
-    console.log('first');
     if (tapped) {
       func(direction, quantity);
       setOpen(true);

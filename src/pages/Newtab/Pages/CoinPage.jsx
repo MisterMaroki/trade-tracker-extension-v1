@@ -25,6 +25,7 @@ import MiniTradesTable from '../Components/MiniTradesTable';
 
 const CoinPage = () => {
   const { coin, coins, currentColor } = CryptoState();
+  console.log('🚀 ~ file: CoinPage.jsx ~ line 28 ~ CoinPage ~ coin', coin);
   const { days, setDays, historicalData } = ChartState();
 
   return (

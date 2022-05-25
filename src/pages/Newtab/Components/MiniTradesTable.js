@@ -3,8 +3,8 @@ import { CryptoState } from '../CryptoContext';
 import FadeIn from 'react-fade-in';
 import TradeItem from './TradeItem';
 import Tilt from 'react-parallax-tilt';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { primarybg, primarytext } from '../styles/themeVariables';
+import { ToggleButton, ToggleButtonGroup, Pagination } from '@mui/material';
+import { black, primarybg, primarytext, white } from '../styles/themeVariables';
 
 const MiniTradesTable = () => {
   // const [search, setSearch] = useState('');
@@ -13,28 +13,34 @@ const MiniTradesTable = () => {
 
   const {
     trades,
-    rowDataEnrichment,
+
     search,
     filter,
     handleFilter,
     setFilter,
+    rowDataEnrichment,
+    id,
     coin,
     currentColor,
     whichCoinsToShow,
     setWhichCoinsToShow,
   } = CryptoState();
-  console.log(
-    '🚀 ~ file: MiniTradesTable.js ~ line 26 ~ MiniTradesTable ~ whichCoinsToShow',
-    whichCoinsToShow
-  );
-
-  useEffect(() => {
-    rowDataEnrichment();
-  }, [filter]);
 
   useEffect(() => {
     tradesArray.length === 0 && setWhichCoinsToShow('all coins');
   }, []);
+
+  // const [counter, setCounter] = useState(0);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCounter((prevCounter) => prevCounter + 1);
+  //     id && trades.length && rowDataEnrichment();
+  //     console.log(trades);
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [trades.length, id, filter]);
+
   const handleSearch = () => {
     if (search !== '') {
       return trades.filter(
@@ -123,18 +129,37 @@ const MiniTradesTable = () => {
       <FadeIn className="trade-container">
         {tradesArray &&
           tradesArray.map((row) => {
-            return (
-              <Tilt
-                tiltEnable={false}
-                glareEnable={true}
-                glareMaxOpacity={0.05}
-                glareColor="white"
-                glarePosition="bottom"
-              >
-                <TradeItem row={row} />
-              </Tilt>
-            );
+            return <TradeItem row={row} />;
           })}
+        {/* {handleSearch() && (
+          <Pagination
+            className="flex"
+            style={{
+              padding: 10,
+              position: 'fixed',
+              bottom: 0,
+              backgroundColor: black,
+              width: '100%',
+            }}
+            sx={{
+              '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
+                { backgroundColor: currentColor, color: `${black} !important` },
+              '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root': {
+                color: white,
+              },
+            }}
+            color="secondary"
+            count={Math.ceil(
+              handleSearch()?.filter((item) =>
+                filter === 'closed' ? !item.active : item.active
+              )?.length / 8
+            )}
+            onChange={(_, value) => {
+              setPage(value);
+              window.scroll(0, 120);
+            }}
+          />
+        )} */}
       </FadeIn>
     </>
   );

@@ -9,7 +9,7 @@ export default function CoinItem({ row }) {
   const { symbol, setId, setSearch } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
-    <CoinCard key={row.name} className="search-dropdown-item">
+    <CoinCard key={row.name} className="search-dropdown-item carousel">
       <Grid item container direction="column" spacing={2} key={row.name * 2}>
         <Grid item>
           <div className="darkbg nobg">

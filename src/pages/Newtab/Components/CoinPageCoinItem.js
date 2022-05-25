@@ -30,7 +30,8 @@ export const getTimeSince = (date) => {
 };
 
 export default function CoinPageCoinItem({ row }) {
-  const { symbol, setId, setSearch, coin, currency } = CryptoState();
+  const { symbol, setId, setSearch, coin, currency, currentColor } =
+    CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   const profit7 =
     coin.market_data.price_change_percentage_7d_in_currency[
@@ -41,7 +42,7 @@ export default function CoinPageCoinItem({ row }) {
       currency.toLowerCase()
     ] >= 0;
   return (
-    <CoinPageCoinCard key={row.name}>
+    <CoinPageCoinCard key={row.name} className="carousel">
       <Grid item container direction="column" spacing={2} key={row.name * 2}>
         <Grid item>
           <div className="darkbg nobg">
@@ -199,10 +200,14 @@ export default function CoinPageCoinItem({ row }) {
           </div>
         </Grid>
         <Grid item>
-          <MyChip
-            label="dev score"
-            value={coin?.developer_data.developer_score || coin.coingecko_score}
-          />
+          <ColorButton className="darkbg">
+            <a
+              style={{ padding: '1rem', color: currentColor }}
+              href={coin?.links?.homepage[0]}
+            >
+              Website
+            </a>
+          </ColorButton>
         </Grid>
       </Grid>
     </CoinPageCoinCard>

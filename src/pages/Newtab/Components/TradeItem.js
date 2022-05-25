@@ -31,6 +31,7 @@ import CloseTradeButton from './CloseTradeButton';
 import MyChip from './MyChip';
 import { getTimeSince } from './CoinPageCoinItem';
 import { formatDate } from './TradesTable';
+import Tilt from 'react-parallax-tilt';
 
 const TradeItem = ({ row }) => {
   const {
@@ -45,6 +46,7 @@ const TradeItem = ({ row }) => {
     handleFilter,
     symbol,
     currentColor,
+    id,
   } = CryptoState();
 
   const checkPnl = (row) => {
@@ -56,154 +58,166 @@ const TradeItem = ({ row }) => {
   };
 
   return (
-    <TradeCard
-      className="trade carousel"
-      key={row?.id}
-      onClick={(e) => {
-        setId(row?.coin);
-        setShowTrades(false);
-      }}
+    <Tilt
+      tiltEnable={false}
+      glareEnable={true}
+      glareMaxOpacity={0.05}
+      glareColor="white"
+      glarePosition="bottom"
+      perspective={40000}
     >
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          {' '}
-          <div className="flex col darkbg nobg">
+      <TradeCard
+        className="trade carousel"
+        key={row?.id}
+        onClick={(e) => {
+          setId(row?.coin);
+          setShowTrades(false);
+        }}
+      >
+        <Grid item container direction="column" spacing={2}>
+          <Grid item>
             {' '}
-            <img src={row.img.small} alt="icon" />
-          </div>
+            <div className="flex col darkbg nobg">
+              {' '}
+              <img src={row.img.small} alt="icon" />
+            </div>
+          </Grid>
+          <Grid item>
+            <MyChip label={row.ticker} value={row.coin} />
+          </Grid>
         </Grid>
-        <Grid item>
-          <MyChip label={row.ticker} value={row.coin} />
-        </Grid>
-      </Grid>
 
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          <div className="flex col darkbg nobg">
-            {row?.direction === 'buy' ? (
-              <Chip
-                label="buy"
-                color="success"
-                size="small"
-                icon={<ArrowCircleUp />}
-              />
-            ) : (
-              <Chip
-                label="sell"
-                color="warning"
-                icon={<ArrowCircleDown />}
-                size="small"
-              />
-            )}
-          </div>
+        <Grid item container direction="column" spacing={2}>
+          <Grid item>
+            <div className="flex col darkbg nobg">
+              {row?.direction === 'buy' ? (
+                <Chip
+                  label="buy"
+                  color="success"
+                  size="small"
+                  icon={<ArrowCircleUp />}
+                />
+              ) : (
+                <Chip
+                  label="sell"
+                  color="warning"
+                  icon={<ArrowCircleDown />}
+                  size="small"
+                />
+              )}
+            </div>
+          </Grid>
+          <Grid item>
+            <div className="flex col darkbg nobg">
+              <CloseTradeButton trade={row} />
+            </div>
+          </Grid>
         </Grid>
-        <Grid item>
-          <div className="flex col darkbg nobg">
-            <CloseTradeButton trade={row} />
-          </div>
-        </Grid>
-      </Grid>
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          {' '}
-          <MyChip
-            label={'Investment'}
-            value={numberWithCommas((row?.quantity * row?.price).toFixed(2))}
-          />
-        </Grid>
-        {row?.value && (
+        <Grid item container direction="column" spacing={2}>
           <Grid item>
             {' '}
             <MyChip
-              label={'Current Value'}
+              label={'Investment'}
+              value={numberWithCommas((row?.quantity * row?.price).toFixed(2))}
+            />
+          </Grid>
+          {row?.value && (
+            <Grid item>
+              {' '}
+              <MyChip
+                label={row.active ? 'Current Value' : 'Closed Value'}
+                value={
+                  row.direction === 'buy'
+                    ? numberWithCommas(row.value.toFixed(2))
+                    : numberWithCommas(
+                        (row.invested + (row.invested - row.value)).toFixed(2)
+                      )
+                }
+              />
+            </Grid>
+          )}
+        </Grid>
+        <Grid item container direction="column" spacing={2}>
+          <Grid item>
+            {' '}
+            <div className="flex col darkbg">
+              <span
+                style={{
+                  fontSize: 12,
+                  textTransform: 'uppercase',
+                  color: 'darkgrey',
+                }}
+              >
+                PnL
+              </span>
+
+              <span
+                className={checkPnl(row) >= 0 ? 'green' : 'red'}
+                style={{ fontSize: 18 }}
+              >
+                {checkPnl(row) > 0 && '+'}
+                {numberWithCommas(checkPnl(row))} {row.fiat.toUpperCase()}
+              </span>
+            </div>
+          </Grid>
+          <Grid item>
+            <div className="flex col darkbg">
+              <span
+                style={{
+                  fontSize: 12,
+                  textTransform: 'uppercase',
+                  color: 'darkgrey',
+                }}
+              >
+                PnL(%)
+              </span>
+
+              <span
+                className={checkPnl(row) >= 0 ? 'green' : 'red'}
+                style={{ fontSize: 18 }}
+              >
+                {checkPnl(row) > 0 && '+'}
+                {`${(
+                  (row.change > 0 ? row.change - 1 : 1 - row?.change) * 100
+                ).toFixed(2)}%`}
+              </span>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Grid item container direction="column" spacing={2}>
+          <Grid item>
+            {' '}
+            <MyChip label={'Opened'} value={formatDate(row?.date)} />
+          </Grid>
+          <Grid item>
+            {' '}
+            <MyChip
+              label={row?.active ? 'Opened: ' : 'Closed: '}
               value={
-                row.direction === 'buy'
-                  ? numberWithCommas(row.value.toFixed(2))
-                  : numberWithCommas(
-                      (row.invested + (row.invested - row.value)).toFixed(2)
-                    )
+                <ReactTimeAgo
+                  date={Date.parse(row?.active ? row?.date : row?.closed)}
+                />
               }
             />
           </Grid>
-        )}
-      </Grid>
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          {' '}
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              PnL
-            </span>
+        </Grid>
 
-            <span
-              className={checkPnl(row) >= 0 ? currentColor : 'red'}
-              style={{ fontSize: 18 }}
-            >
-              {checkPnl(row) > 0 && '+'}
-              {numberWithCommas(checkPnl(row))} {row.fiat.toUpperCase()}
-            </span>
-          </div>
+        <Grid item container direction="column" spacing={2}>
+          <Grid item>
+            {' '}
+            <MyChip
+              label={'Entry'}
+              value={parseFloat(row?.price)?.toFixed(2)}
+            />
+          </Grid>
+          <Grid item>
+            {' '}
+            <MyChip label={'Quantity'} value={row?.quantity} />
+          </Grid>
         </Grid>
-        <Grid item>
-          <div className="flex col darkbg">
-            <span
-              style={{
-                fontSize: 12,
-                textTransform: 'uppercase',
-                color: 'darkgrey',
-              }}
-            >
-              PnL(%)
-            </span>
-
-            <span
-              className={checkPnl(row) >= 0 ? currentColor : 'red'}
-              style={{ fontSize: 18 }}
-            >
-              {checkPnl(row) > 0 && '+'}
-              {`${(
-                (row.change > 0 ? row.change - 1 : 1 - row?.change) * 100
-              ).toFixed(2)}%`}
-            </span>
-          </div>
-        </Grid>
-      </Grid>
-
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          {' '}
-          <MyChip label={'Opened'} value={formatDate(row?.date)} />
-        </Grid>
-        <Grid item>
-          {' '}
-          <MyChip
-            label={row?.active ? 'Opened: ' : 'Closed: '}
-            value={
-              <ReactTimeAgo
-                date={Date.parse(row?.active ? row?.date : row?.closed)}
-              />
-            }
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container direction="column" spacing={2}>
-        <Grid item>
-          {' '}
-          <MyChip label={'Entry'} value={parseFloat(row?.price)?.toFixed(2)} />
-        </Grid>
-        <Grid item>
-          {' '}
-          <MyChip label={'Quantity'} value={row?.quantity} />
-        </Grid>
-      </Grid>
-    </TradeCard>
+      </TradeCard>
+    </Tilt>
   );
 };
 
