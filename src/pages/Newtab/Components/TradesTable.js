@@ -4,6 +4,7 @@ import { ArrowCircleUp } from '@mui/icons-material';
 import {
   Chip,
   Container,
+  Grid,
   Pagination,
   Table,
   TableBody,
@@ -19,11 +20,18 @@ import { CryptoState } from '../CryptoContext';
 import {
   black,
   primarytext,
+  TradeCard,
+  TradesContainer,
   TradesPageContainer,
   white,
 } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import FadeIn from 'react-fade-in';
+import CloseTradeButton from './CloseTradeButton';
+import MyChip from './MyChip';
+import { getTimeSince } from './CoinPageCoinItem';
+import TradeItem from './TradeItem';
+import Tilt from 'react-parallax-tilt';
 
 const TradesTable = () => {
   // const [search, setSearch] = useState('');
@@ -38,21 +46,11 @@ const TradesTable = () => {
     search,
     setShowTrades,
     filter,
+    coins,
     handleFilter,
+    symbol,
     currentColor,
   } = CryptoState();
-
-  useEffect(() => {
-    rowDataEnrichment();
-  }, [filter]);
-
-  const renderPnl = (row) => {
-    let data =
-      row.direction === 'buy'
-        ? (row.value - row.invested).toFixed(2)
-        : (row.invested - row.value).toFixed(2);
-    return data;
-  };
 
   const handleSearch = () => {
     if (search !== '') {
@@ -72,204 +70,35 @@ const TradesTable = () => {
         : Date.parse(b.date) - Date.parse(a.date);
     })
     ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
-  return (
-    <TradesPageContainer>
-      <div className="flex" style={{ justifyContent: 'space-between' }}>
-        <Typography
-          variant="h6"
-          style={{ margin: 15, fontWeight: 'bold', fontFamily: 'Ubuntu' }}
-        >
-          {filter === 'closed' ? 'Closed Trades' : 'Active Trades'}
-        </Typography>
-        <button onClick={() => handleFilter('')}>
-          Show {filter === 'closed' ? 'Active Trades' : 'Closed Trades'}
-        </button>
-      </div>
 
-      <TableContainer>
-        <FadeIn>
-          {
-            <Table>
-              <TableHead style={{ backgroundColor: 'whitesmoke' }}>
-                <TableRow style={{ borderRadius: '10px' }}>
-                  {[
-                    'Ticker',
-                    'PnL',
-                    '% Change',
-                    'Date',
-                    'Price',
-                    'Quantity',
-                    'Invested',
-                    `${filter === 'closed' ? 'Closed' : 'Current'} Value`,
-                    'Fiat',
-                  ].map((head, index) => (
-                    <TableCell
-                      style={{
-                        fontWeight: 700,
-                        borderRadius:
-                          index === 0
-                            ? '10px 0 0 10px'
-                            : index === 8
-                            ? '0 10px 10px 0'
-                            : '0',
-                      }}
-                      key={head}
-                      align={head === 'Ticker' ? 'left' : 'right'}
-                    >
-                      {head}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {tradesArray.map((row) => {
-                  return (
-                    <TableRow
-                      className="table-row"
-                      key={row?.id}
-                      onClick={(e) => {
-                        var element = e.target.textContent;
-                        if (element === 'close') {
-                          closeTrade(row);
-                        } else {
-                          setId(row?.coin);
-                          setShowTrades(false);
-                        }
-                      }}
-                    >
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        style={{
-                          background: 'whitesmoke',
-                        }}
-                      >
-                        <div
-                          className="flex"
-                          style={{
-                            justifyContent: 'flex-start',
-                            width: '100%',
-                          }}
-                        >
-                          <div className="flex col">
-                            <span
-                              style={{
-                                fontSize: 20,
-                                textTransform: 'uppercase',
-                              }}
-                            >
-                              {row?.ticker}
-                            </span>
-                            <span style={{ color: 'darkgrey' }}>
-                              {row?.coin}
-                            </span>
-                          </div>
-                          <div className="flex">
-                            {row?.direction === 'buy' ? (
-                              <Chip
-                                label="buy"
-                                color="success"
-                                size="small"
-                                icon={<ArrowCircleUp />}
-                              />
-                            ) : (
-                              <Chip
-                                label="sell"
-                                color="warning"
-                                icon={<ArrowCircleDown />}
-                                size="small"
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        style={{ color: renderPnl(row) >= 0 ? 'green' : 'red' }}
-                      >
-                        {numberWithCommas(renderPnl(row))}
-                      </TableCell>
-                      <TableCell
-                        align="right"
-                        style={{
-                          color: renderPnl(row) >= 0 ? 'green' : 'red',
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                          }}
-                        >
-                          {filter !== 'closed' && (
-                            <Chip
-                              label="close"
-                              color="primary"
-                              icon={<DeleteOutlined />}
-                              size="small"
-                              onClick={() => closeTrade(row)}
-                            />
-                          )}
-                          {`${(
-                            (row.change > 0
-                              ? row.change - 1
-                              : 1 - row?.change) * 100
-                          ).toFixed(2)}%`}
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        {formatDate(row?.date)}
-                        <div>
-                          {row?.active ? 'Opened: ' : 'Closed: '}
-                          {
-                            <ReactTimeAgo
-                              date={Date.parse(
-                                row?.active ? row?.date : row?.closed
-                              )}
-                            />
-                          }
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        {parseFloat(row?.price)?.toFixed(2)}
-                      </TableCell>
-                      <TableCell align="right">{row?.quantity}</TableCell>
-                      <TableCell align="right">
-                        {numberWithCommas(
-                          (row?.quantity * row?.price).toFixed(2)
-                        )}
-                      </TableCell>
-                      {row?.value && (
-                        <TableCell align="right">
-                          {row.direction === 'buy'
-                            ? numberWithCommas(row.value.toFixed(2))
-                            : numberWithCommas(
-                                (
-                                  row.invested +
-                                  (row.invested - row.value)
-                                ).toFixed(2)
-                              )}
-                        </TableCell>
-                      )}
-                      <TableCell align="right">
-                        {row?.fiat?.toUpperCase()}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          }
-        </FadeIn>
-      </TableContainer>
+  return (
+    <>
+      <FadeIn className="trade-container">
+        {tradesArray.map((row) => {
+          return (
+            <Tilt
+              tiltEnable={false}
+              glareEnable={true}
+              glareMaxOpacity={0.05}
+              glareColor="white"
+              glarePosition="bottom"
+              style={{ margin: '2rem auto', maxWidth: '800px' }}
+            >
+              <TradeItem row={row} />
+            </Tilt>
+          );
+        })}
+      </FadeIn>
+
       {handleSearch() && (
         <Pagination
           className="flex"
           style={{
             padding: 10,
             position: 'fixed',
-            bottom: 20,
-            color: 'white',
+            bottom: 0,
+            backgroundColor: black,
+            width: '100%',
           }}
           sx={{
             '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
@@ -290,7 +119,7 @@ const TradesTable = () => {
           }}
         />
       )}
-    </TradesPageContainer>
+    </>
   );
 };
 

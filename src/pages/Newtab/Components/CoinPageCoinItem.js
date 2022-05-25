@@ -9,7 +9,7 @@ import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
 
-const getTimeSince = (date) => {
+export const getTimeSince = (date) => {
   let date_now = new Date();
   let date_ath = Date.parse(date);
 

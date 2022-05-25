@@ -1,0 +1,143 @@
+import React, { useEffect, useState } from 'react';
+import { CryptoState } from '../CryptoContext';
+import FadeIn from 'react-fade-in';
+import TradeItem from './TradeItem';
+import Tilt from 'react-parallax-tilt';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { primarybg, primarytext } from '../styles/themeVariables';
+
+const MiniTradesTable = () => {
+  // const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  //   const [rows, setRows] = useState([]);
+
+  const {
+    trades,
+    rowDataEnrichment,
+    search,
+    filter,
+    handleFilter,
+    setFilter,
+    coin,
+    currentColor,
+    whichCoinsToShow,
+    setWhichCoinsToShow,
+  } = CryptoState();
+  console.log(
+    '🚀 ~ file: MiniTradesTable.js ~ line 26 ~ MiniTradesTable ~ whichCoinsToShow',
+    whichCoinsToShow
+  );
+
+  useEffect(() => {
+    rowDataEnrichment();
+  }, [filter]);
+
+  useEffect(() => {
+    tradesArray.length === 0 && setWhichCoinsToShow('all coins');
+  }, []);
+  const handleSearch = () => {
+    if (search !== '') {
+      return trades.filter(
+        (trade) =>
+          trade.coin.toLowerCase().includes(search) ||
+          trade.ticker.toLowerCase().includes(search)
+      );
+    } else return trades;
+  };
+
+  const tradesArray = handleSearch()
+    ?.filter((item) =>
+      whichCoinsToShow !== 'all coins' ? item.coin === coin.id : item
+    )
+    ?.filter((item) =>
+      filter === 'closed'
+        ? !item.active
+        : filter === 'open'
+        ? item.active
+        : item
+    )
+    ?.sort((a, b) => {
+      return filter === 'closed'
+        ? Date.parse(b.closed) - Date.parse(a.closed)
+        : Date.parse(b.date) - Date.parse(a.date);
+    })
+    ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
+
+  return (
+    <>
+      {' '}
+      <ToggleButtonGroup
+        value={whichCoinsToShow}
+        sx={{
+          position: 'sticky',
+          zIndex: 10,
+          top: '0',
+          left: '0',
+        }}
+      >
+        {[coin.symbol, 'all coins'].map((option) => (
+          <ToggleButton
+            value={option}
+            exclusive={true}
+            style={{
+              color: whichCoinsToShow === option ? currentColor : primarytext,
+              backgroundColor: primarybg,
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            key={option}
+            onClick={() => setWhichCoinsToShow(option)}
+          >
+            {option}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      <ToggleButtonGroup
+        value={filter}
+        sx={{
+          position: 'sticky',
+          zIndex: 10,
+          top: '0',
+          left: '100%',
+        }}
+      >
+        {['closed', 'open', 'all'].map((option) => (
+          <ToggleButton
+            value={option}
+            exclusive={true}
+            style={{
+              color: filter === option ? currentColor : primarytext,
+              backgroundColor: primarybg,
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            key={option}
+            onClick={() => handleFilter(option)}
+          >
+            {option}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+      <FadeIn className="trade-container">
+        {tradesArray &&
+          tradesArray.map((row) => {
+            return (
+              <Tilt
+                tiltEnable={false}
+                glareEnable={true}
+                glareMaxOpacity={0.05}
+                glareColor="white"
+                glarePosition="bottom"
+              >
+                <TradeItem row={row} />
+              </Tilt>
+            );
+          })}
+      </FadeIn>
+    </>
+  );
+};
+
+export default MiniTradesTable;

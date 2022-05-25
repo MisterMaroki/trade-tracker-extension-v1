@@ -60,9 +60,7 @@ export const DashboardContainer = styled(Container)`
   max-width: 1800px !important;
 `;
 
-export const TradesContainer = styled(DashboardContainer)`
-  margin: 0;
-`;
+export const TradesContainer = styled(DashboardContainer)``;
 
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
@@ -88,17 +86,11 @@ export const CoinPageCoinCard = styled(CoinCard)`
   margin: 0;
   max-width: none !important;
 `;
-export const Sidebar = styled(CoinPageCoinCard)`
-  width: 30%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  padding-top: 3rem;
-  margin: 2rem;
+
+export const TradeCard = styled(CoinPageCoinCard)`
+  margin: auto;
+  margin-top: 3rem;
+  max-width: 800px !important;
 `;
 
 export const ChartContainer = styled(CoinPageCoinCard)`

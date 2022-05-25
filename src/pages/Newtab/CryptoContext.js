@@ -22,12 +22,18 @@ const CryptoContext = ({ children }) => {
   );
   const [search, setSearch] = useState('');
   const [coin, setCoin] = useState();
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState('all');
+  console.log(
+    '🚀 ~ file: CryptoContext.js ~ line 26 ~ CryptoContext ~ filter',
+    filter
+  );
   const [currentColor, setCurrentColor] = useState(gray);
+  const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
+
   const handleFilter = (type) => {
     !type
       ? filter === 'closed'
-        ? setFilter('')
+        ? setFilter('all')
         : setFilter('closed')
       : setFilter(type);
     setPage(1);
@@ -72,6 +78,11 @@ const CryptoContext = ({ children }) => {
     fetchCoins();
   }, [currency]);
 
+  useEffect(() => {
+    console.log('again');
+    rowDataEnrichment();
+  }, [filter, trades.length]);
+
   const tradeNow = (direction, quantity) => {
     +quantity > 0 &&
       setTrades((prevTrades) => [
@@ -87,11 +98,20 @@ const CryptoContext = ({ children }) => {
           active: true,
           invested:
             quantity * coin.market_data.current_price[currency.toLowerCase()],
+          img: coin.image,
         },
         ...prevTrades,
       ]);
   };
-  console.log(trades);
+
+  useEffect(() => {
+    setSearch('');
+    setWhichCoinsToShow(
+      () => coins.filter((coin) => coin.id === id)[0]?.symbol
+    );
+
+    // setWhichCoinsToShow(() => coins.filter((coin) => coin.id === id).symbol);
+  }, [id]);
 
   const closeTrade = async (row) => {
     if (row.active) {
@@ -185,6 +205,8 @@ const CryptoContext = ({ children }) => {
         filter,
         handleFilter,
         currentColor,
+        whichCoinsToShow,
+        setWhichCoinsToShow,
       }}
     >
       {children}

@@ -20,6 +20,8 @@ import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
 import PerformanceChart from '../Components/PerformanceChart';
+import TradesTable from '../Components/TradesTable';
+import MiniTradesTable from '../Components/MiniTradesTable';
 
 const CoinPage = () => {
   const { coin, coins, currentColor } = CryptoState();
@@ -40,14 +42,6 @@ const CoinPage = () => {
             rowGap={4}
           >
             <Box gridColumn="1/11 " gridRow="2/ 12" className="chart-container">
-              {/* {historicalData && <ChartComponent />} */}
-              {/* </Box> */}
-              {/* <Box
-              gridColumn="1/11 "
-              gridRow="11/ 12"
-              className="flex"
-              justifyContent={'center'}
-            > */}
               <ToggleButtonGroup
                 value={days}
                 sx={{
@@ -77,11 +71,11 @@ const CoinPage = () => {
               <CoinChart />
             </Box>
             <Box gridColumn="11/-1" gridRow="2/12">
-              <GridItem className="carousel ">
-                Carousel banner style container, scrollable list of trades of
+              <GridItem className="carousel" sx={{ overflowY: 'scroll' }}>
+                {/* Carousel banner style container, scrollable list of trades of
                 this coin. Each trade will show a snapshot of the chart at that
-                time!
-                {/* <PerformanceChart /> */}
+                time! */}
+                <MiniTradesTable />
               </GridItem>
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1 ">

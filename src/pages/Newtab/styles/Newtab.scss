@@ -12,13 +12,17 @@ body {
 
 #app-container,
 .container {
-  width: 100%;
+  width: 100% !important;
   min-height: 100%;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.trade-container {
+  width: 100% !important;
+  padding-bottom: 4rem;
 }
 
 * {
@@ -194,13 +198,14 @@ button:active {
 .chart-container::before {
   z-index: -1;
 }
-.table-row {
-  &:hover {
-    backdrop-filter: brightness(1.2);
-  }
-}
+
 td.css-177gid-MuiTableCell-root {
   background-color: whitesmoke !important;
+}
+
+.css-1io93fi {
+  width: 100%;
+  height: 100%;
 }
 
 .coin-container {
@@ -247,16 +252,13 @@ td.css-177gid-MuiTableCell-root {
   color: red;
 }
 .grid-item-container {
-  width: '100%';
-  height: '100%';
-  display: 'flex';
-  flex-direction: 'column';
-  justify-content: 'space-between';
-  align-items: 'flex-start';
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 1rem;
-}
-.css-19micn4-MuiButtonBase-root-MuiPaginationItem-root {
-  // color: whitesmoke !important;
 }
 
 input:-webkit-autofill#mui-1 {
@@ -299,4 +301,8 @@ button.css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root {
 }
 button.MuiButtonBase-root {
   font-weight: 600;
+}
+.css-10h8c1q-MuiGrid-root {
+  margin: -10px 0 0 -10px !important;
+  display: block;
 }
