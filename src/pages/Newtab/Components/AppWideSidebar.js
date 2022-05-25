@@ -118,14 +118,10 @@ export default function AppWideSidebar({ children }) {
         return !showTrades && !id ? tertiaryalt : primarybg;
         break;
       case 1:
-        return showTrades && !id && filter !== 'closed'
-          ? tertiaryalt
-          : primarybg;
+        return showTrades && filter !== 'closed' ? tertiaryalt : primarybg;
         break;
       case 2:
-        return showTrades && !id && filter === 'closed'
-          ? tertiaryalt
-          : primarybg;
+        return showTrades && filter === 'closed' ? tertiaryalt : primarybg;
         break;
       default:
         return;
