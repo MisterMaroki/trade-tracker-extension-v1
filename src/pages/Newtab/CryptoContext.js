@@ -2,6 +2,7 @@ import axios from 'axios';
 import { nanoid } from 'nanoid';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CoinList, SingleCoin } from '../Content/config/api';
+import { numberWithCommas } from './Components/banner/Carousel';
 import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
 
 const Crypto = createContext();
@@ -23,10 +24,7 @@ const CryptoContext = ({ children }) => {
   const [search, setSearch] = useState('');
   const [coin, setCoin] = useState();
   const [filter, setFilter] = useState('all');
-  console.log(
-    '🚀 ~ file: CryptoContext.js ~ line 26 ~ CryptoContext ~ filter',
-    filter
-  );
+  const [coinPriceFeed, setCoinPriceFeed] = useState(null);
   const [currentColor, setCurrentColor] = useState(gray);
   const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
 
@@ -61,11 +59,10 @@ const CryptoContext = ({ children }) => {
   useEffect(() => {
     const fetchCoin = async () => {
       const data = await axios.get(SingleCoin(id));
-      if (coin?.id !== data.data.id && data.data.length === undefined)
-        setCoin(data.data);
+      if (coin?.id !== data.data.id) setCoin(data.data);
     };
-    fetchCoin();
-  }, [id, symbol, coin, search]);
+    id && fetchCoin();
+  }, [id, currency, search]);
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -215,6 +212,7 @@ const CryptoContext = ({ children }) => {
         quantity,
         setQuantity,
         tradeNow,
+
         closeTrade,
         search,
         setSearch,

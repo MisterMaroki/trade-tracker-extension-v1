@@ -34,6 +34,7 @@ import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
 
 const TradeItem = ({ row }) => {
+  console.log('🚀 ~ file: TradeItem.js ~ line 37 ~ TradeItem ~ row', row);
   const {
     trades,
     closeTrade,
@@ -50,11 +51,9 @@ const TradeItem = ({ row }) => {
   } = CryptoState();
 
   const checkPnl = (row) => {
-    let data =
-      row.direction === 'buy'
-        ? (row.value - row.invested).toFixed(2)
-        : (row.invested - row.value).toFixed(2);
-    return data;
+    return row.direction === 'buy'
+      ? (row.value - row.invested).toFixed(2)
+      : (row.invested - row.value).toFixed(2);
   };
 
   return (
@@ -177,9 +176,7 @@ const TradeItem = ({ row }) => {
                 style={{ fontSize: 18 }}
               >
                 {checkPnl(row) > 0 && '+'}
-                {`${(
-                  (row.change > 0 ? row.change - 1 : 1 - row?.change) * 100
-                ).toFixed(2)}%`}
+                {`${((checkPnl(row) / row.invested) * 100).toFixed(2)}%`}
               </span>
             </div>
           </Grid>

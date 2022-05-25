@@ -12,7 +12,7 @@ import {
   white,
 } from '../styles/themeVariables';
 
-const MiniTradesTable = () => {
+const MiniTradesTable = ({ refs }) => {
   // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [counter, setCounter] = useState(0);
@@ -44,7 +44,6 @@ const MiniTradesTable = () => {
     const interval = setInterval(() => {
       setCounter((prevCounter) => prevCounter + 1);
       id && trades.length && rowDataEnrichment();
-      console.log(trades);
     }, 40000);
     return () => clearInterval(interval);
   }, []);
@@ -150,7 +149,7 @@ const MiniTradesTable = () => {
           count={Math.ceil(tradesArray?.length / 8)}
           onChange={(_, value) => {
             setPage(value);
-            window.scroll(0, 120);
+            refs.current.scroll(0, 20);
           }}
         />
       )}

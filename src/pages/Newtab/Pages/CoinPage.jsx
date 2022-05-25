@@ -4,7 +4,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
 import CoinChart from '../Components/CoinChart';
 import { CryptoState } from '../CryptoContext';
 import {
@@ -24,9 +24,48 @@ import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
 
 const CoinPage = () => {
-  const { coin, coins, currentColor } = CryptoState();
-  console.log('🚀 ~ file: CoinPage.jsx ~ line 28 ~ CoinPage ~ coin', coin);
+  const {
+    symbol,
+    setId,
+    setSearch,
+    setCoin,
+    coin,
+    coins,
+    currency,
+    currentColor,
+
+    id,
+  } = CryptoState();
+
   const { days, setDays, historicalData } = ChartState();
+
+  // const getPriceFeed = () => {
+  //   let ws = new WebSocket(
+  //     `wss://stream.binance.com:9443/ws/${coin?.symbol}usdt@trade`
+  //   );
+  //   ws.onmessage = (event) => {
+  //     let priceFeed = JSON.parse(event.data);
+  //     setCoinPriceFeed(() => +priceFeed.p);
+  //   };
+  //   let realPriceOverFeed =
+  //     coin?.market_data?.current_price['usd'] / coinPriceFeed;
+  //   console.log(
+  //     '🚀 ~ file: CoinPage.jsx ~ line 52 ~ getPriceFeed ~ realPriceOverFeed',
+  //     realPriceOverFeed
+  //   );
+
+  //   if (realPriceOverFeed > 0.98 && realPriceOverFeed < 1.02) {
+  //     return;
+  //   } else {
+  //     coinPriceFeed && ws.close();
+  //   }
+  //   console.log(coinPriceFeed);
+  // };
+  // React.useEffect(() => {
+  //   getPriceFeed();
+  // },[search]);
+
+  const ref = useRef();
 
   return (
     <CoinPageContainer>
@@ -72,11 +111,15 @@ const CoinPage = () => {
               <CoinChart />
             </Box>
             <Box gridColumn="11/-1" gridRow="2/12">
-              <GridItem className="carousel" sx={{ overflowY: 'scroll' }}>
+              <GridItem
+                className="carousel"
+                sx={{ overflowY: 'scroll' }}
+                ref={ref}
+              >
                 {/* Carousel banner style container, scrollable list of trades of
                 this coin. Each trade will show a snapshot of the chart at that
                 time! */}
-                <MiniTradesTable />
+                <MiniTradesTable refs={ref} />
               </GridItem>
             </Box>
             <Box gridColumn="span 8" gridRow="12/-1 ">

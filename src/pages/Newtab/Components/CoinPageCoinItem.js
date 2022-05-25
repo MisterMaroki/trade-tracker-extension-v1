@@ -30,9 +30,19 @@ export const getTimeSince = (date) => {
 };
 
 export default function CoinPageCoinItem({ row }) {
-  const { symbol, setId, setSearch, coin, currency, currentColor } =
-    CryptoState();
-  const profit = row.price_change_percentage_24h >= 0;
+  const {
+    symbol,
+    setId,
+    setSearch,
+    setCoin,
+    coin,
+    currency,
+    currentColor,
+
+    id,
+  } = CryptoState();
+
+  const profit = row?.price_change_percentage_24h >= 0;
   const profit7 =
     coin.market_data.price_change_percentage_7d_in_currency[
       currency.toLowerCase()
@@ -41,24 +51,25 @@ export default function CoinPageCoinItem({ row }) {
     coin.market_data.price_change_percentage_30d_in_currency[
       currency.toLowerCase()
     ] >= 0;
+
   return (
-    <CoinPageCoinCard key={row.name} className="carousel">
-      <Grid item container direction="column" spacing={2} key={row.name * 2}>
+    <CoinPageCoinCard key={row?.name} className="carousel">
+      <Grid item container direction="column" spacing={2} key={row?.name * 2}>
         <Grid item>
           <div className="darkbg nobg">
             <img
-              src={row.image}
-              alt={row.name}
+              src={row?.image}
+              alt={row?.name}
               height="38"
               style={{ margin: '5' }}
             />
           </div>
         </Grid>
         <Grid item>
-          <MyChip label={row.symbol} value={row.name} />
+          <MyChip label={row?.symbol} value={row?.name} />
         </Grid>
         <Grid item>
-          <MyChip label={'rank'} value={row.market_cap_rank} />
+          <MyChip label={'rank'} value={row?.market_cap_rank} />
         </Grid>
       </Grid>
 
@@ -67,13 +78,13 @@ export default function CoinPageCoinItem({ row }) {
         container
         direction="column"
         spacing={2}
-        key={row.market_cap_rank}
+        key={row?.market_cap_rank}
       >
         <Grid item>
           <MyChip
             label={'price'}
             value={`${symbol} ${numberWithCommas(
-              row.current_price.toFixed(2)
+              row?.current_price.toFixed(2)
             )}`}
           />
         </Grid>
@@ -81,7 +92,7 @@ export default function CoinPageCoinItem({ row }) {
           <MyChip
             label={'market cap'}
             value={`${numberWithCommas(
-              row.market_cap.toString().slice(0, -6)
+              row?.market_cap.toString().slice(0, -6)
             )}M`}
           />
         </Grid>
@@ -99,7 +110,7 @@ export default function CoinPageCoinItem({ row }) {
 
             <span className={profit ? 'green' : 'red'} style={{ fontSize: 18 }}>
               {profit && '+'}
-              {row.price_change_percentage_24h.toFixed(2)}%
+              {row?.price_change_percentage_24h.toFixed(2)}%
             </span>
           </div>
         </Grid>
@@ -110,14 +121,14 @@ export default function CoinPageCoinItem({ row }) {
           <MyChip
             label={'ath'}
             value={`${symbol} ${numberWithCommas(
-              row.ath.toFixed(2).toString()
+              row?.ath.toFixed(2).toString()
             )}`}
           />
         </Grid>
         <Grid item>
           <MyChip
             label={'% from ath'}
-            value={`${row.ath_change_percentage.toFixed(2)}`}
+            value={`${row?.ath_change_percentage.toFixed(2)}`}
           />
         </Grid>
         <Grid item>
@@ -132,14 +143,14 @@ export default function CoinPageCoinItem({ row }) {
           <MyChip
             label={'atl'}
             value={`${symbol} ${numberWithCommas(
-              row.atl.toFixed(2).toString()
+              row?.atl.toFixed(2).toString()
             )}`}
           />
         </Grid>
         <Grid item>
           <MyChip
             label={'% from atl'}
-            value={`${numberWithCommas(row.atl_change_percentage.toFixed(2))}`}
+            value={`${numberWithCommas(row?.atl_change_percentage.toFixed(2))}`}
           />
         </Grid>
         <Grid item>
@@ -168,7 +179,7 @@ export default function CoinPageCoinItem({ row }) {
               style={{ fontSize: 18 }}
             >
               {profit7 && '+'}
-              {coin.market_data.price_change_percentage_7d_in_currency[
+              {coin?.market_data.price_change_percentage_7d_in_currency[
                 currency.toLowerCase()
               ].toFixed(2)}
               %
