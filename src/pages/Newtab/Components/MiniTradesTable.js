@@ -15,6 +15,7 @@ import {
 const MiniTradesTable = () => {
   // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [counter, setCounter] = useState(0);
   //   const [rows, setRows] = useState([]);
 
   const {
@@ -33,31 +34,22 @@ const MiniTradesTable = () => {
   } = CryptoState();
 
   useEffect(() => {
-    tradesArray.length === 0 && setWhichCoinsToShow('all coins');
-  }, []);
-
-  const [counter, setCounter] = useState(0);
+    if (tradesArray?.slice((page - 1) * 8, (page - 1) * 8 + 8)?.length === 0) {
+      setWhichCoinsToShow('all coins');
+      setPage(1);
+    }
+  }, [counter]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prevCounter) => prevCounter + 1);
       id && trades.length && rowDataEnrichment();
       console.log(trades);
-    }, 10000);
+    }, 40000);
     return () => clearInterval(interval);
-  }, [trades.length, id, filter]);
+  }, []);
 
-  const handleSearch = () => {
-    if (search !== '') {
-      return trades.filter(
-        (trade) =>
-          trade.coin.toLowerCase().includes(search) ||
-          trade.ticker.toLowerCase().includes(search)
-      );
-    } else return trades;
-  };
-
-  const tradesArray = handleSearch()
+  const tradesArray = trades
     ?.filter((item) =>
       whichCoinsToShow !== 'all coins' ? item.coin === coin.id : item
     )
