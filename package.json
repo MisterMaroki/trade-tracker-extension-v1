@@ -1,6 +1,6 @@
 {
   "name": "ctrade-tracker-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A chrome extension to track your trades",
   "license": "MIT",
   "repository": {

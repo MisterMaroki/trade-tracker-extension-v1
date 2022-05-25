@@ -14,6 +14,10 @@ const ChartContext = ({ children }) => {
   const fetchHistoricalData = async () => {
     setLoading(true);
     const { data } = await axios.get(HistoricalChart(coin?.id, days, currency));
+    console.log(
+      '🚀 ~ file: ChartContext.js ~ line 17 ~ fetchHistoricalData ~ data',
+      data
+    );
 
     setHistoricalData(data.prices);
     setLoading(false);

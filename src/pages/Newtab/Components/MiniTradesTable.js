@@ -4,7 +4,13 @@ import FadeIn from 'react-fade-in';
 import TradeItem from './TradeItem';
 import Tilt from 'react-parallax-tilt';
 import { ToggleButton, ToggleButtonGroup, Pagination } from '@mui/material';
-import { black, primarybg, primarytext, white } from '../styles/themeVariables';
+import {
+  black,
+  primarybg,
+  primarytext,
+  secondarybg,
+  white,
+} from '../styles/themeVariables';
 
 const MiniTradesTable = () => {
   // const [search, setSearch] = useState('');
@@ -30,16 +36,16 @@ const MiniTradesTable = () => {
     tradesArray.length === 0 && setWhichCoinsToShow('all coins');
   }, []);
 
-  // const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCounter((prevCounter) => prevCounter + 1);
-  //     id && trades.length && rowDataEnrichment();
-  //     console.log(trades);
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, [trades.length, id, filter]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter + 1);
+      id && trades.length && rowDataEnrichment();
+      console.log(trades);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [trades.length, id, filter]);
 
   const handleSearch = () => {
     if (search !== '') {
@@ -66,8 +72,7 @@ const MiniTradesTable = () => {
       return filter === 'closed'
         ? Date.parse(b.closed) - Date.parse(a.closed)
         : Date.parse(b.date) - Date.parse(a.date);
-    })
-    ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
+    });
 
   return (
     <>
@@ -108,7 +113,7 @@ const MiniTradesTable = () => {
           left: '100%',
         }}
       >
-        {['closed', 'open', 'all'].map((option) => (
+        {['open', 'closed', 'all'].map((option) => (
           <ToggleButton
             value={option}
             exclusive={true}
@@ -126,41 +131,37 @@ const MiniTradesTable = () => {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      <FadeIn className="trade-container">
+      <FadeIn className="trade-container padded">
         {tradesArray &&
-          tradesArray.map((row) => {
+          tradesArray?.slice((page - 1) * 8, (page - 1) * 8 + 8)?.map((row) => {
             return <TradeItem row={row} />;
           })}
-        {/* {handleSearch() && (
-          <Pagination
-            className="flex"
-            style={{
-              padding: 10,
-              position: 'fixed',
-              bottom: 0,
-              backgroundColor: black,
-              width: '100%',
-            }}
-            sx={{
-              '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
-                { backgroundColor: currentColor, color: `${black} !important` },
-              '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root': {
-                color: white,
-              },
-            }}
-            color="secondary"
-            count={Math.ceil(
-              handleSearch()?.filter((item) =>
-                filter === 'closed' ? !item.active : item.active
-              )?.length / 8
-            )}
-            onChange={(_, value) => {
-              setPage(value);
-              window.scroll(0, 120);
-            }}
-          />
-        )} */}
       </FadeIn>
+      {tradesArray.length > 8 && (
+        <Pagination
+          className="flex"
+          style={{
+            padding: 10,
+            position: 'sticky',
+            bottom: '0px',
+            border: `2px solid ${primarybg}`,
+            backgroundColor: secondarybg,
+          }}
+          sx={{
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected':
+              { backgroundColor: currentColor, color: `${black} !important` },
+            '& .css-19micn4-MuiButtonBase-root-MuiPaginationItem-root': {
+              color: white,
+            },
+          }}
+          color="secondary"
+          count={Math.ceil(tradesArray?.length / 8)}
+          onChange={(_, value) => {
+            setPage(value);
+            window.scroll(0, 120);
+          }}
+        />
+      )}
     </>
   );
 };
