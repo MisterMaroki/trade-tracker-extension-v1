@@ -8,6 +8,7 @@ import {
   textFieldSx,
 } from '../styles/themeVariables';
 import SnackbarButton from './SnackBarButton';
+import Ticker from './Ticker';
 
 const TradeTools = () => {
   const {
@@ -77,6 +78,7 @@ const TradeTools = () => {
 
       <Grid item>
         <button onClick={() => setShowTrades(true)}>View Trades</button>
+        {/* <Ticker /> */}
       </Grid>
     </CoinPageCoinCard>
   );

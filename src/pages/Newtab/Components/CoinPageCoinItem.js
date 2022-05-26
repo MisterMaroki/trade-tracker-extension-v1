@@ -8,6 +8,7 @@ import {
 import { numberWithCommas } from './banner/Carousel';
 import { CryptoState } from '../CryptoContext';
 import MyChip from './MyChip';
+import Ticker from './Ticker';
 
 export const getTimeSince = (date) => {
   let date_now = new Date();
@@ -81,12 +82,13 @@ export default function CoinPageCoinItem({ row }) {
         key={row?.market_cap_rank}
       >
         <Grid item>
-          <MyChip
+          <MyChip label={'price'} value={Ticker({ row: row })} />
+          {/* <MyChip
             label={'price'}
             value={`${symbol} ${numberWithCommas(
               row?.current_price.toFixed(2)
-            )}`}
-          />
+            )}`} 
+          />*/}
         </Grid>
         <Grid item>
           <MyChip

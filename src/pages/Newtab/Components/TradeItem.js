@@ -34,21 +34,7 @@ import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
 
 const TradeItem = ({ row }) => {
-  console.log('🚀 ~ file: TradeItem.js ~ line 37 ~ TradeItem ~ row', row);
-  const {
-    trades,
-    closeTrade,
-    rowDataEnrichment,
-    setId,
-    search,
-    setShowTrades,
-    filter,
-    coins,
-    handleFilter,
-    symbol,
-    currentColor,
-    id,
-  } = CryptoState();
+  const { setId, setShowTrades } = CryptoState();
 
   const checkPnl = (row) => {
     return row.direction === 'buy'
@@ -68,7 +54,7 @@ const TradeItem = ({ row }) => {
       <TradeCard
         className="trade carousel"
         key={row?.id}
-        onClick={(e) => {
+        onClick={() => {
           setId(row?.coin);
           setShowTrades(false);
         }}
