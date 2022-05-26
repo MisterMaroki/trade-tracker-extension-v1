@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CoinList, SingleCoin } from '../Content/config/api';
 import { numberWithCommas } from './Components/banner/Carousel';
 import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Crypto = createContext();
 
@@ -16,7 +17,7 @@ const CryptoContext = ({ children }) => {
   const [id, setId] = useState('');
   const [showTrades, setShowTrades] = useState('');
   const [page, setPage] = useState(1);
-  const [trades, setTrades] = useState(() =>
+  const [trades, setTrades] = useState(
     localStorage.getItem('trades')?.length > 1
       ? JSON.parse(localStorage.getItem('trades'))
       : []
@@ -27,6 +28,16 @@ const CryptoContext = ({ children }) => {
   const [coinPriceFeed, setCoinPriceFeed] = useState(null);
   const [currentColor, setCurrentColor] = useState(gray);
   const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
+
+  const notify = () =>
+    toast('Trade closed', {
+      icon: '👏',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
 
   const handleFilter = (type) => {
     !type
@@ -229,8 +240,10 @@ const CryptoContext = ({ children }) => {
         whichCoinsToShow,
         setWhichCoinsToShow,
         rowDataEnrichment,
+        notify,
       }}
     >
+      <Toaster position="bottom-center" />
       {children}
     </Crypto.Provider>
   );

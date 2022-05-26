@@ -12,7 +12,7 @@ import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
 
 const MiniTradeItem = ({ row }) => {
-  const { setId, setShowTrades, coins } = CryptoState();
+  const { setId, setShowTrades, coins, currency } = CryptoState();
 
   const checkPnl = (row) => {
     return row.direction === 'buy'
@@ -148,18 +148,20 @@ const MiniTradeItem = ({ row }) => {
           <Box gridColumn="3" gridRow="3">
             <MyChip
               label={'Entry'}
-              value={parseFloat(row?.price)?.toFixed(2)}
+              value={`${parseFloat(row?.price)?.toFixed(
+                2
+              )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
 
           <Box gridColumn="3" gridRow="4">
             <MyChip
               label={'Current Price'}
-              value={numberWithCommas(
+              value={`${numberWithCommas(
                 coins
                   .find((coin) => coin?.symbol === row.ticker)
                   ?.current_price.toFixed(2)
-              )}
+              )} ${currency}`}
             />
           </Box>
         </Box>

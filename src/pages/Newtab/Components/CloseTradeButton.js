@@ -13,13 +13,21 @@ import {
   Rule,
 } from '@mui/icons-material';
 import { Chip } from '@mui/material';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function CloseTradeButton({ trade }) {
-  const { setShowTrades, setId, setQuantity, filter, closeTrade, trades } =
-    CryptoState();
+  const {
+    setShowTrades,
+    setId,
+    setQuantity,
+    filter,
+    closeTrade,
+    trades,
+    notify,
+  } = CryptoState();
   const [tapped, setTapped] = React.useState(() => trade.active || false);
 
   const handleClick = (event) => {
@@ -27,6 +35,7 @@ export default function CloseTradeButton({ trade }) {
     setTapped(!tapped);
     if (tapped) {
       closeTrade(trade);
+      notify();
       setTapped(false);
     }
   };

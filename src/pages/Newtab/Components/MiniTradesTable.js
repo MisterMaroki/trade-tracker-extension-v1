@@ -41,13 +41,13 @@ const MiniTradesTable = ({ refs }) => {
     }
   }, [counter]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => prevCounter + 1);
-      id && trades.length && rowDataEnrichment();
-    }, 40000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCounter((prevCounter) => prevCounter + 1);
+  //     id && trades.length && rowDataEnrichment();
+  //   }, 40000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const tradesArray = trades
     ?.filter((item) =>

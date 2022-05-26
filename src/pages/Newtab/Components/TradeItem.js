@@ -13,7 +13,7 @@ import Tilt from 'react-parallax-tilt';
 import CoinRangeChart from './CoinRangeChart';
 
 const TradeItem = ({ row }) => {
-  const { setId, setShowTrades, coins } = CryptoState();
+  const { setId, setShowTrades, coins, currency } = CryptoState();
 
   const checkPnl = (row) => {
     return row.direction === 'buy'
@@ -157,7 +157,9 @@ const TradeItem = ({ row }) => {
           <Box gridColumn="4" gridRow="4">
             <MyChip
               label={'Entry'}
-              value={parseFloat(row?.price)?.toFixed(2)}
+              value={`${parseFloat(row?.price)?.toFixed(
+                2
+              )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
           <Box gridColumn="3" gridRow="4">
@@ -166,11 +168,11 @@ const TradeItem = ({ row }) => {
           <Box gridColumn="5" gridRow="4">
             <MyChip
               label={'Current Price'}
-              value={numberWithCommas(
+              value={`${numberWithCommas(
                 coins
                   .find((coin) => coin?.symbol === row.ticker)
                   ?.current_price.toFixed(2)
-              )}
+              )} ${currency}`}
             />
           </Box>
         </Box>
