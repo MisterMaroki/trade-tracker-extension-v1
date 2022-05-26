@@ -31,7 +31,7 @@ const CryptoContext = ({ children }) => {
 
   const notify = () =>
     toast('Trade closed', {
-      icon: '👏',
+      icon: '🍾',
       style: {
         borderRadius: '10px',
         background: '#333',

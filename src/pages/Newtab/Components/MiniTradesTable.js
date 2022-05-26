@@ -16,7 +16,7 @@ import MiniTradeItem from './MiniTradeItem';
 const MiniTradesTable = ({ refs }) => {
   // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [counter, setCounter] = useState(0);
+
   //   const [rows, setRows] = useState([]);
 
   const {
@@ -33,21 +33,6 @@ const MiniTradesTable = ({ refs }) => {
     whichCoinsToShow,
     setWhichCoinsToShow,
   } = CryptoState();
-
-  useEffect(() => {
-    if (tradesArray?.slice((page - 1) * 8, (page - 1) * 8 + 8)?.length === 0) {
-      setWhichCoinsToShow('all coins');
-      setPage(1);
-    }
-  }, [counter]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCounter((prevCounter) => prevCounter + 1);
-  //     id && trades.length && rowDataEnrichment();
-  //   }, 40000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   const tradesArray = trades
     ?.filter((item) =>
