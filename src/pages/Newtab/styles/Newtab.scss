@@ -158,6 +158,7 @@ button:active {
   div.MuiToggleButtonGroup-root {
   }
 }
+
 .carousel::before,
 .chart-container::before {
   content: '';
@@ -183,6 +184,9 @@ button:active {
   span {
     font-size: 1.3rem;
   }
+}
+.trade-container .carousel .darkbg {
+  background-color: #070e1710 !important;
 }
 .carousel-loading {
   justify-content: space-evenly;

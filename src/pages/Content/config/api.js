@@ -4,8 +4,12 @@ export const CoinList = (currency) =>
 export const SingleCoin = (id) =>
   `https://api.coingecko.com/api/v3/coins/${id}`;
 
-export const HistoricalChart = (id, days = 365, currency) =>
-  `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
+export const HistoricalChart = (id, days = 365, currency) => {
+  console.log(
+    `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`
+  );
+  return `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
+};
 
 // https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=1392577232&to=1422577232
 
@@ -25,9 +29,7 @@ export const HistoricalChart = (id, days = 365, currency) =>
 // };
 export const HistoricalRangeChart = (id, currency, start, end) => {
   // return `https://data.messari.io/api/v1/assets/${id}/metrics/price/time-series?start=${start}&end=${end}&interval=1d&timestamp-format=rfc3339`;
-  console.log(
-    `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=usd&from=${start}&to=${end}`
-  );
+
   return `https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=usd&from=${start}&to=${end}`;
 };
 // https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=1653537288&to=1653570727

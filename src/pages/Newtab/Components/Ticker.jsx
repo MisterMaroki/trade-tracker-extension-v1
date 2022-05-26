@@ -71,8 +71,6 @@ export default function Ticker({ row }) {
   ]);
 
   useEffect(() => {
-    console.log(`${symbol}usdt`);
-
     lastJsonMessage?.data?.s?.toLowerCase() != `${symbol}usdt` &&
       handleClickUnSendMessage(prefix);
     setPrefix(symbol);

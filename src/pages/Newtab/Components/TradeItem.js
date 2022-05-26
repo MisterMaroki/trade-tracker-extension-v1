@@ -1,10 +1,10 @@
 import { ArrowCircleDown } from '@mui/icons-material';
 import { ArrowCircleUp } from '@mui/icons-material';
-import { Box, Chip } from '@mui/material';
-import React, { Suspense } from 'react';
+import { Box, Button, Chip } from '@mui/material';
+import React, { Suspense, useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago';
 import { CryptoState } from '../CryptoContext';
-import { TradeCard } from '../styles/themeVariables';
+import { ColorButton, TradeCard } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import CloseTradeButton from './CloseTradeButton';
 import MyChip from './MyChip';
@@ -12,9 +12,13 @@ import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
 import CoinRangeChart from './CoinRangeChart';
 
-const TradeItem = ({ row }) => {
-  const { setId, setShowTrades, coins, currency } = CryptoState();
+const TradeItem = ({ row, page }) => {
+  const { setId, setShowTrades, coins, currency, id } = CryptoState();
+  const [chartShowing, setChartShowing] = useState(false);
 
+  useEffect(() => {
+    setChartShowing(false);
+  }, [page]);
   const checkPnl = (row) => {
     return row.direction === 'buy'
       ? (row.value - row.invested).toFixed(2)
@@ -77,9 +81,20 @@ const TradeItem = ({ row }) => {
           </Box>
 
           <Box gridColumn="3/6" gridRow="1/4" className="flex">
-            <Suspense fallback={<div>Loading</div>}>
-              <CoinRangeChart trade={row} />
-            </Suspense>
+            {chartShowing ? (
+              <Suspense fallback={<div>Loading</div>}>
+                <CoinRangeChart trade={row} />
+              </Suspense>
+            ) : (
+              <ColorButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setChartShowing(true);
+                }}
+              >
+                view chart snapshot
+              </ColorButton>
+            )}
           </Box>
 
           <Box gridColumn="6" gridRow="1" className="flex col darkbg">

@@ -12,10 +12,6 @@ const TradesTable = () => {
   //   const [rows, setRows] = useState([]);
 
   const { trades, search, filter, currentColor } = CryptoState();
-  console.log(
-    '🚀 ~ file: TradesTable.js ~ line 43 ~ TradesTable ~ trades',
-    trades
-  );
 
   const handleSearch = () => {
     if (search !== '') {
@@ -35,18 +31,13 @@ const TradesTable = () => {
         : Date.parse(b.date) - Date.parse(a.date);
     });
 
-  console.log(
-    '🚀 ~ file: TradesTable.js ~ line 55 ~ TradesTable ~ tradesArray',
-    tradesArray
-  );
-
   return (
     <>
       <FadeIn className="trade-container">
         {tradesArray?.slice((page - 1) * 5, (page - 1) * 5 + 5)?.map((row) => {
           return (
             <Suspense fallback={<div>Loading</div>}>
-              <TradeItem row={row} />
+              <TradeItem row={row} page={page} />
             </Suspense>
           );
         })}

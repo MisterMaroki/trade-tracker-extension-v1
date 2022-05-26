@@ -11,9 +11,11 @@ const ChartContext = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { currency, coin } = CryptoState();
 
-  const fetchHistoricalData = async () => {
+  const fetchHistoricalData = async (id) => {
     setLoading(true);
-    const { data } = await axios.get(HistoricalChart(coin?.id, days, currency));
+    const { data } = await axios.get(
+      HistoricalChart(id || coin?.id, days, currency)
+    );
 
     setHistoricalData(data.prices);
     setLoading(false);

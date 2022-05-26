@@ -25,7 +25,6 @@ const CryptoContext = ({ children }) => {
   const [search, setSearch] = useState('');
   const [coin, setCoin] = useState();
   const [filter, setFilter] = useState('all');
-  const [coinPriceFeed, setCoinPriceFeed] = useState(null);
   const [currentColor, setCurrentColor] = useState(gray);
   const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
 
