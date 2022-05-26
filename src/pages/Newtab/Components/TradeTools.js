@@ -1,27 +1,13 @@
 import { CancelOutlined } from '@mui/icons-material';
 import { Grid, IconButton, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CryptoState } from '../CryptoContext';
-import {
-  CoinPageCoinCard,
-  tertiary,
-  textFieldSx,
-} from '../styles/themeVariables';
+import { CoinPageCoinCard, textFieldSx } from '../styles/themeVariables';
 import SnackbarButton from './SnackBarButton';
-import Ticker from './Ticker';
 
 const TradeTools = () => {
-  const {
-    currency,
-    symbol,
-    coin,
-    tradeNow,
-    quantity,
-    setQuantity,
-    showTrades,
-    currentColor,
-    setShowTrades,
-  } = CryptoState();
+  const { coin, tradeNow, quantity, currentColor, setShowTrades } =
+    CryptoState();
   const [tempQuantity, setTempQuantity] = useState(0);
   const func = (direction, quantity) => {
     tradeNow(direction, quantity);
@@ -36,7 +22,6 @@ const TradeTools = () => {
             label={'Set quantity'}
             type="number"
             sx={textFieldSx}
-            className="carousel"
             size="small"
             onChange={(e) => setTempQuantity(() => e.target.value)}
             autoComplete="off"

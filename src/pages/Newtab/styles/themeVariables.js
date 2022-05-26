@@ -89,10 +89,21 @@ export const CoinPageCoinCard = styled(CoinCard)`
 `;
 
 export const TradeCard = styled(CoinPageCoinCard)`
-  margin: auto;
-  margin-top: 3rem;
-  max-width: 800px !important;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
 `;
+export const MiniTradeCard = styled(TradeCard)`
+  /* max-width: 20vw !important; */
+`;
+// export const TradeCard = styled(CoinPageCoinCard)`
+//   margin: auto;
+//   margin-top: 3rem;
+//   max-width: 1000px !important;
+//   height: 300px;
+// `;
 
 export const ChartContainer = styled(CoinPageCoinCard)`
   width: 100%;

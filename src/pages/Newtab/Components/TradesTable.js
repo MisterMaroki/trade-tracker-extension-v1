@@ -1,56 +1,21 @@
-import { ArrowCircleDown } from '@mui/icons-material';
-import { DeleteOutlined } from '@mui/icons-material';
-import { ArrowCircleUp } from '@mui/icons-material';
-import {
-  Chip,
-  Container,
-  Grid,
-  Pagination,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import ReactTimeAgo from 'react-time-ago';
+import { Pagination } from '@mui/material';
+import React, { useState, Suspense } from 'react';
 import { CryptoState } from '../CryptoContext';
-import {
-  black,
-  primarytext,
-  TradeCard,
-  TradesContainer,
-  TradesPageContainer,
-  white,
-} from '../styles/themeVariables';
-import { numberWithCommas } from './banner/Carousel';
+import { black, white } from '../styles/themeVariables';
 import FadeIn from 'react-fade-in';
-import CloseTradeButton from './CloseTradeButton';
-import MyChip from './MyChip';
-import { getTimeSince } from './CoinPageCoinItem';
-import TradeItem from './TradeItem';
-import Tilt from 'react-parallax-tilt';
+// import MiniTradeItem from './TradeItem';
+const TradeItem = React.lazy(() => import('./TradeItem'));
 
 const TradesTable = () => {
   // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   //   const [rows, setRows] = useState([]);
 
-  const {
-    trades,
-    closeTrade,
-    rowDataEnrichment,
-    setId,
-    search,
-    setShowTrades,
-    filter,
-    coins,
-    handleFilter,
-    symbol,
-    currentColor,
-  } = CryptoState();
+  const { trades, search, filter, currentColor } = CryptoState();
+  console.log(
+    '🚀 ~ file: TradesTable.js ~ line 43 ~ TradesTable ~ trades',
+    trades
+  );
 
   const handleSearch = () => {
     if (search !== '') {
@@ -68,24 +33,21 @@ const TradesTable = () => {
       return filter === 'closed'
         ? Date.parse(b.closed) - Date.parse(a.closed)
         : Date.parse(b.date) - Date.parse(a.date);
-    })
-    ?.slice((page - 1) * 8, (page - 1) * 8 + 8);
+    });
+
+  console.log(
+    '🚀 ~ file: TradesTable.js ~ line 55 ~ TradesTable ~ tradesArray',
+    tradesArray
+  );
 
   return (
     <>
       <FadeIn className="trade-container">
-        {tradesArray.map((row) => {
+        {tradesArray?.slice((page - 1) * 5, (page - 1) * 5 + 5)?.map((row) => {
           return (
-            <Tilt
-              tiltEnable={false}
-              glareEnable={true}
-              glareMaxOpacity={0.05}
-              glareColor="white"
-              glarePosition="bottom"
-              style={{ margin: '2rem auto', maxWidth: '800px' }}
-            >
+            <Suspense fallback={<div>Loading</div>}>
               <TradeItem row={row} />
-            </Tilt>
+            </Suspense>
           );
         })}
       </FadeIn>
@@ -108,11 +70,7 @@ const TradesTable = () => {
             },
           }}
           color="secondary"
-          count={Math.ceil(
-            handleSearch()?.filter((item) =>
-              filter === 'closed' ? !item.active : item.active
-            )?.length / 8
-          )}
+          count={Math.ceil(tradesArray?.length / 5)}
           onChange={(_, value) => {
             setPage(value);
             window.scroll(0, 120);

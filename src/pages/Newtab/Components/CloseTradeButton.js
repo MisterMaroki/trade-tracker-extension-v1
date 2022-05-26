@@ -64,7 +64,7 @@ export default function CloseTradeButton({ trade }) {
           }
           size="small"
           onClick={handleClick}
-          style={{ transform: trade.active ? 'none' : 'translateX(-20px' }}
+          style={{ transform: trade.active ? 'none' : 'translateX(-20px)' }}
         />
       }
     </>

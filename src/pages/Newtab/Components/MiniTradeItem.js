@@ -1,18 +1,17 @@
 import { ArrowCircleDown } from '@mui/icons-material';
 import { ArrowCircleUp } from '@mui/icons-material';
 import { Box, Chip } from '@mui/material';
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactTimeAgo from 'react-time-ago';
 import { CryptoState } from '../CryptoContext';
-import { TradeCard } from '../styles/themeVariables';
+import { MiniTradeCard } from '../styles/themeVariables';
 import { numberWithCommas } from './banner/Carousel';
 import CloseTradeButton from './CloseTradeButton';
 import MyChip from './MyChip';
 import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
-import CoinRangeChart from './CoinRangeChart';
 
-const TradeItem = ({ row }) => {
+const MiniTradeItem = ({ row }) => {
   const { setId, setShowTrades, coins } = CryptoState();
 
   const checkPnl = (row) => {
@@ -29,9 +28,9 @@ const TradeItem = ({ row }) => {
       glareColor="white"
       glarePosition="bottom"
       perspective={40000}
-      style={{ width: '800px', height: '270px', margin: '3rem auto' }}
+      style={{ margin: '3rem auto' }}
     >
-      <TradeCard
+      <MiniTradeCard
         className="trade carousel"
         key={row?.id}
         onClick={() => {
@@ -41,16 +40,14 @@ const TradeItem = ({ row }) => {
       >
         <Box
           display="grid"
-          gridTemplateColumns="repeat(6, 1fr)"
-          gridTemplateRows="repeat(4,1fr)"
-          height={'270px'}
-          width={'100%'}
-          style={{ padding: '1rem' }}
+          gridTemplateColumns="repeat(3, 1fr)"
+          gridTemplateRows="repeat(3,1fr)"
+          style={{ padding: '1rem', width: '100%' }}
         >
-          <Box gridColumn="1" gridRow="1" className="flex darkbg nobg">
+          <Box gridColumn="1" gridRow="1" className="flex col darkbg nobg">
             <img src={row.img.small} alt="icon" />
           </Box>
-          <Box gridColumn="1" gridRow="2" className="flex darkbg nobg">
+          <Box gridColumn="1" gridRow="2">
             <MyChip label={row.ticker} value={row.coin} />
           </Box>
 
@@ -76,13 +73,7 @@ const TradeItem = ({ row }) => {
             <CloseTradeButton trade={row} />
           </Box>
 
-          <Box gridColumn="3/6" gridRow="1/4" className="flex">
-            <Suspense fallback={<div>Loading</div>}>
-              <CoinRangeChart trade={row} />
-            </Suspense>
-          </Box>
-
-          <Box gridColumn="6" gridRow="1" className="flex col darkbg">
+          <Box gridColumn="3" gridRow="1" className="flex col darkbg">
             <span
               style={{
                 fontSize: 12,
@@ -101,7 +92,7 @@ const TradeItem = ({ row }) => {
               {numberWithCommas(checkPnl(row))} {row.fiat.toUpperCase()}
             </span>
           </Box>
-          <Box gridColumn="6" gridRow="2" className="flex col darkbg">
+          <Box gridColumn="3" gridRow="2" className="flex col darkbg">
             <span
               style={{
                 fontSize: 12,
@@ -121,13 +112,13 @@ const TradeItem = ({ row }) => {
             </span>
           </Box>
 
-          <Box gridColumn="6" gridRow="3">
+          <Box gridColumn="2" gridRow="3">
             <MyChip
               label={'Investment'}
               value={numberWithCommas((row?.quantity * row?.price).toFixed(2))}
             />
           </Box>
-          <Box gridColumn="6" gridRow="4">
+          <Box gridColumn="2" gridRow="4">
             {row?.value && (
               <MyChip
                 label={row.active ? 'Current Value' : 'Closed Value'}
@@ -141,10 +132,10 @@ const TradeItem = ({ row }) => {
               />
             )}
           </Box>
-          <Box gridColumn="2" gridRow="3">
+          <Box gridColumn="1" gridRow="3">
             <MyChip label={'Opened'} value={formatDate(row?.date)} />
           </Box>
-          <Box gridColumn="2" gridRow="4">
+          <Box gridColumn="1" gridRow="4">
             <MyChip
               label={row?.active ? 'Opened: ' : 'Closed: '}
               value={
@@ -154,16 +145,14 @@ const TradeItem = ({ row }) => {
               }
             />
           </Box>
-          <Box gridColumn="4" gridRow="4">
+          <Box gridColumn="3" gridRow="3">
             <MyChip
               label={'Entry'}
               value={parseFloat(row?.price)?.toFixed(2)}
             />
           </Box>
+
           <Box gridColumn="3" gridRow="4">
-            <MyChip label={'Quantity'} value={row?.quantity} />
-          </Box>
-          <Box gridColumn="5" gridRow="4">
             <MyChip
               label={'Current Price'}
               value={numberWithCommas(
@@ -174,9 +163,9 @@ const TradeItem = ({ row }) => {
             />
           </Box>
         </Box>
-      </TradeCard>
+      </MiniTradeCard>
     </Tilt>
   );
 };
 
-export default TradeItem;
+export default MiniTradeItem;

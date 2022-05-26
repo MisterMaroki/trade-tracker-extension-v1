@@ -81,6 +81,10 @@ a {
 .nobg {
   background: transparent !important;
 }
+.chart {
+  max-height: 150px;
+  width: 100%;
+}
 header {
   position: fixed;
   top: 0;
@@ -148,6 +152,9 @@ button:active {
   position: relative;
   border-radius: 0 0 0.5rem 0.5rem;
   box-shadow: #10172480 0px -50px 36px -28px inset;
+  * {
+    z-index: 2;
+  }
   div.MuiToggleButtonGroup-root {
   }
 }
@@ -162,6 +169,7 @@ button:active {
   background-image: url(../../../assets/img/dots.svg);
   background-repeat: no-repeat;
   background-position: bottom;
+  z-index: -1;
 
   filter: opacity(0.03) invert(1);
 }
@@ -170,7 +178,7 @@ button:active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  z-index: 2;
   span {
     font-size: 1.3rem;
   }

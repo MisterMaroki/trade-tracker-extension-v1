@@ -82,13 +82,13 @@ export default function CoinPageCoinItem({ row }) {
         key={row?.market_cap_rank}
       >
         <Grid item>
-          <MyChip label={'price'} value={Ticker({ row: row })} />
-          {/* <MyChip
+          {/* <MyChip label={'price'} value={Ticker({ row: row })} /> */}
+          <MyChip
             label={'price'}
             value={`${symbol} ${numberWithCommas(
               row?.current_price.toFixed(2)
-            )}`} 
-          />*/}
+            )}`}
+          />
         </Grid>
         <Grid item>
           <MyChip

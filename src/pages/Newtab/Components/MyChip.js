@@ -15,8 +15,8 @@ const MyChip = ({ label, value }) => {
       <span
         style={{
           fontSize:
-            value.toString().length > 10
-              ? value.toString().length > 13
+            value?.toString()?.length > 10
+              ? value?.toString()?.length > 13
                 ? 12
                 : 14
               : 16,

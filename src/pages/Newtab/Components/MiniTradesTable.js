@@ -11,6 +11,7 @@ import {
   secondarybg,
   white,
 } from '../styles/themeVariables';
+import MiniTradeItem from './MiniTradeItem';
 
 const MiniTradesTable = ({ refs }) => {
   // const [search, setSearch] = useState('');
@@ -124,11 +125,11 @@ const MiniTradesTable = ({ refs }) => {
       </ToggleButtonGroup>
       <FadeIn className="trade-container padded">
         {tradesArray &&
-          tradesArray?.slice((page - 1) * 8, (page - 1) * 8 + 8)?.map((row) => {
-            return <TradeItem row={row} />;
+          tradesArray?.slice((page - 1) * 5, (page - 1) * 5 + 5)?.map((row) => {
+            return <MiniTradeItem row={row} />;
           })}
       </FadeIn>
-      {tradesArray.length > 8 && (
+      {tradesArray.length > 5 && (
         <Pagination
           className="flex"
           style={{
@@ -146,7 +147,7 @@ const MiniTradesTable = ({ refs }) => {
             },
           }}
           color="secondary"
-          count={Math.ceil(tradesArray?.length / 8)}
+          count={Math.ceil(tradesArray?.length / 5)}
           onChange={(_, value) => {
             setPage(value);
             refs.current.scroll(0, 20);
