@@ -11,16 +11,24 @@ import TradesPage from './Pages/TradesPage';
 import { black, NewtabContainer } from './styles/themeVariables';
 import { CryptoState } from './CryptoContext';
 import AppWideSidebar from './Components/AppWideSidebar';
+import OverviewPage from './Pages/OverviewPage';
 
 const Newtab = () => {
-  const { id, showTrades } = CryptoState();
+  const { id, showTrades, showingOverview } = CryptoState();
   return (
     <>
       <Navbar />
       <AppWideSidebar>
         <NewtabContainer>
-          {showTrades ? <TradesPage /> : id ? <CoinPage /> : <CoinDashboard />}
-          {/* </AppWideSidebar> */}
+          {showingOverview ? (
+            <OverviewPage />
+          ) : showTrades ? (
+            <TradesPage />
+          ) : id ? (
+            <CoinPage />
+          ) : (
+            <CoinDashboard />
+          )}
         </NewtabContainer>
       </AppWideSidebar>
     </>

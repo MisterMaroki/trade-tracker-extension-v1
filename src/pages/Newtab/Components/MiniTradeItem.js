@@ -10,15 +10,10 @@ import CloseTradeButton from './CloseTradeButton';
 import MyChip from './MyChip';
 import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
+import { checkPnl } from './TradeItem';
 
 const MiniTradeItem = ({ row }) => {
   const { setId, setShowTrades, coins, currency } = CryptoState();
-
-  const checkPnl = (row) => {
-    return row.direction === 'buy'
-      ? (row.value - row.invested).toFixed(2)
-      : (row.invested - row.value).toFixed(2);
-  };
 
   return (
     <Tilt
@@ -85,7 +80,8 @@ const MiniTradeItem = ({ row }) => {
             <span
               className={checkPnl(row) >= 0 ? 'green' : 'red'}
               style={{
-                fontSize: numberWithCommas(checkPnl(row)).length > 6 ? 12 : 16,
+                fontSize:
+                  checkPnl(row) >= 10000 || checkPnl(row) <= -10000 ? 12 : 16,
               }}
             >
               {checkPnl(row) > 0 && '+'}
@@ -122,13 +118,7 @@ const MiniTradeItem = ({ row }) => {
             {row?.value && (
               <MyChip
                 label={row.active ? 'Current Value' : 'Closed Value'}
-                value={
-                  row.direction === 'buy'
-                    ? numberWithCommas(row.value.toFixed(2))
-                    : numberWithCommas(
-                        (row.invested + (row.invested - row.value)).toFixed(2)
-                      )
-                }
+                value={numberWithCommas(row.value.toFixed(2))}
               />
             )}
           </Box>
@@ -148,20 +138,18 @@ const MiniTradeItem = ({ row }) => {
           <Box gridColumn="3" gridRow="3">
             <MyChip
               label={'Entry'}
-              value={`${parseFloat(row?.price)?.toFixed(
-                2
+              value={`${numberWithCommas(
+                row?.price
               )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
 
           <Box gridColumn="3" gridRow="4">
             <MyChip
-              label={'Current Price'}
+              label={row.active ? 'Current Price' : 'Exit Price'}
               value={`${numberWithCommas(
-                coins
-                  .find((coin) => coin?.symbol === row.ticker)
-                  ?.current_price.toFixed(2)
-              )} ${currency}`}
+                row.active ? row.current_price : row.exit
+              )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
         </Box>

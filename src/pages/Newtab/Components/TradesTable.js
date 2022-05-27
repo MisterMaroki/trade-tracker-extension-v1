@@ -1,5 +1,5 @@
 import { Pagination } from '@mui/material';
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { CryptoState } from '../CryptoContext';
 import { black, white } from '../styles/themeVariables';
 import FadeIn from 'react-fade-in';
@@ -22,6 +22,11 @@ const TradesTable = () => {
       );
     } else return trades;
   };
+
+  useEffect(() => {
+    setPage(1);
+    return () => setPage(1);
+  }, [filter]);
 
   const tradesArray = handleSearch()
     ?.filter((item) => (filter === 'closed' ? !item.active : item.active))

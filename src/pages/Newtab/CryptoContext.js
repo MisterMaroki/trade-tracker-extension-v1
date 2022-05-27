@@ -5,6 +5,7 @@ import { CoinList, SingleCoin } from '../Content/config/api';
 import { numberWithCommas } from './Components/banner/Carousel';
 import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
 import toast, { Toaster } from 'react-hot-toast';
+import { getDurationString } from './Components/TradeItem';
 
 const Crypto = createContext();
 
@@ -12,6 +13,7 @@ const CryptoContext = ({ children }) => {
   const [currency, setCurrency] = useState('USD');
   const [symbol, setSymbol] = useState('$');
   const [coins, setCoins] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState('');
   const [id, setId] = useState('');
@@ -27,7 +29,7 @@ const CryptoContext = ({ children }) => {
   const [filter, setFilter] = useState('all');
   const [currentColor, setCurrentColor] = useState(gray);
   const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
-
+  const [showingOverview, setShowingOverview] = useState(false);
   const notify = () =>
     toast('Trade closed', {
       icon: '🍾',
@@ -95,7 +97,7 @@ const CryptoContext = ({ children }) => {
           coin: coin.id,
           ticker: coin.symbol,
           fiat: currency.toLowerCase(),
-          price: coin.market_data.current_price[currency.toLowerCase()],
+          price: coins.find((coi) => coi.symbol === coin.symbol)?.current_price,
           date: new Date(),
           quantity: +quantity,
           direction: direction === 'buy' ? 'buy' : 'sell',
@@ -120,7 +122,7 @@ const CryptoContext = ({ children }) => {
     );
 
     // setWhichCoinsToShow(() => coins.filter((coin) => coin.id === id).symbol);
-  }, [id]);
+  }, [id, showTrades]);
 
   const closeTrade = async (row) => {
     if (row.active) {
@@ -132,6 +134,9 @@ const CryptoContext = ({ children }) => {
                 active: false,
                 closed: new Date(),
                 exit: trade.current_price,
+                duration: getDurationString(
+                  Date.parse(new Date()) - Date.parse(trade.date)
+                ),
               }
             : trade;
         })
@@ -142,15 +147,16 @@ const CryptoContext = ({ children }) => {
   const rowDataEnrichment = async () => {
     let enrichedRows = await Promise.all(
       trades?.map(async (trade) => {
+        const currentPrice = await findProfits(trade, 'current-price');
         const currentMarketValue = await findProfits(trade, 'current-value');
         const percentChange = await findProfits(trade, 'percent-change');
 
         return trade?.active
           ? {
               ...trade,
-              current_price: +currentMarketValue / +trade.quantity,
-              value: +currentMarketValue,
-              change: +percentChange,
+              current_price: currentPrice,
+              value: currentMarketValue,
+              change: percentChange,
             }
           : trade;
       })
@@ -162,20 +168,26 @@ const CryptoContext = ({ children }) => {
     const rowDataEnrichment = async () => {
       let enrichedRows = await Promise.all(
         trades?.map(async (trade) => {
+          const currentPrice = await findProfits(trade, 'current-price');
+          console.log(
+            '🚀 ~ file: CryptoContext.js ~ line 172 ~ trades?.map ~ currentPrice',
+            currentPrice
+          );
+
           const currentMarketValue = await findProfits(trade, 'current-value');
           const percentChange = await findProfits(trade, 'percent-change');
 
           return trade?.active
             ? {
                 ...trade,
-                current_price: +currentMarketValue / +trade.quantity,
-                value: +currentMarketValue,
-                change: +percentChange,
+                current_price: currentPrice,
+                value: currentMarketValue,
+                change: percentChange,
               }
             : trade;
         })
       );
-      count !== 0 && setTrades(enrichedRows);
+      setTrades(enrichedRows);
     };
     rowDataEnrichment();
   }, [count, filter]);
@@ -193,15 +205,23 @@ const CryptoContext = ({ children }) => {
   const findProfits = async (trade, type) => {
     const { data } = await axios.get(SingleCoin(trade.coin));
     const differenceMultiplier =
-      (await data?.market_data.current_price[trade.fiat.toLowerCase()]) /
+      (await data?.market_data?.current_price[trade.fiat.toLowerCase()]) /
       trade.price;
 
-    const currentValue = trade.invested * differenceMultiplier;
+    const currentValue =
+      trade.direction === 'buy'
+        ? trade.invested * differenceMultiplier
+        : trade.invested +
+          (trade.invested - trade.invested * differenceMultiplier);
+
+    if (type === 'current-price') {
+      return +data?.market_data?.current_price[trade.fiat.toLowerCase()];
+    }
     if (type === 'current-value') {
-      return currentValue;
+      return +currentValue;
     }
     if (type === 'percent-change') {
-      return differenceMultiplier;
+      return +differenceMultiplier;
     }
   };
 
@@ -240,6 +260,8 @@ const CryptoContext = ({ children }) => {
         setWhichCoinsToShow,
         rowDataEnrichment,
         notify,
+        showingOverview,
+        setShowingOverview,
       }}
     >
       <Toaster position="bottom-center" />

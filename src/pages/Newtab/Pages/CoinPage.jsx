@@ -39,32 +39,6 @@ const CoinPage = () => {
 
   const { days, setDays, historicalData } = ChartState();
 
-  // const getPriceFeed = () => {
-  //   let ws = new WebSocket(
-  //     `wss://stream.binance.com:9443/ws/${coin?.symbol}usdt@trade`
-  //   );
-  //   ws.onmessage = (event) => {
-  //     let priceFeed = JSON.parse(event.data);
-  //     setCoinPriceFeed(() => +priceFeed.p);
-  //   };
-  //   let realPriceOverFeed =
-  //     coin?.market_data?.current_price['usd'] / coinPriceFeed;
-  //   console.log(
-  //     '🚀 ~ file: CoinPage.jsx ~ line 52 ~ getPriceFeed ~ realPriceOverFeed',
-  //     realPriceOverFeed
-  //   );
-
-  //   if (realPriceOverFeed > 0.98 && realPriceOverFeed < 1.02) {
-  //     return;
-  //   } else {
-  //     coinPriceFeed && ws.close();
-  //   }
-  //   console.log(coinPriceFeed);
-  // };
-  // React.useEffect(() => {
-  //   getPriceFeed();
-  // },[search]);
-
   const ref = useRef();
 
   return (

@@ -24,6 +24,7 @@ const Navbar = () => {
     id,
     currentColor,
     setPage,
+    setShowingOverview,
   } = CryptoState();
 
   const [nameInput, setNameInput] = useState('');
@@ -116,6 +117,7 @@ const Navbar = () => {
             onClick={() => {
               setId('');
               setShowTrades(false);
+              setShowingOverview(false);
             }}
           >
             Home
@@ -129,7 +131,10 @@ const Navbar = () => {
                 backgroundColor: '#09111b',
               },
             }}
-            onClick={() => setShowTrades(!showTrades)}
+            onClick={() => {
+              setShowTrades(!showTrades);
+              setShowingOverview(false);
+            }}
           >
             Trades
           </Button>

@@ -12,18 +12,19 @@ import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
 import CoinRangeChart from './CoinRangeChart';
 
+export const checkPnl = (row) => {
+  return (row.value - row.invested).toFixed(2);
+};
 const TradeItem = ({ row, page }) => {
   const { setId, setShowTrades, coins, currency, id } = CryptoState();
   const [chartShowing, setChartShowing] = useState(false);
 
   useEffect(() => {
     setChartShowing(false);
-  }, [page]);
-  const checkPnl = (row) => {
-    return row.direction === 'buy'
-      ? (row.value - row.invested).toFixed(2)
-      : (row.invested - row.value).toFixed(2);
-  };
+    return () => {
+      setChartShowing(false);
+    };
+  }, [page, row]);
 
   return (
     <Tilt
@@ -54,7 +55,7 @@ const TradeItem = ({ row, page }) => {
           <Box gridColumn="1" gridRow="1" className="flex darkbg nobg">
             <img src={row.img.small} alt="icon" />
           </Box>
-          <Box gridColumn="1" gridRow="2" className="flex darkbg nobg">
+          <Box gridColumn="1" gridRow="2">
             <MyChip label={row.ticker} value={row.coin} />
           </Box>
 
@@ -109,7 +110,13 @@ const TradeItem = ({ row, page }) => {
             <span
               className={checkPnl(row) >= 0 ? 'green' : 'red'}
               style={{
-                fontSize: numberWithCommas(checkPnl(row)).length > 6 ? 12 : 16,
+                fontSize:
+                  checkPnl(row)
+                    .toString()
+                    .split('')
+                    .filter((x) => typeof +x === 'number').length >= 8
+                    ? 12
+                    : 16,
               }}
             >
               {checkPnl(row) > 0 && '+'}
@@ -146,20 +153,32 @@ const TradeItem = ({ row, page }) => {
             {row?.value && (
               <MyChip
                 label={row.active ? 'Current Value' : 'Closed Value'}
-                value={
-                  row.direction === 'buy'
-                    ? numberWithCommas(row.value.toFixed(2))
-                    : numberWithCommas(
-                        (row.invested + (row.invested - row.value)).toFixed(2)
-                      )
-                }
+                value={numberWithCommas(row.value.toFixed(2))}
               />
             )}
           </Box>
-          <Box gridColumn="2" gridRow="3">
+          {row.closed && (
+            <>
+              <Box gridColumn={'2'} gridRow="3">
+                <MyChip label={'Closed'} value={formatDate(row?.closed)} />
+              </Box>
+              <Box gridColumn={'2'} gridRow="4">
+                <MyChip
+                  label={'Duration'}
+                  value={
+                    row?.duration ||
+                    getDurationString(
+                      Date.parse(row?.date) - Date.parse(row?.date)
+                    )
+                  }
+                />
+              </Box>
+            </>
+          )}
+          <Box gridColumn={'1'} gridRow="3">
             <MyChip label={'Opened'} value={formatDate(row?.date)} />
           </Box>
-          <Box gridColumn="2" gridRow="4">
+          <Box gridColumn={'1'} gridRow="4">
             <MyChip
               label={row?.active ? 'Opened: ' : 'Closed: '}
               value={
@@ -172,8 +191,8 @@ const TradeItem = ({ row, page }) => {
           <Box gridColumn="4" gridRow="4">
             <MyChip
               label={'Entry'}
-              value={`${parseFloat(row?.price)?.toFixed(
-                2
+              value={`${numberWithCommas(
+                row?.price
               )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
@@ -182,12 +201,10 @@ const TradeItem = ({ row, page }) => {
           </Box>
           <Box gridColumn="5" gridRow="4">
             <MyChip
-              label={'Current Price'}
+              label={row.active ? 'Current Price' : 'Exit Price'}
               value={`${numberWithCommas(
-                coins
-                  .find((coin) => coin?.symbol === row.ticker)
-                  ?.current_price.toFixed(2)
-              )} ${currency}`}
+                row.active ? row.current_price : row.exit
+              )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
         </Box>
@@ -197,3 +214,18 @@ const TradeItem = ({ row, page }) => {
 };
 
 export default TradeItem;
+export const getDurationString = (ms) => {
+  // var ms = 43411993;
+  var d = new Date(1000 * Math.round(ms / 1000)); // round to nearest second
+  function pad(i) {
+    return ('0' + i).slice(-2);
+  }
+  var str =
+    d.getUTCHours() +
+    ':' +
+    pad(d.getUTCMinutes()) +
+    ':' +
+    pad(d.getUTCSeconds());
+
+  return str;
+};

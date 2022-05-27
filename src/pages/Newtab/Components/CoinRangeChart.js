@@ -28,8 +28,9 @@ const CoinRangeChart = ({ trade }) => {
     fetchHistoricalData,
   } = ChartState();
 
-  const [historicalRangeData, setHistoricalRangeData] = useState();
-
+  const [historicalRangeData, setHistoricalRangeData] = useState([]);
+  const [suppliedData, setSuppliedData] = useState([]);
+  const [label, setLabel] = useState('');
   const [loading, setLoading] = useState(false);
 
   const fetchHistoricalRangeData = async () => {
@@ -43,23 +44,45 @@ const CoinRangeChart = ({ trade }) => {
         Math.floor(new Date(trade.closed || Date.now()).getTime() / 1000)
       )
     );
+    const { prices } = data;
 
-    if (data?.prices.length > 10) {
-      setHistoricalRangeData(data.prices);
+    if (prices.length > 1) {
+      setHistoricalRangeData(prices);
+      setLoading(false);
+      setLabel('Trade snapshot');
     } else {
       fetchHistoricalData(trade?.coin);
+      setLabel('Past 24 hours');
     }
-    setLoading(false);
   };
 
   useEffect(() => {
+    if (true) {
+      historicalRangeData?.length > 2
+        ? setSuppliedData(historicalRangeData)
+        : setSuppliedData(historicalData);
+      console.log(
+        '🚀 ~ file: CoinRangeChart.js ~ line 67 ~ useEffect ~ historicalData',
+        historicalData
+      );
+      console.log(
+        '🚀 ~ file: CoinRangeChart.js ~ line 32 ~ CoinRangeChart ~ historicalRangeData',
+        historicalRangeData
+      );
+    }
+  });
+
+  useEffect(() => {
     const intervalId = setInterval(() => {
+      historicalRangeData?.length > 1 && setLoading(false);
       //assign interval to a variable to clear it.
-      !historicalRangeData && setHistoricalRangeData(historicalData);
+      historicalRangeData === undefined &&
+        loading &&
+        setHistoricalRangeData(historicalData);
     }, 500);
 
-    return () => clearInterval(intervalId); //This is important
-  }, [historicalRangeData]);
+    // This is important
+  }, []);
 
   useEffect(() => {
     fetchHistoricalRangeData();
@@ -67,13 +90,13 @@ const CoinRangeChart = ({ trade }) => {
 
   return (
     <>
-      {!historicalRangeData ? (
+      {!suppliedData ? (
         <CircularProgress sx={{ color: currentColor }} />
       ) : (
         <>
           <Line
             data={{
-              labels: historicalRangeData?.map((coin) => {
+              labels: suppliedData?.map((coin) => {
                 let date = new Date(coin[0]);
 
                 let time =
@@ -81,15 +104,15 @@ const CoinRangeChart = ({ trade }) => {
                     ? `${date.getHours() - 12}:${date.getMinutes()} PM`
                     : `${date.getHours()}:${date.getMinutes()} AM`;
                 // return '';
-                return historicalRangeData?.length < 300
+                return suppliedData?.length < 300
                   ? time
                   : date.toLocaleDateString();
               }),
 
               datasets: [
                 {
-                  data: historicalRangeData?.map((coin) => coin[1]),
-                  label: `Price`,
+                  data: suppliedData?.map((coin) => coin[1]),
+                  label: label,
                   borderColor: currentColor,
                   color: 'transparent',
                 },
@@ -104,7 +127,7 @@ const CoinRangeChart = ({ trade }) => {
               },
               plugins: {
                 legend: {
-                  display: false,
+                  display: true,
                 },
               },
             }}

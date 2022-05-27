@@ -100,6 +100,8 @@ export default function AppWideSidebar({ children }) {
     setPage,
     handleFilter,
     filter,
+    showingOverview,
+    setShowingOverview,
   } = CryptoState();
 
   const [open, setOpen] = React.useState(false);
@@ -115,13 +117,20 @@ export default function AppWideSidebar({ children }) {
   const decideBackground = (index) => {
     switch (index) {
       case 0:
-        return !showTrades && !id ? tertiaryalt : primarybg;
+        return !showTrades && !id && !showingOverview ? tertiaryalt : primarybg;
         break;
       case 1:
-        return showTrades && filter !== 'closed' ? tertiaryalt : primarybg;
+        return showTrades && filter !== 'closed' && !showingOverview
+          ? tertiaryalt
+          : primarybg;
         break;
       case 2:
-        return showTrades && filter === 'closed' ? tertiaryalt : primarybg;
+        return showTrades && filter === 'closed' && !showingOverview
+          ? tertiaryalt
+          : primarybg;
+        break;
+      case 3:
+        return showingOverview ? tertiaryalt : primarybg;
         break;
       default:
         return;
@@ -189,6 +198,7 @@ export default function AppWideSidebar({ children }) {
                 }}
                 onClick={() => {
                   setId('');
+                  setShowingOverview(false);
                   index === 0 && handleDrawerClose();
                   switch (index) {
                     case 0:
@@ -234,18 +244,40 @@ export default function AppWideSidebar({ children }) {
             <ListItem
               key={text}
               disablePadding
-              sx={{
-                display: 'block',
-                '&:hover': {
-                  backgroundColor: secondarybg,
-                },
-              }}
+              sx={
+                index === 0
+                  ? {
+                      display: 'block',
+                      backgroundColor: decideBackground(3),
+                      color:
+                        decideBackground(3) === tertiaryalt
+                          ? primarybg
+                          : tertiaryalt,
+                      '&:hover': {
+                        backgroundColor: secondarybg,
+                        color: tertiaryalt,
+                      },
+                    }
+                  : {
+                      display: 'block',
+                      '&:hover': {
+                        backgroundColor: secondarybg,
+                      },
+                    }
+              }
             >
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                }}
+                onClick={() => {
+                  if (index === 0) {
+                    setId('');
+                    setShowingOverview(true);
+                    setShowTrades(true);
+                  }
                 }}
               >
                 <ListItemIcon
