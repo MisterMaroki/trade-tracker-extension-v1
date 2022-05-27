@@ -1,111 +1,174 @@
 import React from 'react';
-import { Sankey, Tooltip } from 'recharts';
+import { Layer, Rectangle, Sankey, Tooltip } from 'recharts';
 import { CryptoState } from '../CryptoContext';
-const data0 = {
-  nodes: [
-    {
-      name: 'Total',
-    },
-    {
-      name: 'Win',
-    },
-    {
-      name: 'Long',
-    },
-    {
-      name: 'Short',
-    },
-    {
-      name: 'Loss',
-    },
-    {
-      name: 'Long',
-    },
-    {
-      name: 'Short',
-    },
-
-    {
-      name: 'Total Long',
-    },
-    {
-      name: 'Total Short',
-    },
-  ],
-  links: [
-    {
-      source: 0,
-      target: 1,
-      value: 27,
-    },
-    {
-      source: 0,
-      target: 4,
-      value: 73,
-    },
-    {
-      source: 1,
-      target: 2,
-      value: 5,
-    },
-    {
-      source: 1,
-      target: 3,
-      value: 22,
-    },
-
-    {
-      source: 4,
-      target: 5,
-      value: 25,
-    },
-    {
-      source: 4,
-      target: 6,
-      value: 48,
-    },
-    {
-      source: 5,
-      target: 7,
-      value: 25,
-    },
-    {
-      source: 6,
-      target: 8,
-      value: 48,
-    },
-    {
-      source: 2,
-      target: 7,
-      value: 5,
-    },
-    {
-      source: 3,
-      target: 8,
-      value: 22,
-    },
-  ],
-};
+import { white } from '../styles/themeVariables';
 
 const PerformanceChart = () => {
-  const { currentColor } = CryptoState();
+  const { currentColor, trades } = CryptoState();
+  const allClosedTrades = trades.filter((trade) => !trade.active);
+
+  const totalClosedPositions = allClosedTrades?.length;
+  const allWins = allClosedTrades?.filter(
+    (trade) => trade.value > trade.invested
+  );
+  const allLosses = allClosedTrades?.filter(
+    (trade) => trade.value < trade.invested
+  );
+  const allWinsShort = allWins?.filter((trade) => trade.direction === 'sell');
+  const allWinsLong = allWins?.filter((trade) => trade.direction === 'buy');
+  const allLossesLong = allLosses?.filter((trade) => trade.direction === 'buy');
+
+  const allLossesShort = allLosses?.filter(
+    (trade) => trade.direction === 'sell'
+  );
+
+  const data0 = {
+    nodes: [
+      {
+        name: 'Closed',
+      },
+      {
+        name: 'Win',
+      },
+      {
+        name: 'Long',
+      },
+      {
+        name: 'Short',
+      },
+      {
+        name: 'Loss',
+      },
+      {
+        name: 'Long',
+      },
+      {
+        name: 'Short',
+      },
+
+      {
+        name: 'Total Long',
+      },
+      {
+        name: 'Total Short',
+      },
+    ],
+    links: [
+      {
+        source: 0,
+        target: 1,
+        value: allWins?.length,
+      },
+      {
+        source: 0,
+        target: 4,
+        value: allLosses?.length,
+      },
+      {
+        source: 1,
+        target: 2,
+        value: allWinsLong?.length,
+      },
+      {
+        source: 1,
+        target: 3,
+        value: allWinsShort?.length,
+      },
+
+      {
+        source: 4,
+        target: 5,
+        value: allLossesLong?.length,
+      },
+      {
+        source: 4,
+        target: 6,
+        value: allLossesShort?.length,
+      },
+      {
+        source: 5,
+        target: 7,
+        value: allLossesLong?.length,
+      },
+      {
+        source: 6,
+        target: 8,
+        value: allLossesShort?.length,
+      },
+      {
+        source: 2,
+        target: 7,
+        value: allWinsLong?.length,
+      },
+      {
+        source: 3,
+        target: 8,
+        value: allLossesShort?.length,
+      },
+    ],
+  };
+
+  const MyCustomNode = ({
+    x,
+    y,
+    width,
+    height,
+    index,
+    payload,
+    containerWidth,
+  }) => {
+    const isOut = x + width + 6 > containerWidth;
+    return (
+      <Layer key={`CustomNode${index}`}>
+        <Rectangle
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          fill={currentColor}
+          fillOpacity="1"
+        />
+        <text
+          textAnchor={isOut ? 'end' : 'start'}
+          x={isOut ? x - 6 : x + width + 6}
+          y={y + height / 2}
+          fontSize="14"
+          stroke={white}
+        >
+          {payload.name}
+        </text>
+        <text
+          textAnchor={isOut ? 'end' : 'start'}
+          x={isOut ? x - 6 : x + width + 6}
+          y={y + height / 2 + 13}
+          fontSize="12"
+          stroke={currentColor}
+          strokeWidth={2}
+        >
+          {`${payload.value}`}
+        </text>
+      </Layer>
+    );
+  };
   return (
-    <Sankey
-      width={960}
-      height={500}
-      data={data0}
-      node={{ stroke: currentColor, strokeWidth: 2 }}
-      nodePadding={50}
-      margin={{
-        left: 200,
-        right: 200,
-        top: 100,
-        bottom: 100,
-      }}
-      link={{ stroke: currentColor }}
-    >
-      <Tooltip />
-    </Sankey>
+    <div style={{ width: '100%', height: '100%' }}>
+      <Sankey
+        width={600}
+        height={400}
+        data={data0}
+        node={MyCustomNode}
+        nodePadding={50}
+        margin={{
+          left: 70,
+          right: 0,
+          top: 100,
+          bottom: 20,
+        }}
+        link={{ stroke: currentColor }}
+      >
+        <Tooltip />
+      </Sankey>
+    </div>
   );
 };
 

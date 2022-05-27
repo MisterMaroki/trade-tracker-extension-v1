@@ -81,7 +81,7 @@ const MiniTradeItem = ({ row }) => {
               className={checkPnl(row) >= 0 ? 'green' : 'red'}
               style={{
                 fontSize:
-                  checkPnl(row) >= 10000 || checkPnl(row) <= -10000 ? 12 : 16,
+                  checkPnl(row) >= 1000 || checkPnl(row) <= -1000 ? 12 : 16,
               }}
             >
               {checkPnl(row) > 0 && '+'}

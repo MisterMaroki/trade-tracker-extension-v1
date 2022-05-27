@@ -22,6 +22,9 @@ import { chartDays } from '../../Content/config/data';
 import PerformanceChart from '../Components/PerformanceChart';
 import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
+import PerformanceSummary from '../Components/PerformanceSummary';
+import WinLossPie from '../Components/WinLossPie';
+import LongShortPie from '../Components/LongShortPie';
 
 const OverviewPage = () => {
   const { trades } = CryptoState();
@@ -39,19 +42,23 @@ const OverviewPage = () => {
         >
           <Box gridColumn="1/7 " gridRow="2/8" className="chart-container">
             <GridItem className="carousel">
-              {/* <PerformanceChart /> */}
+              <PerformanceSummary />
             </GridItem>
           </Box>
           <Box gridColumn="7/12 " gridRow="2/8" className="chart-container">
             <GridItem className="carousel">
-              {/* <PerformanceChart /> */}
+              <WinLossPie />
             </GridItem>
           </Box>
           <Box gridColumn="12/-1" gridRow="2/8">
-            <GridItem className="carousel"></GridItem>
+            <GridItem className="carousel">
+              <LongShortPie />
+            </GridItem>
           </Box>
           <Box gridColumn="span 10" gridRow="8/-1 ">
-            <GridItem className="carousel"></GridItem>
+            <GridItem className="carousel">
+              <PerformanceChart />
+            </GridItem>
           </Box>
           <Box gridColumn="span 6" gridRow="8/-1">
             <GridItem className="carousel"></GridItem>

@@ -169,10 +169,6 @@ const CryptoContext = ({ children }) => {
       let enrichedRows = await Promise.all(
         trades?.map(async (trade) => {
           const currentPrice = await findProfits(trade, 'current-price');
-          console.log(
-            '🚀 ~ file: CryptoContext.js ~ line 172 ~ trades?.map ~ currentPrice',
-            currentPrice
-          );
 
           const currentMarketValue = await findProfits(trade, 'current-value');
           const percentChange = await findProfits(trade, 'percent-change');
