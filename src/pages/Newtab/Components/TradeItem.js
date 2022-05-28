@@ -10,7 +10,7 @@ import CloseTradeButton from './CloseTradeButton';
 import MyChip from './MyChip';
 import { formatDate } from './TradesTable';
 import Tilt from 'react-parallax-tilt';
-import CoinRangeChart from './CoinRangeChart';
+import CoinRangeChart from './charts/CoinRangeChart';
 
 export const checkPnl = (row) => {
   return (row.value - row.invested).toFixed(2);

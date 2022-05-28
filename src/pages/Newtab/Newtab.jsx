@@ -15,6 +15,7 @@ import OverviewPage from './Pages/OverviewPage';
 
 const Newtab = () => {
   const { id, showTrades, showingOverview } = CryptoState();
+
   return (
     <>
       <Navbar />

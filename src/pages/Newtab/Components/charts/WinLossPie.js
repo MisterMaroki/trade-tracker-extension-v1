@@ -1,15 +1,15 @@
 import { Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
-import ChartContext, { ChartState } from '../ChartContext';
-import { CryptoState } from '../CryptoContext';
+import ChartContext, { ChartState } from '../../ChartContext';
+import { CryptoState } from '../../CryptoContext';
 import {
   PieContainer,
   primarytext,
   secondarybg,
   typographySx,
   white,
-} from '../styles/themeVariables';
+} from '../../styles/themeVariables';
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -75,7 +75,7 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill={primarytext}
-      >{`${payload.name === 'Longs' ? 'Longs: ' : 'Shorts: '} ${value}`}</text>
+      >{`${payload.name === 'Wins' ? 'Wins: ' : 'Losses: '} ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -91,7 +91,7 @@ const renderActiveShape = (props) => {
 
 export default function LongShortPie() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const { allLongs, allShorts } = ChartState();
+  const { allWins, allLosses } = ChartState();
   const { trades, currentColor } = CryptoState();
   const onPieEnter = useCallback(
     (_, index) => {
@@ -100,15 +100,15 @@ export default function LongShortPie() {
     [setActiveIndex]
   );
   const data = [
-    { name: 'Longs', value: allLongs?.length },
-    { name: 'Shorts', value: allShorts?.length },
+    { name: 'Wins', value: allWins?.length },
+    { name: 'Losses', value: allLosses?.length },
   ];
 
   return (
     <PieContainer>
       <div>
         <Typography variant="h6" style={typographySx}>
-          Long/Short Rate
+          Win Rate
         </Typography>
       </div>
       <ResponsiveContainer className="carousel">

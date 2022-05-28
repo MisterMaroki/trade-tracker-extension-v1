@@ -3,12 +3,12 @@ import axios from 'axios';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { HistoricalRangeChart } from '../../Content/config/api';
-import { CryptoState } from '../CryptoContext';
+import { HistoricalRangeChart } from '../../../Content/config/api';
+import { CryptoState } from '../../CryptoContext';
 import 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { numberWithCommas } from './banner/Carousel';
-import { ChartState } from '../ChartContext';
+import { numberWithCommas } from './../banner/Carousel';
+import { ChartState } from '../../ChartContext';
 
 export function toTimestamp(strDate) {
   var datum = Date.parse(strDate);

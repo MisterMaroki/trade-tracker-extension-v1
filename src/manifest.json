@@ -4,6 +4,7 @@
   "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
+  "permissions": ["storage", "activeTab", "scripting", "identity"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
@@ -27,5 +28,13 @@
       "resources": ["content.styles.css", "icon-34.png", "icon-34.png"],
       "matches": []
     }
-  ]
+  ],
+  "oauth2": {
+    "client_id": "204731758491-84plo77tp8frbotkot0n6mnn1s57vk50.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg+xhnmVnXP9FZ7rlQhRc1kYWc+Yr5/3fDQaEDzmBFgEJDkXj7nQGcqTVoIern9HiIJ1jqJhmFAgDdi3FrB/r8hGDAH7FSyDZvJbw6xcA9gmBcuHb5svixoQIZefZQBvRuHWcZqGNXDf0TpAg7n2zTW91tS8WSUuIJa+pD4R+6vditcvG+N90QG471FTIm0RZE3C8oReHy8sJpK2Dq/cU19F8KnY23eGilxLhjJO6UFCrsmYOb1jpj/wQPGx0ZTvmwUjQ3rGFHXbDx+WuU6c19Ot0Iv7ZVIqzQS0BpJm0W5dX2gXVke/N4AwRVUYzJxnNj52ERsfG44MMmW2eH+DbLQIDAQAB"
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
 import { CryptoState } from '../CryptoContext';
-import { Button, IconButton, Stack, TextField } from '@mui/material';
+import { Avatar, Button, IconButton, Stack, TextField } from '@mui/material';
 import MySelect from './MySelect';
 import { primarytext, tertiary, textFieldSx } from '../styles/themeVariables';
 import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
@@ -27,24 +27,45 @@ const Navbar = () => {
     setShowingOverview,
   } = CryptoState();
 
+  const [openLogin, setopenLogin] = useState(false);
+
   const [nameInput, setNameInput] = useState('');
-  const { user, setUser } = UserState();
+  const { user, setUser, initFirebaseApp, loggedIn, signOut } = UserState();
+  console.log('🚀 ~ file: Navbar.jsx ~ line 34 ~ Navbar ~ user', user);
 
   return (
     <>
       <header>
         {user ? (
-          <h6
-            style={{ cursor: 'pointer', color: currentColor }}
-            onClick={() => {
-              setId('');
-              setShowTrades(false);
-            }}
-          >
-            <span>
-              {user.charAt(0).toUpperCase() + user.slice(1)}'s Dashboard
-            </span>
-          </h6>
+          !loggedIn ? (
+            // <h6
+            //   style={{ cursor: 'pointer', color: currentColor }}
+            //   onClick={() => {
+            //     setId('');
+            //     setShowTrades(false);
+            //   }}
+            // >
+            //   <span>
+            //     {user.charAt(0).toUpperCase() + user.slice(1)}'s Dashboard
+            //   </span>
+            // </h6>
+
+            <div className="social__login">
+              <button
+                className="btn btn__google"
+                onClick={() => initFirebaseApp()}
+              >
+                <i className="fa fa-google"></i>GOOGLE
+              </button>
+            </div>
+          ) : (
+            <Avatar
+              src={user?.photoURL}
+              alt="user avatar"
+              style={{ background: 'none' }}
+              onClick={() => signOut()}
+            />
+          )
         ) : (
           <TextField
             label="What's your name?"

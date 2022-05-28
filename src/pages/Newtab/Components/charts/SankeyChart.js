@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layer, Rectangle, Sankey, Tooltip } from 'recharts';
-import { ChartState } from '../ChartContext';
-import { CryptoState } from '../CryptoContext';
-import { white } from '../styles/themeVariables';
+import { ChartState } from '../../ChartContext';
+import { CryptoState } from '../../CryptoContext';
+import { white } from '../../styles/themeVariables';
 
 const SankeyChart = () => {
   const { currentColor, trades } = CryptoState();

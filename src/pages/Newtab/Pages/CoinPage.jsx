@@ -5,7 +5,7 @@ import {
   ToggleButtonGroup,
 } from '@mui/material';
 import React, { useRef } from 'react';
-import CoinChart from '../Components/CoinChart';
+import CoinChart from '../Components/charts/CoinChart';
 import { CryptoState } from '../CryptoContext';
 import {
   CoinPageContainer,
@@ -19,7 +19,7 @@ import CoinPageCoinItem from '../Components/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
-import SankeyChart from '../Components/SankeyChart';
+import SankeyChart from '../Components/charts/SankeyChart';
 import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
 

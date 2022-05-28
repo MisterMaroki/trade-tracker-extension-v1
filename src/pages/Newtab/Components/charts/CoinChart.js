@@ -4,13 +4,17 @@ import axios from 'axios';
 import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { HistoricalChart } from '../../Content/config/api';
-import { CryptoState } from '../CryptoContext';
+import { HistoricalChart } from '../../../Content/config/api';
+import { CryptoState } from '../../CryptoContext';
 import 'chart.js/auto';
 import { Bar, Chart, Line } from 'react-chartjs-2';
-import { chartDays } from '../../Content/config/data';
-import { ChartContainer, primarytext, purple } from '../styles/themeVariables';
-import { ChartState } from '../ChartContext';
+import { chartDays } from '../../../Content/config/data';
+import {
+  ChartContainer,
+  primarytext,
+  purple,
+} from '../../styles/themeVariables';
+import { ChartState } from '../../ChartContext';
 
 const CoinChart = () => {
   const { currency, trades, setTrades, coin, currentColor } = CryptoState();
