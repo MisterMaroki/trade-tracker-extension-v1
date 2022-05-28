@@ -37,7 +37,7 @@ const ChartContext = ({ children }) => {
     borderColor: '#05595b',
   };
 
-  const allClosedTrades = trades.filter((trade) => !trade.active);
+  const allClosedTrades = trades.filter((trade) => trade.value);
 
   const totalClosedPositions = allClosedTrades?.length;
   const allLongs = allClosedTrades?.filter(

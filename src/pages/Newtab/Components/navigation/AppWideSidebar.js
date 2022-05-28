@@ -17,8 +17,8 @@ import {
   primarybg,
   secondarybg,
   tertiaryalt,
-} from '../styles/themeVariables';
-import { CryptoState } from '../CryptoContext';
+} from '../../styles/themeVariables';
+import { CryptoState } from '../../CryptoContext';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import {
   DataThresholding,

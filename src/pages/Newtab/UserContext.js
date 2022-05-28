@@ -17,7 +17,7 @@ const UserContext = ({ children }) => {
   const auth = getAuth(firebaseApp);
   setPersistence(auth, browserLocalPersistence);
 
-  function init() {
+  const init = () => {
     // Detect auth state
     onAuthStateChanged(auth, (user) => {
       if (user != null) {
@@ -29,7 +29,7 @@ const UserContext = ({ children }) => {
         console.log('No user logged in!');
       }
     });
-  }
+  };
   init();
 
   const initFirebaseApp = () => {
@@ -51,7 +51,7 @@ const UserContext = ({ children }) => {
   /**
    * Starts the sign-in process.
    */
-  function startSignIn() {
+  const startSignIn = () => {
     console.log('started SignIn');
     //https://firebase.google.com/docs/auth/web/manage-users
     const user = auth.currentUser;
@@ -63,7 +63,7 @@ const UserContext = ({ children }) => {
       console.log('proceed');
       startAuth(true);
     }
-  }
+  };
 
   function signOut() {
     if (user) {
@@ -73,7 +73,7 @@ const UserContext = ({ children }) => {
     }
   }
 
-  function startAuth(interactive) {
+  const startAuth = (interactive) => {
     console.log('Auth trying');
     chrome.identity.getAuthToken({ interactive: true }, function (token) {
       //Token:  This requests an OAuth token from the Chrome Identity API.
@@ -102,7 +102,7 @@ const UserContext = ({ children }) => {
         console.error('The OAuth token was null');
       }
     });
-  }
+  };
 
   useEffect(() => {
     user && localStorage.setItem('user', user);

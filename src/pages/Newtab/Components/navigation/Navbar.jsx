@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 // import DiceGame from '../Components/tenzies/DiceGame';
 // import Select from 'react-select';
-import { CryptoState } from '../CryptoContext';
+import { CryptoState } from '../../CryptoContext';
 import { Avatar, Button, IconButton, Stack, TextField } from '@mui/material';
-import MySelect from './MySelect';
-import { primarytext, tertiary, textFieldSx } from '../styles/themeVariables';
-import { CancelOutlined, ThumbUpOffAltOutlined } from '@mui/icons-material';
-import { UserState } from '../UserContext';
-import CoinItem from './CoinItem';
+import MySelect from './../MySelect';
+import {
+  ColorButton,
+  primarytext,
+  tertiary,
+  textFieldSx,
+} from '../../styles/themeVariables';
+import {
+  CancelOutlined,
+  Google,
+  ThumbUpOffAltOutlined,
+} from '@mui/icons-material';
+import { UserState } from '../../UserContext';
+import CoinItem from './../CoinItem';
 import FadeIn from 'react-fade-in';
 import Tilt from 'react-parallax-tilt';
 
@@ -35,7 +44,78 @@ const Navbar = () => {
 
   return (
     <>
-      <header>
+      <header className="flex" style={{ justifyContent: 'space-between' }}>
+        <Stack direction="row" spacing={2}>
+          <Button
+            sx={{
+              color: !showTrades && !id ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => {
+              setId('');
+              setShowTrades(false);
+              setShowingOverview(false);
+            }}
+          >
+            Home
+          </Button>
+
+          <Button
+            sx={{
+              color: showTrades ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => {
+              setShowTrades(!showTrades);
+              setShowingOverview(false);
+            }}
+          >
+            Trades
+          </Button>
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={2}
+          style={{ marginLeft: 'auto', marginRight: 'auto' }}
+        >
+          <TextField
+            // clearable
+            value={search}
+            label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
+            sx={textFieldSx}
+            size="small"
+            onChange={(e) => {
+              setPage(1);
+              setSearch(e.target.value.toLowerCase());
+            }}
+            autoComplete="off"
+            InputProps={{
+              endAdornment: search.length > 0 && (
+                <IconButton
+                  variant="outlined"
+                  onClick={() => setSearch('')}
+                  sx={{
+                    padding: 0,
+                    position: 'absolute',
+                    right: 10,
+                    top: 8,
+                  }}
+                >
+                  <CancelOutlined sx={{ color: currentColor }} />
+                </IconButton>
+              ),
+            }}
+          />
+
+          <MySelect />
+        </Stack>
+
         {user ? (
           !loggedIn ? (
             // <h6
@@ -50,14 +130,7 @@ const Navbar = () => {
             //   </span>
             // </h6>
 
-            <div className="social__login">
-              <button
-                className="btn btn__google"
-                onClick={() => initFirebaseApp()}
-              >
-                <i className="fa fa-google"></i>GOOGLE
-              </button>
-            </div>
+            <ColorButton onClick={() => initFirebaseApp()}>Login</ColorButton>
           ) : (
             <Avatar
               src={user?.photoURL}
@@ -93,73 +166,6 @@ const Navbar = () => {
             }}
           />
         )}
-
-        <Stack direction="row" spacing={2}>
-          <TextField
-            // clearable
-            value={search}
-            label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
-            sx={textFieldSx}
-            size="small"
-            onChange={(e) => {
-              setPage(1);
-              setSearch(e.target.value.toLowerCase());
-            }}
-            autoComplete="off"
-            InputProps={{
-              endAdornment: search.length > 0 && (
-                <IconButton
-                  variant="outlined"
-                  onClick={() => setSearch('')}
-                  sx={{
-                    padding: 0,
-                    position: 'absolute',
-                    right: 10,
-                    top: 8,
-                  }}
-                >
-                  <CancelOutlined sx={{ color: currentColor }} />
-                </IconButton>
-              ),
-            }}
-          />
-
-          <MySelect />
-        </Stack>
-        <Stack direction="row" spacing={2}>
-          <Button
-            sx={{
-              color: !showTrades && !id ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setId('');
-              setShowTrades(false);
-              setShowingOverview(false);
-            }}
-          >
-            Home
-          </Button>
-
-          <Button
-            sx={{
-              color: showTrades ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setShowTrades(!showTrades);
-              setShowingOverview(false);
-            }}
-          >
-            Trades
-          </Button>
-        </Stack>
       </header>
       {search &&
         !showTrades &&

@@ -189,7 +189,7 @@ const CryptoContext = ({ children }) => {
       setTrades(enrichedRows);
     };
     rowDataEnrichment();
-  }, [count, filter]);
+  }, [count, filter, showTrades, whichCoinsToShow]);
 
   const handleSearch = () => {
     if (coins?.length > 20 && !loading) {

@@ -16,6 +16,22 @@ const SankeyChart = () => {
     allLossesLong,
     allLossesShort,
   } = ChartState();
+  // console.log(
+  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWinsShort',
+  //   allWinsShort
+  // );
+  // console.log(
+  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWinsLong',
+  //   allWinsLong
+  // );
+  // console.log(
+  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allLosses',
+  //   allLosses
+  // );
+  // console.log(
+  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWins',
+  //   allWins
+  // );
 
   const data0 = {
     nodes: [
@@ -102,6 +118,14 @@ const SankeyChart = () => {
       },
     ],
   };
+  console.log(
+    '🚀 ~ file: SankeyChart.js ~ line 119 ~ SankeyChart ~ allLossesShort?.length',
+    allLossesShort?.length
+  );
+  console.log(
+    '🚀 ~ file: SankeyChart.js ~ line 114 ~ SankeyChart ~ allWinsLong?.length',
+    allWinsLong?.length
+  );
 
   const MyCustomNode = ({
     x,
