@@ -3,6 +3,7 @@ import { Layer, Rectangle, Sankey, Tooltip } from 'recharts';
 import { ChartState } from '../../ChartContext';
 import { CryptoState } from '../../CryptoContext';
 import { white } from '../../styles/themeVariables';
+import { UserState } from '../../UserContext';
 
 const SankeyChart = () => {
   const { currentColor, trades } = CryptoState();
@@ -16,22 +17,7 @@ const SankeyChart = () => {
     allLossesLong,
     allLossesShort,
   } = ChartState();
-  // console.log(
-  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWinsShort',
-  //   allWinsShort
-  // );
-  // console.log(
-  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWinsLong',
-  //   allWinsLong
-  // );
-  // console.log(
-  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allLosses',
-  //   allLosses
-  // );
-  // console.log(
-  //   '🚀 ~ file: SankeyChart.js ~ line 19 ~ SankeyChart ~ allWins',
-  //   allWins
-  // );
+  const { open } = UserState();
 
   const data0 = {
     nodes: [
@@ -41,12 +27,7 @@ const SankeyChart = () => {
       {
         name: 'Win',
       },
-      {
-        name: 'Long',
-      },
-      {
-        name: 'Short',
-      },
+
       {
         name: 'Loss',
       },
@@ -55,13 +36,6 @@ const SankeyChart = () => {
       },
       {
         name: 'Short',
-      },
-
-      {
-        name: 'Total Long',
-      },
-      {
-        name: 'Total Short',
       },
     ],
     links: [
@@ -72,60 +46,32 @@ const SankeyChart = () => {
       },
       {
         source: 0,
-        target: 4,
+        target: 2,
         value: allLosses?.length,
       },
       {
         source: 1,
-        target: 2,
+        target: 3,
         value: allWinsLong?.length,
       },
       {
         source: 1,
-        target: 3,
+        target: 4,
         value: allWinsShort?.length,
       },
 
       {
-        source: 4,
-        target: 5,
+        source: 2,
+        target: 3,
         value: allLossesLong?.length,
-      },
-      {
-        source: 4,
-        target: 6,
-        value: allLossesShort?.length,
-      },
-      {
-        source: 5,
-        target: 7,
-        value: allLossesLong?.length,
-      },
-      {
-        source: 6,
-        target: 8,
-        value: allLossesShort?.length,
       },
       {
         source: 2,
-        target: 7,
-        value: allWinsLong?.length,
-      },
-      {
-        source: 3,
-        target: 8,
+        target: 4,
         value: allLossesShort?.length,
       },
     ],
   };
-  console.log(
-    '🚀 ~ file: SankeyChart.js ~ line 119 ~ SankeyChart ~ allLossesShort?.length',
-    allLossesShort?.length
-  );
-  console.log(
-    '🚀 ~ file: SankeyChart.js ~ line 114 ~ SankeyChart ~ allWinsLong?.length',
-    allWinsLong?.length
-  );
 
   const MyCustomNode = ({
     x,
@@ -178,7 +124,7 @@ const SankeyChart = () => {
         node={MyCustomNode}
         nodePadding={50}
         margin={{
-          left: 70,
+          left: open ? 70 : 160,
           right: 0,
           top: 100,
           bottom: 20,

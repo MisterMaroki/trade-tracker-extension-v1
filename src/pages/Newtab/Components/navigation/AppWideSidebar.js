@@ -28,6 +28,7 @@ import {
   KeyboardDoubleArrowRight,
   PriceChange,
 } from '@mui/icons-material';
+import { UserState } from '../../UserContext';
 
 const drawerWidth = 240;
 
@@ -104,7 +105,7 @@ export default function AppWideSidebar({ children }) {
     setShowingOverview,
   } = CryptoState();
 
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = UserState();
 
   const handleDrawerOpen = () => {
     setOpen(true);

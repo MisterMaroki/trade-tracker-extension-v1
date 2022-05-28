@@ -37,7 +37,7 @@ const ChartContext = ({ children }) => {
     borderColor: '#05595b',
   };
 
-  const allClosedTrades = trades.filter((trade) => trade.value);
+  const allClosedTrades = trades.filter((trade) => !trade.active);
 
   const totalClosedPositions = allClosedTrades?.length;
   const allLongs = allClosedTrades?.filter(
@@ -76,7 +76,7 @@ const ChartContext = ({ children }) => {
 
   const averageInvestment = (arr) => totalInvested(arr) / arr.length;
 
-  const netProfit = (arr) => averageInvestment(arr) * averagePercentGain(arr);
+  const netProfit = (arr) => totalReturns(arr) - totalInvested(arr);
 
   return (
     <Chart.Provider

@@ -12,7 +12,7 @@ const User = createContext();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem('user') || '');
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const [open, setOpen] = useState(false);
   // Auth instance for the current firebaseApp
   const auth = getAuth(firebaseApp);
   setPersistence(auth, browserLocalPersistence);
@@ -110,7 +110,16 @@ const UserContext = ({ children }) => {
 
   return (
     <User.Provider
-      value={{ user, setUser, initFirebaseApp, loggedIn, setLoggedIn, signOut }}
+      value={{
+        user,
+        setUser,
+        initFirebaseApp,
+        loggedIn,
+        setLoggedIn,
+        signOut,
+        open,
+        setOpen,
+      }}
     >
       {children}
     </User.Provider>

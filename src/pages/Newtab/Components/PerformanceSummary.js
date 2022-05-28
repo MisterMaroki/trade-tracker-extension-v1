@@ -20,20 +20,6 @@ const PerformanceSummary = () => {
     totalInvested,
     netProfit,
   } = ChartState();
-  console.log(
-    '🚀 ~ file: PerformanceSummary.js ~ line 23 ~ PerformanceSummary ~ averagePercentGain',
-    totalInvested(allClosedTrades)
-  );
-  console.log(
-    '🚀 ~ file: PerformanceSummary.js ~ line 23 ~ PerformanceSummary ~ averagePercentGain',
-    totalReturns(allClosedTrades)
-  );
-  console.log(
-    '🚀 ~ file: PerformanceSummary.js ~ line 23 ~ PerformanceSummary ~ averagePercentGain',
-    totalClosedPositions,
-    allLongs.length,
-    allShorts.length
-  );
 
   return (
     <Box
@@ -151,7 +137,6 @@ const PerformanceSummary = () => {
             Invested:
           </h6>
           <span className={'green'} style={{ fontSize: 15, margin: '0 auto' }}>
-            {netProfit(allClosedTrades) >= 0 && '+'}
             {numberWithCommas(totalInvested(allClosedTrades).toFixed(2))}{' '}
             {currency}
           </span>
