@@ -17,7 +17,7 @@ const CryptoContext = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState('');
   const [id, setId] = useState('');
-  const [showTrades, setShowTrades] = useState('');
+  const [showTrades, setShowTrades] = useState(false);
   const [page, setPage] = useState(1);
   const [trades, setTrades] = useState(
     localStorage.getItem('trades')?.length > 1
@@ -87,9 +87,11 @@ const CryptoContext = ({ children }) => {
     fetchCoins();
   }, [currency]);
 
-  const [count, setCount] = useState(0);
+  const initalState = 0;
+  const [count, setCount] = useState(initalState);
 
   const tradeNow = (direction, quantity) => {
+    console.log(coin);
     if (+quantity > 0) {
       setTrades((prevTrades) => [
         {
@@ -97,7 +99,7 @@ const CryptoContext = ({ children }) => {
           coin: coin.id,
           ticker: coin.symbol,
           fiat: currency.toLowerCase(),
-          price: coins.find((coi) => coi.symbol === coin.symbol)?.current_price,
+          price: coin?.market_data?.current_price[currency.toLowerCase()],
           date: new Date(),
           quantity: +quantity,
           direction: direction === 'buy' ? 'buy' : 'sell',
@@ -162,6 +164,7 @@ const CryptoContext = ({ children }) => {
       })
     );
     setTrades(enrichedRows);
+    console.log('ran');
   };
 
   useEffect(() => {

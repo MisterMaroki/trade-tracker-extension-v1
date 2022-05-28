@@ -19,7 +19,7 @@ import CoinPageCoinItem from '../Components/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
-import PerformanceChart from '../Components/PerformanceChart';
+import SankeyChart from '../Components/SankeyChart';
 import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
 

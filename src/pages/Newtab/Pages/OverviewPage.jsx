@@ -4,7 +4,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import CoinChart from '../Components/CoinChart';
 import { CryptoState } from '../CryptoContext';
 import {
@@ -14,57 +14,60 @@ import {
   primarytext,
   purple,
   primarybg,
+  GridChartItem,
 } from '../styles/themeVariables';
 import CoinPageCoinItem from '../Components/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
-import PerformanceChart from '../Components/PerformanceChart';
+import SankeyChart from '../Components/SankeyChart';
 import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
 import PerformanceSummary from '../Components/PerformanceSummary';
 import WinLossPie from '../Components/WinLossPie';
 import LongShortPie from '../Components/LongShortPie';
+import { ResponsiveContainer } from 'recharts';
 
 const OverviewPage = () => {
   const { trades } = CryptoState();
+  const [currentChart, setCurrentChart] = useState('sankey');
 
   return (
     <CoinPageContainer>
-      <>
-        <Box
-          display="grid"
-          gridTemplateColumns="repeat(16, 1fr)"
-          gridTemplateRows="repeat(16,1fr)"
-          height={'90vh'}
-          gap={4}
-          rowGap={4}
-        >
-          <Box gridColumn="1/7 " gridRow="2/8" className="chart-container">
-            <GridItem className="carousel">
-              <PerformanceSummary />
-            </GridItem>
-          </Box>
-          <Box gridColumn="7/12 " gridRow="2/8" className="chart-container">
-            <GridItem className="carousel">
-              <WinLossPie />
-            </GridItem>
-          </Box>
-          <Box gridColumn="12/-1" gridRow="2/8">
-            <GridItem className="carousel">
-              <LongShortPie />
-            </GridItem>
-          </Box>
-          <Box gridColumn="span 10" gridRow="8/-1 ">
-            <GridItem className="carousel">
-              <PerformanceChart />
-            </GridItem>
-          </Box>
-          <Box gridColumn="span 6" gridRow="8/-1">
-            <GridItem className="carousel"></GridItem>
-          </Box>
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(16, 1fr)"
+        gridTemplateRows="repeat(16,1fr)"
+        height={'90vh'}
+        gap={4}
+        rowGap={4}
+      >
+        <Box gridColumn="1/7 " gridRow="2/8" className="chart-container">
+          <GridChartItem>
+            <PerformanceSummary />
+          </GridChartItem>
         </Box>
-      </>
+        <Box gridColumn="7/12 " gridRow="2/8" className="chart-container">
+          <GridChartItem className="carousel">
+            <WinLossPie />
+          </GridChartItem>
+        </Box>
+        <Box gridColumn="12/-1" gridRow="2/8" className="chart-container">
+          <GridChartItem className="carousel">
+            <LongShortPie />
+          </GridChartItem>
+        </Box>
+        <Box gridColumn="span 10" gridRow="8/-1" className="chart-container">
+          <GridChartItem className="carousel">
+            <ResponsiveContainer width="100%" height="100%">
+              <SankeyChart />
+            </ResponsiveContainer>
+          </GridChartItem>
+        </Box>
+        <Box gridColumn="span 6" gridRow="8/-1" className="chart-container">
+          <GridChartItem></GridChartItem>
+        </Box>
+      </Box>
     </CoinPageContainer>
   );
 };

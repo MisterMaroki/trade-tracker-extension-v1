@@ -11,7 +11,6 @@ import { Bar, Chart, Line } from 'react-chartjs-2';
 import { chartDays } from '../../Content/config/data';
 import { ChartContainer, primarytext, purple } from '../styles/themeVariables';
 import { ChartState } from '../ChartContext';
-import ChartTwo from './PerformanceChart';
 
 const CoinChart = () => {
   const { currency, trades, setTrades, coin, currentColor } = CryptoState();
@@ -41,7 +40,7 @@ const CoinChart = () => {
                   date.getHours() > 12
                     ? `${date.getHours() - 12}:${date.getMinutes()} PM`
                     : `${date.getHours()}:${date.getMinutes()} AM`;
-                return ' ';
+                // return ' ';
                 return days === 1 ? time : date.toLocaleDateString();
               }),
 

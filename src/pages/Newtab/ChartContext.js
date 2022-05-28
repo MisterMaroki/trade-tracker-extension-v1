@@ -9,7 +9,7 @@ const ChartContext = ({ children }) => {
 
   const [days, setDays] = useState(1);
   const [loading, setLoading] = useState(false);
-  const { currency, coin } = CryptoState();
+  const { currency, coin, trades } = CryptoState();
 
   const fetchHistoricalData = async (id) => {
     setLoading(true);
@@ -36,6 +36,48 @@ const ChartContext = ({ children }) => {
     label: 'Volatility',
     borderColor: '#05595b',
   };
+
+  const allClosedTrades = trades.filter((trade) => !trade.active);
+
+  const totalClosedPositions = allClosedTrades?.length;
+  const allLongs = allClosedTrades?.filter(
+    (trade) => trade.direction === 'buy'
+  );
+  const allShorts = allClosedTrades?.filter(
+    (trade) => trade.direction === 'sell'
+  );
+
+  const allWins = allClosedTrades?.filter(
+    (trade) => trade.value >= trade.invested
+  );
+  const allLosses = allClosedTrades?.filter(
+    (trade) => trade.value < trade.invested
+  );
+  const allWinsShort = allWins?.filter((trade) => trade.direction === 'sell');
+  const allWinsLong = allWins?.filter((trade) => trade.direction === 'buy');
+  const allLossesLong = allLosses?.filter((trade) => trade.direction === 'buy');
+
+  const allLossesShort = allLosses?.filter(
+    (trade) => trade.direction === 'sell'
+  );
+
+  const averagePercentGain = (arr) =>
+    arr.reduce((acc, x) => {
+      return acc + 100 * ((x.value - x.invested) / x.invested);
+    }, 0) / arr.length;
+  const totalInvested = (arr) =>
+    arr.reduce((acc, x) => {
+      return acc + x.invested;
+    }, 0);
+  const totalReturns = (arr) =>
+    arr.reduce((acc, x) => {
+      return acc + x.value;
+    }, 0);
+
+  const averageInvestment = (arr) => totalInvested(arr) / arr.length;
+
+  const netProfit = (arr) => averageInvestment(arr) * averagePercentGain(arr);
+
   return (
     <Chart.Provider
       value={{
@@ -47,6 +89,21 @@ const ChartContext = ({ children }) => {
         loading,
         setLoading,
         volatilitydataset,
+        allClosedTrades,
+        totalClosedPositions,
+        allWins,
+        allLosses,
+        allLongs,
+        allShorts,
+        allWinsLong,
+        allWinsShort,
+        allLossesLong,
+        allLossesShort,
+        averagePercentGain,
+        averageInvestment,
+        totalInvested,
+        totalReturns,
+        netProfit,
       }}
     >
       {children}

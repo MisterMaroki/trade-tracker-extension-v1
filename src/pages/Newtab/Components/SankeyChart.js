@@ -1,26 +1,21 @@
 import React from 'react';
 import { Layer, Rectangle, Sankey, Tooltip } from 'recharts';
+import { ChartState } from '../ChartContext';
 import { CryptoState } from '../CryptoContext';
 import { white } from '../styles/themeVariables';
 
-const PerformanceChart = () => {
+const SankeyChart = () => {
   const { currentColor, trades } = CryptoState();
-  const allClosedTrades = trades.filter((trade) => !trade.active);
-
-  const totalClosedPositions = allClosedTrades?.length;
-  const allWins = allClosedTrades?.filter(
-    (trade) => trade.value > trade.invested
-  );
-  const allLosses = allClosedTrades?.filter(
-    (trade) => trade.value < trade.invested
-  );
-  const allWinsShort = allWins?.filter((trade) => trade.direction === 'sell');
-  const allWinsLong = allWins?.filter((trade) => trade.direction === 'buy');
-  const allLossesLong = allLosses?.filter((trade) => trade.direction === 'buy');
-
-  const allLossesShort = allLosses?.filter(
-    (trade) => trade.direction === 'sell'
-  );
+  const {
+    allClosedTrades,
+    totalClosedPositions,
+    allWins,
+    allLosses,
+    allWinsLong,
+    allWinsShort,
+    allLossesLong,
+    allLossesShort,
+  } = ChartState();
 
   const data0 = {
     nodes: [
@@ -153,7 +148,7 @@ const PerformanceChart = () => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <Sankey
-        width={600}
+        width={750}
         height={400}
         data={data0}
         node={MyCustomNode}
@@ -172,4 +167,4 @@ const PerformanceChart = () => {
   );
 };
 
-export default PerformanceChart;
+export default SankeyChart;

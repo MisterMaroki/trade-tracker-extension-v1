@@ -45,6 +45,10 @@ export const SectionContainer = styled(Container)`
 export const GridItem = styled(SectionContainer)`
   height: 100%;
 `;
+export const GridChartItem = styled(SectionContainer)`
+  height: 100%;
+  overflow: hidden;
+`;
 
 export const DashboardContainer = styled(Container)`
   margin-top: 6rem;
@@ -64,6 +68,10 @@ export const TradesContainer = styled(DashboardContainer)``;
 
 export const CarouselContainer = styled(SectionContainer)`
   padding: 1rem 0 0 0 !important;
+`;
+export const PieContainer = styled(CarouselContainer)`
+  width: 100%;
+  height: 100%;
 `;
 export const CoinPageContainer = styled(DashboardContainer)`
   margin-top: 3.5rem;

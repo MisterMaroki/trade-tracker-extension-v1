@@ -78,6 +78,14 @@ a {
   width: min-content;
   padding: 5px 10px;
 }
+.start {
+  justify-content: flex-start;
+}
+.darkbgonly {
+  background: $secondary--bg;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
 .nobg {
   background: transparent !important;
 }
@@ -325,4 +333,10 @@ button.MuiButtonBase-root {
 .css-10h8c1q-MuiGrid-root {
   margin: -10px 0 0 -10px !important;
   display: block;
+}
+
+/////////////////////////
+
+g text {
+  font-size: 1rem;
 }
