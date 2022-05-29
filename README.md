@@ -17,9 +17,7 @@
     - useContext as main state method
     - MUI material,labs,core
     
-  
-    I also implemented a popup tenzies game and will continue to add features to this as I'm using it as my current newtab for chrome.
-    <br>
+ 
    
   </p>
 </p>
