@@ -91,7 +91,6 @@ const CryptoContext = ({ children }) => {
   const [count, setCount] = useState(initalState);
 
   const tradeNow = (direction, quantity) => {
-    console.log(coin);
     if (+quantity > 0) {
       setTrades((prevTrades) => [
         {
@@ -128,6 +127,7 @@ const CryptoContext = ({ children }) => {
 
   const closeTrade = async (row) => {
     if (row.active) {
+      await rowDataEnrichment();
       setTrades((prevTrades) =>
         prevTrades.map((trade) => {
           return trade.id === row.id

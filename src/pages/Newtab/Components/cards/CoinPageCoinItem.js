@@ -59,13 +59,16 @@ export default function CoinPageCoinItem({ row }) {
       currency.toLowerCase()
     ] >= 0;
 
-  const inWatchlist = watchlist?.includes(coin?.id);
+  const inWatchlist =
+    watchlist?.filter((x) => x.id.includes(coin?.id)).length !== 0;
   const addToWatchlist = async () => {
     const coinRef = doc(db, 'watchlist', user.uid);
 
     try {
       await setDoc(coinRef, {
-        coins: watchlist ? [...watchlist, coin.id] : [coin?.id],
+        coins: watchlist
+          ? [...watchlist, { id: coin.id, price: row.current_price }]
+          : [{ id: coin.id, price: row.current_price }],
       });
       setAlert({
         open: true,
@@ -88,7 +91,7 @@ export default function CoinPageCoinItem({ row }) {
       await setDoc(
         coinRef,
         {
-          coins: watchlist.filter((x) => x !== coin?.id),
+          coins: watchlist.filter((x) => x.id !== coin?.id),
         },
         { merge: true }
       );

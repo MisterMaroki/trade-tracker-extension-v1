@@ -90,9 +90,6 @@ const CoinPage = () => {
                 sx={{ overflowY: 'scroll' }}
                 ref={ref}
               >
-                {/* Carousel banner style container, scrollable list of trades of
-                this coin. Each trade will show a snapshot of the chart at that
-                time! */}
                 <MiniTradesTable refs={ref} />
               </GridItem>
             </Box>

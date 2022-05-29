@@ -47,9 +47,12 @@ import { ColorButton } from '../../styles/themeVariables';
 import { Avatar, IconButton } from '@mui/material';
 import { CryptoState } from '../../CryptoContext';
 import { UserState } from '../../UserContext';
+import CoinItem from '../cards/CoinItem';
 
 export default function UserSidebar() {
-  const { user, initFirebaseApp, loggedIn, signOut, setAlert } = UserState();
+  const { user, initFirebaseApp, loggedIn, signOut, setAlert, watchlist } =
+    UserState();
+  const { coins } = CryptoState();
 
   const { currentColor } = CryptoState();
   const [state, setState] = React.useState({
@@ -117,12 +120,28 @@ export default function UserSidebar() {
                     background: 'none',
                     width: '90px !important',
                     height: '90px !important',
-                    margin: '0 auto',
+                    margin: '1rem auto',
                   }}
                 />
                 <h6>{user?.displayName || user?.email}</h6>
-                <div className="watchlist">
+                <div
+                  className="watchlist flex col"
+                  style={{
+                    height: '80%',
+                    addingTop: '3rem',
+                    overflowY: 'scroll',
+                  }}
+                >
                   <span className="watchlist-title">Watchlist</span>
+                  {watchlist &&
+                    watchlist?.map((item, index) => {
+                      console.log(coins?.filter((x) => x.id === item.id));
+                      return (
+                        <CoinItem
+                          row={coins?.filter((x) => x.id === item.id)[0]}
+                        />
+                      );
+                    })}
                 </div>
               </div>
               <div>

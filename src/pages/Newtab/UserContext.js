@@ -36,6 +36,11 @@ const UserContext = ({ children }) => {
       var unsubscribe = onSnapshot(coinRef, (coin) => {
         if (coin.exists) {
           setWatchlist(coin.data().coins);
+          console.log(watchlist);
+          console.log(
+            '🚀 ~ file: UserContext.js ~ line 39 ~ unsubscribe ~ coin.data().coins',
+            coin.data().coins
+          );
         } else {
           console.log('Nothing in the watchlist.');
         }
