@@ -19,6 +19,7 @@ import { UserState } from '../../UserContext';
 import CoinItem from '../cards/CoinItem';
 import FadeIn from 'react-fade-in';
 import Tilt from 'react-parallax-tilt';
+import AuthModal from '../auth/AuthModal';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
@@ -36,10 +37,8 @@ const Navbar = () => {
     setShowingOverview,
   } = CryptoState();
 
-  const [openLogin, setopenLogin] = useState(false);
-
   const [nameInput, setNameInput] = useState('');
-  const { user, setUser, initFirebaseApp, loggedIn, signOut } = UserState();
+  const { user, setUser } = UserState();
   console.log('🚀 ~ file: Navbar.jsx ~ line 34 ~ Navbar ~ user', user);
 
   return (
@@ -117,28 +116,7 @@ const Navbar = () => {
         </Stack>
 
         {user ? (
-          !loggedIn ? (
-            // <h6
-            //   style={{ cursor: 'pointer', color: currentColor }}
-            //   onClick={() => {
-            //     setId('');
-            //     setShowTrades(false);
-            //   }}
-            // >
-            //   <span>
-            //     {user.charAt(0).toUpperCase() + user.slice(1)}'s Dashboard
-            //   </span>
-            // </h6>
-
-            <ColorButton onClick={() => initFirebaseApp()}>Login</ColorButton>
-          ) : (
-            <Avatar
-              src={user?.photoURL}
-              alt="user avatar"
-              style={{ background: 'none' }}
-              onClick={() => signOut()}
-            />
-          )
+          <AuthModal />
         ) : (
           <TextField
             label="What's your name?"
@@ -150,7 +128,7 @@ const Navbar = () => {
               endAdornment: nameInput.length > 0 && (
                 <IconButton
                   variant="outlined"
-                  onClick={(e) => setUser(nameInput)}
+                  onClick={() => setUser(nameInput)}
                   sx={{
                     padding: 0,
                     position: 'absolute',
