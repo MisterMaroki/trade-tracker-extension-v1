@@ -18,4 +18,4 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp); // For Authentication
 const db = getFirestore(firebaseApp); // For Using Database
 
-export { auth, db, firebaseApp };
+export { auth, db };

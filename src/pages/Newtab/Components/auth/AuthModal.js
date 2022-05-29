@@ -15,6 +15,7 @@ import {
 import { UserState } from '../../UserContext';
 import Login from './Login';
 import SignUp from './SignUp';
+import GoogleButton from 'react-google-button';
 
 const style = {
   position: 'absolute',
@@ -33,6 +34,7 @@ const style = {
 export default function AuthModal() {
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => setOpen(!open);
+  const { initFirebaseApp } = UserState();
 
   const [value, setValue] = React.useState('login');
 
@@ -72,6 +74,15 @@ export default function AuthModal() {
             ) : (
               <SignUp toggleOpen={toggleOpen} />
             )}
+            <Box className="google">
+              <span style={{ color: 'darkgrey' }}>OR</span>
+              <GoogleButton
+                style={{ width: '90%', outline: 'none', borderRadius: '1px' }}
+                onClick={initFirebaseApp}
+              >
+                Google
+              </GoogleButton>
+            </Box>
           </Box>
         </Fade>
       </Modal>

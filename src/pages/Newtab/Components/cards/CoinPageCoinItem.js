@@ -9,6 +9,11 @@ import { numberWithCommas } from './../banner/Carousel';
 import { CryptoState } from '../../CryptoContext';
 import MyChip from './../MyChip';
 import Ticker from './../Ticker';
+import { IconButton } from '@mui/material';
+import { UserState } from '../../UserContext';
+import { StarOutlined, StarOutlineOutlined } from '@mui/icons-material';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 export const getTimeSince = (date) => {
   let date_now = new Date();
@@ -42,6 +47,7 @@ export default function CoinPageCoinItem({ row }) {
 
     id,
   } = CryptoState();
+  const { user, setAlert, watchlist } = UserState();
 
   const profit = row?.price_change_percentage_24h >= 0;
   const profit7 =
@@ -52,6 +58,53 @@ export default function CoinPageCoinItem({ row }) {
     coin.market_data.price_change_percentage_30d_in_currency[
       currency.toLowerCase()
     ] >= 0;
+
+  const inWatchlist = watchlist?.includes(coin?.id);
+  const addToWatchlist = async () => {
+    const coinRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(coinRef, {
+        coins: watchlist ? [...watchlist, coin.id] : [coin?.id],
+      });
+      setAlert({
+        open: true,
+        message: `${coin.name} has been added to your watchlist.`,
+        type: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: 'error',
+      });
+    }
+  };
+
+  const removeFromWatchlist = async () => {
+    const coinRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coins: watchlist.filter((x) => x !== coin?.id),
+        },
+        { merge: true }
+      );
+      setAlert({
+        open: true,
+        message: `${coin.name} has been removed from your watchlist.`,
+        type: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: 'error',
+      });
+    }
+  };
 
   return (
     <CoinPageCoinCard key={row?.name} className="carousel">
@@ -64,6 +117,19 @@ export default function CoinPageCoinItem({ row }) {
               height="38"
               style={{ margin: '5' }}
             />
+            {user && (
+              <IconButton
+                style={{
+                  position: 'absolute',
+                  top: -2,
+                  left: -2,
+                  color: currentColor,
+                }}
+                onClick={inWatchlist ? removeFromWatchlist : addToWatchlist}
+              >
+                {inWatchlist ? <StarOutlined /> : <StarOutlineOutlined />}
+              </IconButton>
+            )}
           </div>
         </Grid>
         <Grid item>

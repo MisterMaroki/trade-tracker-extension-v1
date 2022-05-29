@@ -79,7 +79,12 @@ export default function UserSidebar() {
           {loggedIn && (
             <IconButton
               onClick={toggleDrawer(anchor, true)}
-              style={{ position: 'absolute', top: '5rem', right: '-5px' }}
+              style={{
+                position: 'absolute',
+                top: '5rem',
+                right: '-5px',
+                borderRadius: '10px 0 0 10px',
+              }}
               className="carousel"
             >
               <KeyboardDoubleArrowLeft style={{ color: currentColor }} />

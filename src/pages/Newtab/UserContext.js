@@ -1,20 +1,20 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
-  getAuth,
   onAuthStateChanged,
   signInWithCredential,
   GoogleAuthProvider,
   setPersistence,
   browserLocalPersistence,
 } from 'firebase/auth';
-import { firebaseApp } from './firebase';
+import { auth, db } from './firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
 const User = createContext();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
+  const [watchlist, setWatchlist] = useState([]);
   // Auth instance for the current firebaseApp
-  const auth = getAuth(firebaseApp);
   setPersistence(auth, browserLocalPersistence);
   const [alert, setAlert] = useState({
     open: false,
@@ -28,6 +28,21 @@ const UserContext = ({ children }) => {
       else setUser(null);
     });
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      const coinRef = doc(db, 'watchlist', user?.uid);
+
+      var unsubscribe = onSnapshot(coinRef, (coin) => {
+        if (coin.exists) {
+          setWatchlist(coin.data().coins);
+        } else {
+          console.log('Nothing in the watchlist.');
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, [user]);
 
   const init = () => {
     // Detect auth state
@@ -82,11 +97,8 @@ const UserContext = ({ children }) => {
       console.log('signing out');
       auth.signOut();
       setLoggedIn(false);
-    } else {
-      return false;
     }
   }
-
   const startAuth = (interactive) => {
     console.log('Auth trying');
     chrome.identity.getAuthToken({ interactive: true }, function (token) {
@@ -104,7 +116,6 @@ const UserContext = ({ children }) => {
             setLoggedIn(true);
           })
           .catch((error) => {
-            // You can handle errors here
             console.log(error);
           });
       } else {
@@ -112,10 +123,6 @@ const UserContext = ({ children }) => {
       }
     });
   };
-
-  useEffect(() => {
-    user && localStorage.setItem('user', user);
-  }, [user]);
 
   return (
     <User.Provider
@@ -130,6 +137,8 @@ const UserContext = ({ children }) => {
         setOpen,
         alert,
         setAlert,
+        watchlist,
+        setWatchlist,
       }}
     >
       {children}
