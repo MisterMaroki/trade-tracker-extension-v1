@@ -15,7 +15,7 @@ import {
   purple,
   primarybg,
 } from '../styles/themeVariables';
-import CoinPageCoinItem from '../Components/CoinPageCoinItem';
+import CoinPageCoinItem from '../Components/cards/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';

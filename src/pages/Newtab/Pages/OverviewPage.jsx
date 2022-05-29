@@ -16,14 +16,14 @@ import {
   primarybg,
   GridChartItem,
 } from '../styles/themeVariables';
-import CoinPageCoinItem from '../Components/CoinPageCoinItem';
+import CoinPageCoinItem from '../Components/cards/CoinPageCoinItem';
 import TradeTools from '../Components/TradeTools';
 import { ChartState } from '../ChartContext';
 import { chartDays } from '../../Content/config/data';
 import SankeyChart from '../Components/charts/SankeyChart';
 import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
-import PerformanceSummary from '../Components/PerformanceSummary';
+import PerformanceSummary from '../Components/cards/PerformanceSummary';
 import WinLossPie from '../Components/charts/WinLossPie';
 import LongShortPie from '../Components/charts/LongShortPie';
 import { ResponsiveContainer } from 'recharts';

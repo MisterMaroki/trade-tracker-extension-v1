@@ -4,11 +4,11 @@ import {
   CoinCard,
   CoinPageCoinCard,
   ColorButton,
-} from '../styles/themeVariables';
-import { numberWithCommas } from './banner/Carousel';
-import { CryptoState } from '../CryptoContext';
-import MyChip from './MyChip';
-import Ticker from './Ticker';
+} from '../../styles/themeVariables';
+import { numberWithCommas } from './../banner/Carousel';
+import { CryptoState } from '../../CryptoContext';
+import MyChip from './../MyChip';
+import Ticker from './../Ticker';
 
 export const getTimeSince = (date) => {
   let date_now = new Date();

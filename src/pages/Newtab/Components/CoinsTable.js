@@ -10,7 +10,7 @@ import {
 import Tilt from 'react-parallax-tilt';
 import FadeIn from 'react-fade-in';
 
-import CoinItem from './CoinItem';
+import CoinItem from '../Components/cards/CoinItem';
 import chroma from 'chroma-js';
 
 const CoinsTable = () => {

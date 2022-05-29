@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CryptoState } from '../CryptoContext';
 import FadeIn from 'react-fade-in';
-import TradeItem from './TradeItem';
+import TradeItem from './cards/TradeItem';
 import Tilt from 'react-parallax-tilt';
 import { ToggleButton, ToggleButtonGroup, Pagination } from '@mui/material';
 import {
@@ -11,7 +11,7 @@ import {
   secondarybg,
   white,
 } from '../styles/themeVariables';
-import MiniTradeItem from './MiniTradeItem';
+import MiniTradeItem from './cards/MiniTradeItem';
 
 const MiniTradesTable = ({ refs }) => {
   // const [search, setSearch] = useState('');

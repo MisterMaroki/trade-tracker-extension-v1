@@ -5,7 +5,7 @@ import { CoinList, SingleCoin } from '../Content/config/api';
 import { numberWithCommas } from './Components/banner/Carousel';
 import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
 import toast, { Toaster } from 'react-hot-toast';
-import { getDurationString } from './Components/TradeItem';
+import { getDurationString } from './Components/cards/TradeItem';
 
 const Crypto = createContext();
 

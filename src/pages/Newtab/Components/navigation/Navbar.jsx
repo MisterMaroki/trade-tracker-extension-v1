@@ -16,7 +16,7 @@ import {
   ThumbUpOffAltOutlined,
 } from '@mui/icons-material';
 import { UserState } from '../../UserContext';
-import CoinItem from './../CoinItem';
+import CoinItem from '../cards/CoinItem';
 import FadeIn from 'react-fade-in';
 import Tilt from 'react-parallax-tilt';
 

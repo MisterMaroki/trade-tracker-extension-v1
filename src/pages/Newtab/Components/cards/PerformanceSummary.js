@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { ChartState } from '../ChartContext';
-import { CryptoState } from '../CryptoContext';
+import { ChartState } from '../../ChartContext';
+import { CryptoState } from '../../CryptoContext';
 
-import { GridItem, primarytext } from '../styles/themeVariables';
-import { numberWithCommas } from './banner/Carousel';
+import { GridItem, primarytext } from '../../styles/themeVariables';
+import { numberWithCommas } from '../banner/Carousel';
 
 const PerformanceSummary = () => {
   const { trades, currency } = CryptoState();

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import { CoinCard, ColorButton } from '../styles/themeVariables';
-import { numberWithCommas } from './banner/Carousel';
-import { CryptoState } from '../CryptoContext';
-import MyChip from './MyChip';
+import { CoinCard, ColorButton } from '../../styles/themeVariables';
+import { numberWithCommas } from '../banner/Carousel';
+import { CryptoState } from '../../CryptoContext';
+import MyChip from '../MyChip';
 
 export default function CoinItem({ row }) {
   const { symbol, setId, setSearch } = CryptoState();

@@ -4,7 +4,7 @@ import { CryptoState } from '../CryptoContext';
 import { black, white } from '../styles/themeVariables';
 import FadeIn from 'react-fade-in';
 // import MiniTradeItem from './TradeItem';
-const TradeItem = React.lazy(() => import('./TradeItem'));
+const TradeItem = React.lazy(() => import('./cards/TradeItem'));
 
 const TradesTable = () => {
   // const [search, setSearch] = useState('');
