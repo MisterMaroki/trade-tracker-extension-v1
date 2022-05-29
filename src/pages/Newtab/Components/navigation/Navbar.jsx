@@ -20,6 +20,8 @@ import CoinItem from '../cards/CoinItem';
 import FadeIn from 'react-fade-in';
 import Tilt from 'react-parallax-tilt';
 import AuthModal from '../auth/AuthModal';
+import AuthAlert from '../auth/AuthAlert';
+import UserSidebar from '../auth/UserSidebar';
 
 const Navbar = () => {
   // const [showTenziesGame, setshowTenziesGame] = useState(false);
@@ -36,6 +38,7 @@ const Navbar = () => {
     setPage,
     setShowingOverview,
   } = CryptoState();
+  const { loggedIn } = UserState();
 
   const [nameInput, setNameInput] = useState('');
   const { user, setUser } = UserState();
@@ -45,38 +48,7 @@ const Navbar = () => {
     <>
       <header className="flex" style={{ justifyContent: 'space-between' }}>
         <Stack direction="row" spacing={2}>
-          <Button
-            sx={{
-              color: !showTrades && !id ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setId('');
-              setShowTrades(false);
-              setShowingOverview(false);
-            }}
-          >
-            Home
-          </Button>
-
-          <Button
-            sx={{
-              color: showTrades ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setShowTrades(!showTrades);
-              setShowingOverview(false);
-            }}
-          >
-            Trades
-          </Button>
+          <h6 style={{ color: currentColor }}>cTrade</h6>
         </Stack>
         <Stack
           direction="row"
@@ -114,37 +86,51 @@ const Navbar = () => {
 
           <MySelect />
         </Stack>
-
-        {user ? (
-          <AuthModal />
-        ) : (
-          <TextField
-            label="What's your name?"
-            value={nameInput}
-            sx={textFieldSx}
-            size="small"
-            onChange={(e) => setNameInput(e.target.value)}
-            InputProps={{
-              endAdornment: nameInput.length > 0 && (
-                <IconButton
-                  variant="outlined"
-                  onClick={() => setUser(nameInput)}
-                  sx={{
-                    padding: 0,
-                    position: 'absolute',
-                    right: 10,
-                    top: 8,
-                  }}
-                >
-                  <ThumbUpOffAltOutlined
-                    sx={{ color: currentColor, fontSize: 20 }}
-                  />
-                </IconButton>
-              ),
+        <Stack direction="row" spacing={2}>
+          <Button
+            sx={{
+              color: !showTrades && !id ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
             }}
-          />
-        )}
+            onClick={() => {
+              setId('');
+              setShowTrades(false);
+              setShowingOverview(false);
+            }}
+          >
+            Home
+          </Button>
+
+          <Button
+            sx={{
+              color: showTrades ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => {
+              setShowTrades(!showTrades);
+              setShowingOverview(false);
+            }}
+          >
+            Trades
+          </Button>
+          {loggedIn ? (
+            <Avatar
+              src={user?.photoURL}
+              alt={user.displayName || user.email}
+              style={{ background: 'none' }}
+            />
+          ) : (
+            <AuthModal />
+          )}
+        </Stack>
       </header>
+      <UserSidebar />
       {search &&
         !showTrades &&
         handleSearch() &&
@@ -170,6 +156,7 @@ const Navbar = () => {
           </FadeIn>
         )}
       {/* {showTenziesGame && <DiceGame />} */}
+      <AuthAlert />
     </>
   );
 };

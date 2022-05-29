@@ -164,7 +164,7 @@ const CryptoContext = ({ children }) => {
       })
     );
     setTrades(enrichedRows);
-    console.log('ran');
+    console.log('PnL updated');
   };
 
   useEffect(() => {

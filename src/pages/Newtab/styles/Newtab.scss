@@ -60,6 +60,10 @@ a {
   flex-direction: column;
   align-items: flex-start;
 }
+.sidebar {
+  align-items: center;
+  justify-content: flex-start;
+}
 .two-column {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -115,6 +119,9 @@ header {
   h6 span {
     color: $tertiary2;
   }
+}
+h6 {
+  color: $primary--text;
 }
 .select {
   background: $secondary--bg;
@@ -339,4 +346,12 @@ button.MuiButtonBase-root {
 
 g text {
   font-size: 1rem;
+}
+.profile {
+  height: 90%;
+  text-align: center;
+
+  span {
+    color: $secondary--text;
+  }
 }

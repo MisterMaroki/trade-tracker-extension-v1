@@ -1,33 +1,83 @@
-import { Avatar } from '@mui/material';
-import React from 'react';
-import { ColorButton } from '../../styles/themeVariables';
+import * as React from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+import { AppBar, Avatar, Tab, Tabs } from '@mui/material';
+import {
+  ColorButton,
+  primarybg,
+  primarytext,
+} from '../../styles/themeVariables';
 import { UserState } from '../../UserContext';
+import Login from './Login';
+import SignUp from './SignUp';
 
-const AuthModal = () => {
-  const { user, initFirebaseApp, loggedIn, signOut } = UserState();
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  borderRadius: '5px',
+  background: primarytext,
 
-  return !loggedIn ? (
-    // <h6
-    //   style={{ cursor: 'pointer', color: currentColor }}
-    //   onClick={() => {
-    //     setId('');
-    //     setShowTrades(false);
-    //   }}
-    // >
-    //   <span>
-    //     {user.charAt(0).toUpperCase() + user.slice(1)}'s Dashboard
-    //   </span>
-    // </h6>
-
-    <ColorButton onClick={initFirebaseApp}>Login</ColorButton>
-  ) : (
-    <Avatar
-      src={user?.photoURL}
-      alt="user avatar"
-      style={{ background: 'none' }}
-      onClick={() => signOut()}
-    />
-  );
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 0,
 };
 
-export default AuthModal;
+export default function AuthModal() {
+  const [open, setOpen] = React.useState(false);
+  const toggleOpen = () => setOpen(!open);
+
+  const [value, setValue] = React.useState('login');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <>
+      <ColorButton onClick={toggleOpen}>Login</ColorButton>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={toggleOpen}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <AppBar position="static" style={{ background: 'transparent' }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="modal tabs"
+              >
+                <Tab value="login" label="Login" sx={{ color: 'white' }} />
+                <Tab value="signup" label="Sign Up" sx={{ color: 'white' }} />
+              </Tabs>
+            </AppBar>
+            {value === 'login' ? (
+              <Login toggleOpen={toggleOpen} />
+            ) : (
+              <SignUp toggleOpen={toggleOpen} />
+            )}
+          </Box>
+        </Fade>
+      </Modal>
+    </>
+  );
+}
+{
+  /* <ColorButton onClick={handleOpen} onClick={initFirebaseApp}>Login</ColorButton> */
+}

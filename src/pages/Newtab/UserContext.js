@@ -10,12 +10,24 @@ import {
 import { firebaseApp } from './firebase';
 const User = createContext();
 const UserContext = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem('user') || '');
+  const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
   // Auth instance for the current firebaseApp
   const auth = getAuth(firebaseApp);
   setPersistence(auth, browserLocalPersistence);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    type: 'success',
+  });
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) setUser(user);
+      else setUser(null);
+    });
+  }, []);
 
   const init = () => {
     // Detect auth state
@@ -70,6 +82,8 @@ const UserContext = ({ children }) => {
       console.log('signing out');
       auth.signOut();
       setLoggedIn(false);
+    } else {
+      return false;
     }
   }
 
@@ -82,11 +96,6 @@ const UserContext = ({ children }) => {
       } else if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError);
       } else if (token) {
-        // Follows: https://firebase.google.com/docs/auth/web/google-signin
-        // Authorize Firebase with the OAuth Access Token.
-        // console.log("TOKEN:")
-        // console.log(token)
-        // Builds Firebase credential with the Google ID token.
         const credential = GoogleAuthProvider.credential(null, token);
         signInWithCredential(auth, credential)
           .then((result) => {
@@ -119,6 +128,8 @@ const UserContext = ({ children }) => {
         signOut,
         open,
         setOpen,
+        alert,
+        setAlert,
       }}
     >
       {children}
