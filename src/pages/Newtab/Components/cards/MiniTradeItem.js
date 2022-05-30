@@ -139,7 +139,7 @@ const MiniTradeItem = ({ row }) => {
             <MyChip
               label={'Entry'}
               value={`${numberWithCommas(
-                row?.price
+                parseFloat(row?.price).toFixed(2)
               )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>
@@ -148,7 +148,7 @@ const MiniTradeItem = ({ row }) => {
             <MyChip
               label={row.active ? 'Current Price' : 'Exit Price'}
               value={`${numberWithCommas(
-                row.active ? row.current_price : row.exit
+                parseFloat(row.active ? row.current_price : row.exit).toFixed(2)
               )} ${row?.fiat.toUpperCase()}`}
             />
           </Box>

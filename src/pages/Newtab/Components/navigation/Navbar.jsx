@@ -41,8 +41,7 @@ const Navbar = () => {
   const { loggedIn } = UserState();
 
   const [nameInput, setNameInput] = useState('');
-  const { user, setUser } = UserState();
-  console.log('🚀 ~ file: Navbar.jsx ~ line 34 ~ Navbar ~ user', user);
+  const { user } = UserState();
 
   return (
     <>

@@ -14,6 +14,10 @@ const UserContext = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
+  console.log(
+    '🚀 ~ file: UserContext.js ~ line 17 ~ UserContext ~ watchlist',
+    watchlist
+  );
   // Auth instance for the current firebaseApp
   setPersistence(auth, browserLocalPersistence);
   const [alert, setAlert] = useState({
@@ -36,11 +40,6 @@ const UserContext = ({ children }) => {
       var unsubscribe = onSnapshot(coinRef, (coin) => {
         if (coin.exists) {
           setWatchlist(coin.data().coins);
-          console.log(watchlist);
-          console.log(
-            '🚀 ~ file: UserContext.js ~ line 39 ~ unsubscribe ~ coin.data().coins',
-            coin.data().coins
-          );
         } else {
           console.log('Nothing in the watchlist.');
         }
@@ -102,6 +101,7 @@ const UserContext = ({ children }) => {
       console.log('signing out');
       auth.signOut();
       setLoggedIn(false);
+      setWatchlist([]);
     }
   }
   const startAuth = (interactive) => {

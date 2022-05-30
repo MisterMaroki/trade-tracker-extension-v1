@@ -43,15 +43,17 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { KeyboardDoubleArrowLeft } from '@mui/icons-material';
-import { ColorButton } from '../../styles/themeVariables';
+import { ColorButton, SignOutButton } from '../../styles/themeVariables';
 import { Avatar, IconButton } from '@mui/material';
 import { CryptoState } from '../../CryptoContext';
 import { UserState } from '../../UserContext';
 import CoinItem from '../cards/CoinItem';
+import WatchlistCoinItem from '../cards/WatchlistCoinItem';
+import FadeIn from 'react-fade-in';
 
 export default function UserSidebar() {
-  const { user, initFirebaseApp, loggedIn, signOut, setAlert, watchlist } =
-    UserState();
+  const { user, loggedIn, signOut, setAlert, watchlist } = UserState();
+
   const { coins } = CryptoState();
 
   const { currentColor } = CryptoState();
@@ -76,7 +78,7 @@ export default function UserSidebar() {
   };
 
   return (
-    <div>
+    <>
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
           {loggedIn && (
@@ -124,33 +126,35 @@ export default function UserSidebar() {
                   }}
                 />
                 <h6>{user?.displayName || user?.email}</h6>
+                <span className="watchlist-title">Watchlist</span>
                 <div
                   className="watchlist flex col"
                   style={{
-                    height: '80%',
-                    addingTop: '3rem',
+                    height: '75%',
+                    paddingBlock: '2rem',
                     overflowY: 'scroll',
+                    justifyContent: 'flex-start',
+                    marginTop: '1rem',
                   }}
                 >
-                  <span className="watchlist-title">Watchlist</span>
-                  {watchlist &&
-                    watchlist?.map((item, index) => {
-                      console.log(coins?.filter((x) => x.id === item.id));
-                      return (
-                        <CoinItem
+                  <FadeIn className="flex col sidebar">
+                    {watchlist &&
+                      watchlist?.map((item, index) => (
+                        <WatchlistCoinItem
                           row={coins?.filter((x) => x.id === item.id)[0]}
+                          price={item.price}
                         />
-                      );
-                    })}
+                      ))}
+                  </FadeIn>
                 </div>
               </div>
               <div>
-                <ColorButton onClick={logOut}>Sign Out</ColorButton>
+                <SignOutButton onClick={logOut}>Sign Out</SignOutButton>
               </div>
             </div>
           </Drawer>
         </React.Fragment>
       ))}
-    </div>
+    </>
   );
 }

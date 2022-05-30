@@ -89,6 +89,18 @@ export const CoinCard = styled(Box)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 `;
+export const WatchlistCoinCard = styled(CoinCard)`
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  width: 95%;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid ${primarytext};
+  }
+`;
 export const CoinPageCoinCard = styled(CoinCard)`
   height: 100%;
   width: 100%;
@@ -106,12 +118,6 @@ export const TradeCard = styled(CoinPageCoinCard)`
 export const MiniTradeCard = styled(TradeCard)`
   /* max-width: 20vw !important; */
 `;
-// export const TradeCard = styled(CoinPageCoinCard)`
-//   margin: auto;
-//   margin-top: 3rem;
-//   max-width: 1000px !important;
-//   height: 300px;
-// `;
 
 export const ChartContainer = styled(CoinPageCoinCard)`
   width: 100%;
@@ -130,6 +136,10 @@ export const ColorButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     backgroundColor: '#09111b',
   },
+}));
+export const SignOutButton = styled(ColorButton)(({ theme }) => ({
+  width: '300px',
+  marginTop: '1.5rem',
 }));
 
 export const linearProgressSx = {
