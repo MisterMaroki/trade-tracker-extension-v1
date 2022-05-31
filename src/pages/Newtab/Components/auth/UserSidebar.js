@@ -111,6 +111,7 @@ export default function UserSidebar() {
                         <WatchlistCoinItem
                           row={coins?.filter((x) => x.id === item.id)[0]}
                           price={item.price}
+                          key={item.id}
                         />
                       ))}
                   </FadeIn>

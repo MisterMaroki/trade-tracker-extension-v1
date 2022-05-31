@@ -91,7 +91,7 @@ const Navbar = () => {
           }}
         >
           <TextField
-            // clearable
+            clearable
             value={search}
             label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
             sx={textFieldSx}
@@ -110,7 +110,6 @@ const Navbar = () => {
                     padding: 0,
                     position: 'absolute',
                     right: 10,
-                    top: 8,
                   }}
                 >
                   <CancelOutlined sx={{ color: currentColor }} />

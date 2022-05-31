@@ -14,29 +14,31 @@ import CoinItem from '../Components/cards/CoinItem';
 import chroma from 'chroma-js';
 
 const CoinsTable = () => {
-  const { loading, handleSearch, page, setPage, currentColor, coins } =
+  const { loading, handleSearch, page, setPage, currentColor, coins, search } =
     CryptoState();
 
-  const coinItems = useMemo(
-    () =>
-      handleSearch()
-        ?.sort(() => 0.5 - Math.random())
+  const coinItems = useMemo(() => {
+    console.log('object');
+    return handleSearch()
+      ?.sort((a, b) => {
+        return !search ? 0.5 - Math.random() : 1;
+      })
 
-        .map((row) => {
-          return (
-            <Tilt
-              tiltEnable={false}
-              glareEnable={true}
-              glareMaxOpacity={0.05}
-              glareColor="white"
-              glarePosition="bottom"
-            >
-              <CoinItem row={row} />
-            </Tilt>
-          );
-        }),
-    [coins]
-  );
+      .map((row) => {
+        return (
+          <Tilt
+            tiltEnable={false}
+            glareEnable={true}
+            glareMaxOpacity={0.05}
+            glareColor="white"
+            glarePosition="bottom"
+            key={row.name}
+          >
+            <CoinItem row={row} />
+          </Tilt>
+        );
+      });
+  }, [search, loading]);
 
   return (
     <>

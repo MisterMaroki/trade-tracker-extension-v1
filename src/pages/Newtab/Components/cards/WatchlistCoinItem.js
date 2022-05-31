@@ -9,12 +9,12 @@ import { numberWithCommas } from '../banner/Carousel';
 import { CryptoState } from '../../CryptoContext';
 import MyChip from '../MyChip';
 
-export default function WatchlistCoinItem({ row, price }) {
+export default function WatchlistCoinItem({ row, price, key }) {
   const { symbol, setId, setSearch } = CryptoState();
   const profit = row.price_change_percentage_24h >= 0;
   return (
     <WatchlistCoinCard
-      key={row.name}
+      key={key}
       className="carousel"
       onClick={() => {
         setId(row.id);

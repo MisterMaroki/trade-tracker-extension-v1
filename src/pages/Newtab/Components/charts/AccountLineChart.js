@@ -24,11 +24,6 @@ const AccountLineChart = () => {
     const currentAcumPnl = sortedClosedTrades
       .slice(0, index + 1)
       .reduce((acc, current) => {
-        console.log(
-          '🚀 ~ file: AccountLineChart.js ~ line 58 ~ .reduce ~ current',
-          current
-        );
-
         return acc + (current.value - current.invested);
       }, 0);
 
@@ -42,12 +37,12 @@ const AccountLineChart = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip carousel">
+        <div className="custom-tooltip">
           <p className="label">{`${label}`}</p>
-          <p className="label">{`return:${numberWithCommas(
+          <p className="value">{`return:${numberWithCommas(
             payload[0].value
           )} ${currency}`}</p>
-          <p className="label">{`cumulative:${numberWithCommas(
+          <p className="value">{`cumulative:${numberWithCommas(
             payload[0].payload.cumulative
           )} ${currency}`}</p>
         </div>
