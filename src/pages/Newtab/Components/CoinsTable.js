@@ -1,5 +1,5 @@
 import { LinearProgress, Pagination } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CryptoState } from '../CryptoContext';
 import {
   black,
@@ -14,7 +14,29 @@ import CoinItem from '../Components/cards/CoinItem';
 import chroma from 'chroma-js';
 
 const CoinsTable = () => {
-  const { loading, handleSearch, page, setPage, currentColor } = CryptoState();
+  const { loading, handleSearch, page, setPage, currentColor, coins } =
+    CryptoState();
+
+  const coinItems = useMemo(
+    () =>
+      handleSearch()
+        ?.sort(() => 0.5 - Math.random())
+
+        .map((row) => {
+          return (
+            <Tilt
+              tiltEnable={false}
+              glareEnable={true}
+              glareMaxOpacity={0.05}
+              glareColor="white"
+              glarePosition="bottom"
+            >
+              <CoinItem row={row} />
+            </Tilt>
+          );
+        }),
+    [coins]
+  );
 
   return (
     <>
@@ -22,24 +44,7 @@ const CoinsTable = () => {
         {loading ? (
           <LinearProgress sx={linearProgressSx} />
         ) : (
-          <>
-            {handleSearch()
-              // ?.sort(() => 0.5 - Math.random())
-              ?.slice((page - 1) * 6, (page - 1) * 6 + 6)
-              .map((row) => {
-                return (
-                  <Tilt
-                    tiltEnable={false}
-                    glareEnable={true}
-                    glareMaxOpacity={0.05}
-                    glareColor="white"
-                    glarePosition="bottom"
-                  >
-                    <CoinItem row={row} />
-                  </Tilt>
-                );
-              })}
-          </>
+          <>{coinItems?.slice((page - 1) * 6, (page - 1) * 6 + 6)}</>
         )}
       </div>
       {handleSearch() && (
