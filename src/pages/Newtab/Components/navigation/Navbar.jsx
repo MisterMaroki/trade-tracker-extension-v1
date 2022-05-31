@@ -48,11 +48,47 @@ const Navbar = () => {
       <header className="flex" style={{ justifyContent: 'space-between' }}>
         <Stack direction="row" spacing={2}>
           <h6 style={{ color: currentColor }}>cTrade</h6>
+          <Button
+            sx={{
+              color: !showTrades && !id ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => {
+              setId('');
+              setShowTrades(false);
+              setShowingOverview(false);
+            }}
+          >
+            Home
+          </Button>
+
+          <Button
+            sx={{
+              color: showTrades ? currentColor : primarytext,
+              backgroundColor: 'none',
+              '&:hover': {
+                backgroundColor: '#09111b',
+              },
+            }}
+            onClick={() => {
+              setShowTrades(!showTrades);
+              setShowingOverview(false);
+            }}
+          >
+            Trades
+          </Button>
         </Stack>
         <Stack
           direction="row"
           spacing={2}
-          style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
         >
           <TextField
             // clearable
@@ -86,38 +122,6 @@ const Navbar = () => {
           <MySelect />
         </Stack>
         <Stack direction="row" spacing={2}>
-          <Button
-            sx={{
-              color: !showTrades && !id ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setId('');
-              setShowTrades(false);
-              setShowingOverview(false);
-            }}
-          >
-            Home
-          </Button>
-
-          <Button
-            sx={{
-              color: showTrades ? currentColor : primarytext,
-              backgroundColor: 'none',
-              '&:hover': {
-                backgroundColor: '#09111b',
-              },
-            }}
-            onClick={() => {
-              setShowTrades(!showTrades);
-              setShowingOverview(false);
-            }}
-          >
-            Trades
-          </Button>
           {loggedIn ? (
             <Avatar
               src={user?.photoURL}

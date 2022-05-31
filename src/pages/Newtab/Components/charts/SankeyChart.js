@@ -1,5 +1,11 @@
 import React from 'react';
-import { Layer, Rectangle, Sankey, Tooltip } from 'recharts';
+import {
+  Layer,
+  Rectangle,
+  ResponsiveContainer,
+  Sankey,
+  Tooltip,
+} from 'recharts';
 import { ChartState } from '../../ChartContext';
 import { CryptoState } from '../../CryptoContext';
 import { white } from '../../styles/themeVariables';
@@ -116,30 +122,39 @@ const SankeyChart = () => {
     );
   };
   return (
-    <div style={{ width: '100%', height: '100%' }} className="flex">
-      {allWinsLong.length >= 1 &&
-      allWinsShort.length >= 1 &&
-      allLossesLong.length >= 1 &&
-      allLossesShort.length >= 1 ? (
-        <Sankey
-          width={750}
-          height={400}
-          data={data0}
-          node={MyCustomNode}
-          nodePadding={50}
-          margin={{
-            left: open ? 70 : 160,
-            right: 0,
-            top: 100,
-            bottom: 20,
-          }}
-          link={{ stroke: currentColor }}
-        >
-          <Tooltip />
-        </Sankey>
-      ) : (
-        <h6>Track more trades to unlock this data.</h6>
-      )}
+    <div
+      style={{
+        height: '70%',
+        width: '100%',
+        position: 'absolute',
+        bottom: '20px',
+      }}
+    >
+      <ResponsiveContainer height="100%">
+        {allWinsLong.length >= 1 &&
+        allWinsShort.length >= 1 &&
+        allLossesLong.length >= 1 &&
+        allLossesShort.length >= 1 ? (
+          <Sankey
+            width={750}
+            height={400}
+            data={data0}
+            node={MyCustomNode}
+            nodePadding={50}
+            margin={{
+              top: 5,
+              right: 60,
+              left: 40,
+              bottom: 5,
+            }}
+            link={{ stroke: currentColor }}
+          >
+            <Tooltip />
+          </Sankey>
+        ) : (
+          <h6>Track more trades to unlock this data.</h6>
+        )}
+      </ResponsiveContainer>
     </div>
   );
 };

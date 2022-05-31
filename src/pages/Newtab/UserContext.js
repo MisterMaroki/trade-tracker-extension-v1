@@ -7,17 +7,14 @@ import {
   browserLocalPersistence,
 } from 'firebase/auth';
 import { auth, db } from './firebase';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 const User = createContext();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [open, setOpen] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
-  console.log(
-    '🚀 ~ file: UserContext.js ~ line 17 ~ UserContext ~ watchlist',
-    watchlist
-  );
+
   // Auth instance for the current firebaseApp
   setPersistence(auth, browserLocalPersistence);
   const [alert, setAlert] = useState({
@@ -53,6 +50,7 @@ const UserContext = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
       if (user != null) {
         console.log('Below User is logged in:');
+        console.log(user);
         setUser(user);
         setLoggedIn(true);
       } else {
@@ -129,6 +127,54 @@ const UserContext = ({ children }) => {
     });
   };
 
+  const addToWatchlist = async (coin, row) => {
+    const coinRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(coinRef, {
+        coins: watchlist
+          ? [...watchlist, { id: coin.id, price: row.current_price }]
+          : [{ id: coin.id, price: row.current_price }],
+      });
+      setAlert({
+        open: true,
+        message: `${coin.name} has been added to your watchlist.`,
+        type: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: 'error',
+      });
+    }
+  };
+
+  const removeFromWatchlist = async (coin) => {
+    const coinRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coins: watchlist.filter((x) => x.id !== coin?.id),
+        },
+        { merge: true }
+      );
+      setAlert({
+        open: true,
+        message: `${coin.name} has been removed from your watchlist.`,
+        type: 'success',
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: 'error',
+      });
+    }
+  };
+
   return (
     <User.Provider
       value={{
@@ -144,6 +190,8 @@ const UserContext = ({ children }) => {
         setAlert,
         watchlist,
         setWatchlist,
+        addToWatchlist,
+        removeFromWatchlist,
       }}
     >
       {children}

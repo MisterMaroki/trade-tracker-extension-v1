@@ -12,13 +12,13 @@ import ChartContext from './ChartContext';
 TimeAgo.addDefaultLocale(en);
 
 render(
-  <CryptoContext>
-    <UserContext>
+  <UserContext>
+    <CryptoContext>
       <ChartContext>
         <Newtab />
       </ChartContext>
-    </UserContext>
-  </CryptoContext>,
+    </CryptoContext>
+  </UserContext>,
   window.document.querySelector('#app-container')
 );
 

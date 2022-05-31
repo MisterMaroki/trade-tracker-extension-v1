@@ -116,6 +116,9 @@ header {
   background-color: $primary--bg;
 
   box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
+  h6 {
+    font-size: 1.7rem;
+  }
   h6 span {
     color: $tertiary2;
   }

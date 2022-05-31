@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Trade Tracker",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "description": "The best trade tracker for your chrome new tab.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "permissions": ["storage", "activeTab", "scripting", "identity"],
@@ -18,8 +18,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-      "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"]
+      "js": ["contentScript.bundle.js"]
     }
   ],
   "devtools_page": "devtools.html",

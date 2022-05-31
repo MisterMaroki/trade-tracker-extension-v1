@@ -67,7 +67,7 @@ const CoinPage = () => {
                 {chartDays.map((day) => (
                   <ToggleButton
                     value={day.value}
-                    exclusive={true}
+                    exclusive="true"
                     style={{
                       color: day.value === days ? currentColor : primarytext,
                       backgroundColor: primarybg,

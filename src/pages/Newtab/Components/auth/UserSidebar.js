@@ -1,35 +1,3 @@
-// import { KeyboardDoubleArrowLeft } from '@mui/icons-material';
-// import { Box, Fade } from '@mui/material';
-// import React, { useState } from 'react';
-
-// const UserSidebar = () => {
-//   const [open, setOpen] = useState(false);
-//   return (
-//     <Box
-//       style={{
-//         display: 'flex',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         position: 'absolute',
-//         top: '4rem',
-//         right: '10px',
-//         border: '1px solid red',
-//         height: '100%',
-//       }}
-//     >
-//       {!open ? (
-//         <KeyboardDoubleArrowLeft onClick={() => setOpen(!open)} />
-//       ) : (
-//         <Fade in={open}>
-//           <Box>UserSidebar</Box>
-//         </Fade>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default UserSidebar;
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -85,7 +53,7 @@ export default function UserSidebar() {
             <IconButton
               onClick={toggleDrawer(anchor, true)}
               style={{
-                position: 'absolute',
+                position: 'fixed',
                 top: '5rem',
                 right: '-5px',
                 borderRadius: '10px 0 0 10px',

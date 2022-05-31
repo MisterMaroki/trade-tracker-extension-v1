@@ -47,7 +47,8 @@ export default function CoinPageCoinItem({ row }) {
 
     id,
   } = CryptoState();
-  const { user, setAlert, watchlist } = UserState();
+  const { user, setAlert, watchlist, addToWatchlist, removeFromWatchlist } =
+    UserState();
 
   const profit = row?.price_change_percentage_24h >= 0;
   const profit7 =
@@ -61,53 +62,6 @@ export default function CoinPageCoinItem({ row }) {
 
   const inWatchlist =
     watchlist?.filter((x) => x.id.includes(coin?.id)).length !== 0;
-  const addToWatchlist = async () => {
-    const coinRef = doc(db, 'watchlist', user.uid);
-
-    try {
-      await setDoc(coinRef, {
-        coins: watchlist
-          ? [...watchlist, { id: coin.id, price: row.current_price }]
-          : [{ id: coin.id, price: row.current_price }],
-      });
-      setAlert({
-        open: true,
-        message: `${coin.name} has been added to your watchlist.`,
-        type: 'success',
-      });
-    } catch (error) {
-      setAlert({
-        open: true,
-        message: error.message,
-        type: 'error',
-      });
-    }
-  };
-
-  const removeFromWatchlist = async () => {
-    const coinRef = doc(db, 'watchlist', user.uid);
-
-    try {
-      await setDoc(
-        coinRef,
-        {
-          coins: watchlist.filter((x) => x.id !== coin?.id),
-        },
-        { merge: true }
-      );
-      setAlert({
-        open: true,
-        message: `${coin.name} has been removed from your watchlist.`,
-        type: 'success',
-      });
-    } catch (error) {
-      setAlert({
-        open: true,
-        message: error.message,
-        type: 'error',
-      });
-    }
-  };
 
   return (
     <CoinPageCoinCard key={row?.name} className="carousel">
@@ -128,7 +82,11 @@ export default function CoinPageCoinItem({ row }) {
                   left: -2,
                   color: currentColor,
                 }}
-                onClick={inWatchlist ? removeFromWatchlist : addToWatchlist}
+                onClick={() =>
+                  inWatchlist
+                    ? removeFromWatchlist(row)
+                    : addToWatchlist(coin, row)
+                }
               >
                 {inWatchlist ? <StarOutlined /> : <StarOutlineOutlined />}
               </IconButton>

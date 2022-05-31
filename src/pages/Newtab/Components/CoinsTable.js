@@ -24,7 +24,7 @@ const CoinsTable = () => {
         ) : (
           <>
             {handleSearch()
-              ?.sort(() => 0.5 - Math.random())
+              // ?.sort(() => 0.5 - Math.random())
               ?.slice((page - 1) * 6, (page - 1) * 6 + 6)
               .map((row) => {
                 return (

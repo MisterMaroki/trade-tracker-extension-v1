@@ -1,36 +1,22 @@
-import {
-  Box,
-  CircularProgress,
-  ToggleButton,
-  ToggleButtonGroup,
-} from '@mui/material';
-import React, { useRef, useState } from 'react';
-import CoinChart from '../Components/charts/CoinChart';
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { useState } from 'react';
 import { CryptoState } from '../CryptoContext';
 import {
   CoinPageContainer,
-  tertiaryalt,
-  GridItem,
-  primarytext,
-  purple,
-  primarybg,
   GridChartItem,
+  primarybg,
+  primarytext,
 } from '../styles/themeVariables';
-import CoinPageCoinItem from '../Components/cards/CoinPageCoinItem';
-import TradeTools from '../Components/TradeTools';
-import { ChartState } from '../ChartContext';
-import { chartDays } from '../../Content/config/data';
 import SankeyChart from '../Components/charts/SankeyChart';
-import TradesTable from '../Components/TradesTable';
-import MiniTradesTable from '../Components/MiniTradesTable';
 import PerformanceSummary from '../Components/cards/PerformanceSummary';
 import WinLossPie from '../Components/charts/WinLossPie';
 import LongShortPie from '../Components/charts/LongShortPie';
 import { ResponsiveContainer } from 'recharts';
+import { AccountLineChart } from '../Components/charts/AccountLineChart';
 
 const OverviewPage = () => {
-  const { trades } = CryptoState();
-  const [currentChart, setCurrentChart] = useState('sankey');
+  const { trades, currentColor } = CryptoState();
+  const [currentChart, setCurrentChart] = useState('line');
 
   return (
     <CoinPageContainer>
@@ -58,10 +44,36 @@ const OverviewPage = () => {
           </GridChartItem>
         </Box>
         <Box gridColumn="span 10" gridRow="8/-1" className="chart-container">
-          <GridChartItem className="carousel">
-            <ResponsiveContainer width="100%" height="100%">
-              <SankeyChart />
-            </ResponsiveContainer>
+          <GridChartItem className="carousel" s>
+            <ToggleButtonGroup
+              value={currentChart}
+              sx={{
+                position: 'sticky',
+                zIndex: 10,
+                top: '0',
+                left: '0',
+              }}
+            >
+              {['line', 'sankey', 'bars', 'treemap'].map((option) => (
+                <ToggleButton
+                  exclusive="true"
+                  value={option}
+                  style={{
+                    color: currentChart === option ? currentColor : primarytext,
+                    backgroundColor: primarybg,
+                    '&:hover': {
+                      backgroundColor: '#09111b',
+                    },
+                  }}
+                  key={option}
+                  onClick={() => setCurrentChart(() => option)}
+                >
+                  {option}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+            {currentChart === 'sankey' && <SankeyChart />}
+            {currentChart === 'line' && <AccountLineChart />}
           </GridChartItem>
         </Box>
         <Box gridColumn="span 6" gridRow="8/-1" className="chart-container">

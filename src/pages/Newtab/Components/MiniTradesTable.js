@@ -66,7 +66,7 @@ const MiniTradesTable = ({ refs }) => {
         {[coin.symbol, 'all coins'].map((option) => (
           <ToggleButton
             value={option}
-            exclusive={true}
+            exclusive="true"
             style={{
               color: whichCoinsToShow === option ? currentColor : primarytext,
               backgroundColor: primarybg,
@@ -93,7 +93,7 @@ const MiniTradesTable = ({ refs }) => {
         {['open', 'closed', 'all'].map((option) => (
           <ToggleButton
             value={option}
-            exclusive={true}
+            exclusive="true"
             style={{
               color: filter === option ? currentColor : primarytext,
               backgroundColor: primarybg,

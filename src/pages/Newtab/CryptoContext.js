@@ -1,11 +1,20 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { CoinList, SingleCoin } from '../Content/config/api';
 import { numberWithCommas } from './Components/banner/Carousel';
 import { blue, gray, purple, tertiary, yellow } from './styles/themeVariables';
 import toast, { Toaster } from 'react-hot-toast';
 import { getDurationString } from './Components/cards/TradeItem';
+import { UserState } from './UserContext';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 const Crypto = createContext();
 
@@ -20,7 +29,7 @@ const CryptoContext = ({ children }) => {
   const [showTrades, setShowTrades] = useState(false);
   const [page, setPage] = useState(1);
   const [trades, setTrades] = useState(
-    localStorage.getItem('trades')?.length > 1
+    localStorage.getItem('trades')?.length > 5
       ? JSON.parse(localStorage.getItem('trades'))
       : []
   );
@@ -30,6 +39,9 @@ const CryptoContext = ({ children }) => {
   const [currentColor, setCurrentColor] = useState(gray);
   const [whichCoinsToShow, setWhichCoinsToShow] = useState('this');
   const [showingOverview, setShowingOverview] = useState(false);
+
+  const { user, setAlert } = UserState();
+
   const notify = () =>
     toast('Trade closed', {
       icon: '🍾',
@@ -48,7 +60,6 @@ const CryptoContext = ({ children }) => {
       : setFilter(type);
     setPage(1);
   };
-
   useEffect(() => {
     if (currency === 'USD') {
       setSymbol('$');
@@ -63,10 +74,30 @@ const CryptoContext = ({ children }) => {
   }, [currency]);
 
   useEffect(() => {
-    trades?.length >= 1
-      ? localStorage.setItem('trades', JSON.stringify(trades))
-      : localStorage.setItem('trades', ['']);
+    if (trades?.length >= 1) {
+      localStorage.setItem('trades', JSON.stringify(trades));
+    } else {
+      localStorage.setItem('trades', ['']);
+    }
   }, [trades]);
+
+  useEffect(() => {
+    id && setShowTrades(false);
+  }, [id]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      const tradesRef = doc(db, 'trades', user?.uid);
+      var unsubscribe = onSnapshot(tradesRef, (trades) => {
+        if (trades.exists) {
+          setTrades(() => trades.data()?.trades || []);
+        } else {
+          console.log('Nothing in db trades.');
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, [user, trades?.length]);
 
   useEffect(() => {
     const fetchCoin = async () => {
@@ -78,11 +109,13 @@ const CryptoContext = ({ children }) => {
 
   useEffect(() => {
     const fetchCoins = async () => {
-      setLoading(true);
+      if (coins.length === 0) {
+        setLoading(true);
 
-      const data = await axios.get(CoinList(currency));
-      if (data.data !== coins) setCoins(data.data);
-      setLoading(false);
+        const data = await axios.get(CoinList(currency));
+        if (data.data !== coins) setCoins(data.data);
+        setLoading(false);
+      }
     };
     fetchCoins();
   }, [currency]);
@@ -99,7 +132,7 @@ const CryptoContext = ({ children }) => {
           ticker: coin.symbol,
           fiat: currency.toLowerCase(),
           price: coin?.market_data?.current_price[currency.toLowerCase()],
-          date: new Date(),
+          date: new Date().toUTCString(),
           quantity: +quantity,
           direction: direction === 'buy' ? 'buy' : 'sell',
           active: true,
@@ -113,16 +146,44 @@ const CryptoContext = ({ children }) => {
     }
     setTimeout(() => {
       setFilter('open');
-    }, 1000);
+    }, 700);
   };
+  useEffect(() => {
+    if (user?.uid) {
+      const writeTrades = async () => {
+        const tradesRef = doc(db, 'trades', user.uid);
+
+        try {
+          console.log('writeTrades()');
+
+          await setDoc(
+            tradesRef,
+            {
+              trades: trades,
+            },
+            { merge: true }
+          );
+        } catch (error) {
+          setTimeout(
+            () =>
+              setAlert({
+                open: true,
+                message: error.message,
+                type: 'error',
+              }),
+            500
+          );
+        }
+      };
+      writeTrades();
+    }
+  }, [setAlert, trades]);
 
   useEffect(() => {
     setSearch('');
     setWhichCoinsToShow(
       () => coins.filter((coin) => coin.id === id)[0]?.symbol
     );
-
-    // setWhichCoinsToShow(() => coins.filter((coin) => coin.id === id).symbol);
   }, [id, showTrades]);
 
   const closeTrade = async (row) => {
@@ -134,7 +195,7 @@ const CryptoContext = ({ children }) => {
             ? {
                 ...trade,
                 active: false,
-                closed: new Date(),
+                closed: new Date().toUTCString(),
                 exit: trade.current_price,
                 duration: getDurationString(
                   Date.parse(new Date()) - Date.parse(trade.date)
@@ -187,11 +248,12 @@ const CryptoContext = ({ children }) => {
         })
       );
       setTrades(enrichedRows);
+      console.log('PnL updated');
     };
     rowDataEnrichment();
   }, [count, filter, showTrades, whichCoinsToShow]);
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (coins?.length > 20 && !loading) {
       return coins?.filter(
         (coin) =>
@@ -199,7 +261,7 @@ const CryptoContext = ({ children }) => {
           coin.symbol.toLowerCase().includes(search)
       );
     }
-  };
+  }, [loading, search]);
 
   const findProfits = async (trade, type) => {
     const { data } = await axios.get(SingleCoin(trade.coin));
