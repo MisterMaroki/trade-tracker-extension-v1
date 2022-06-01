@@ -1,6 +1,7 @@
 body {
   width: 400px;
-  height: 260px;
+  /* min-height: 260px; */
+  /* height: 800px; */
   margin: 0;
 
   -webkit-font-smoothing: antialiased;
