@@ -5,6 +5,7 @@ import './Popup.css';
 
 import { CryptoState } from '../Newtab/CryptoContext';
 import { Select } from '@mui/material';
+import TradeTools from '../Newtab/Components/TradeTools';
 
 const options = [
   { value: 'bitcoin', label: 'Bitcoin' },
@@ -46,7 +47,7 @@ const Popup = () => {
   return (
     <div className={`__container `}>
       <p ref={priceEl}>BTC: $39225.00</p>
-
+      <TradeTools />
       <Select
         options={options}
         name="ticker-select"

@@ -377,3 +377,27 @@ g text {
   font-size: 1rem;
   text-transform: uppercase;
 }
+.custom-tooltip {
+  width: 220px;
+  height: 110px;
+  background: whitesmoke;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  position: relative;
+  font-weight: bold;
+  p {
+    padding: 0.5rem;
+  }
+  p.label {
+    color: #2f2f2f;
+  }
+  p.value {
+    color: #030303;
+    text-transform: uppercase;
+    span {
+      color: #09121ed7;
+      font-weight: 400;
+    }
+  }
+}

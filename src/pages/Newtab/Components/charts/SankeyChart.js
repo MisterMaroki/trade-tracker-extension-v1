@@ -123,6 +123,7 @@ const SankeyChart = () => {
   };
   return (
     <div
+      className="flex"
       style={{
         height: '70%',
         width: '100%',
@@ -152,7 +153,9 @@ const SankeyChart = () => {
             <Tooltip />
           </Sankey>
         ) : (
-          <h6>Track more trades to unlock this data.</h6>
+          <h6 style={{ position: 'absolute', bottom: '50%', left: '12%' }}>
+            Track more trades to unlock this data.
+          </h6>
         )}
       </ResponsiveContainer>
     </div>

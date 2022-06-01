@@ -101,7 +101,7 @@ const MiniTradesTable = ({ refs }) => {
                 backgroundColor: '#09111b',
               },
             }}
-            key={option}
+            key={option[0]}
             onClick={() => handleFilter(option)}
           >
             {option}
@@ -110,9 +110,11 @@ const MiniTradesTable = ({ refs }) => {
       </ToggleButtonGroup>
       <FadeIn className="trade-container padded">
         {tradesArray &&
-          tradesArray?.slice((page - 1) * 5, (page - 1) * 5 + 5)?.map((row) => {
-            return <MiniTradeItem row={row} />;
-          })}
+          tradesArray
+            ?.slice((page - 1) * 5, (page - 1) * 5 + 5)
+            ?.map((row, index) => {
+              return <MiniTradeItem row={row} key={row.date} />;
+            })}
       </FadeIn>
       {tradesArray.length > 5 && (
         <Pagination

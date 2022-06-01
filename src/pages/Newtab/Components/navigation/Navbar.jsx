@@ -91,7 +91,6 @@ const Navbar = () => {
           }}
         >
           <TextField
-            clearable
             value={search}
             label={showTrades ? 'Filter trades...' : 'Search for a coin...'}
             sx={textFieldSx}

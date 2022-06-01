@@ -39,12 +39,18 @@ const AccountLineChart = () => {
       return (
         <div className="custom-tooltip">
           <p className="label">{`${label}`}</p>
-          <p className="value">{`return:${numberWithCommas(
-            payload[0].value
-          )} ${currency}`}</p>
-          <p className="value">{`cumulative:${numberWithCommas(
-            payload[0].payload.cumulative
-          )} ${currency}`}</p>
+          <p className="value">
+            Return:{' '}
+            <span>
+              {`${numberWithCommas(payload[0].value)}`} {currency}
+            </span>
+          </p>
+          <p className="value">
+            Pnl:{' '}
+            <span>
+              {`${numberWithCommas(payload[0].payload.cumulative)}`} {currency}
+            </span>
+          </p>
         </div>
       );
     }

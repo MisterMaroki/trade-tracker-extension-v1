@@ -8,19 +8,39 @@ import {
 import { numberWithCommas } from '../banner/Carousel';
 import { CryptoState } from '../../CryptoContext';
 import MyChip from '../MyChip';
+import { UserState } from '../../UserContext';
+import { IconButton } from '@mui/material';
+import { DeleteForeverRounded, DeleteOutlined } from '@mui/icons-material';
 
-export default function WatchlistCoinItem({ row, price, key }) {
-  const { symbol, setId, setSearch } = CryptoState();
+export default function WatchlistCoinItem({ row, price }) {
+  const { symbol, setId, setSearch, currentColor } = CryptoState();
+  const { user, setAlert, watchlist, addToWatchlist, removeFromWatchlist } =
+    UserState();
   const profit = row.price_change_percentage_24h >= 0;
+  const inWatchlist =
+    watchlist?.filter((x) => x.id.includes(row?.id)).length !== 0;
   return (
     <WatchlistCoinCard
-      key={key}
       className="carousel"
       onClick={() => {
         setId(row.id);
         setSearch('');
       }}
     >
+      {user && (
+        <IconButton
+          style={{
+            position: 'absolute',
+            top: 1,
+            left: 1,
+            color: currentColor,
+            zIndex: 100,
+          }}
+          onClick={() => inWatchlist && removeFromWatchlist(row)}
+        >
+          {<DeleteForeverRounded />}
+        </IconButton>
+      )}
       <div className="flex col">
         <div className="darkbg nobg">
           <img

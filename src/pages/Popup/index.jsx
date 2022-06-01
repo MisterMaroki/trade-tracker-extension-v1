@@ -4,11 +4,14 @@ import { render } from 'react-dom';
 import Popup from './Popup';
 import './index.css';
 import CryptoContext from '../Newtab/CryptoContext';
+import UserContext from '../Newtab/UserContext';
 
 render(
-  <CryptoContext>
-    <Popup />
-  </CryptoContext>,
+  <UserContext>
+    <CryptoContext>
+      <Popup />
+    </CryptoContext>
+  </UserContext>,
   window.document.querySelector('#app-container')
 );
 

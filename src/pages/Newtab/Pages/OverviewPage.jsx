@@ -44,7 +44,7 @@ const OverviewPage = () => {
           </GridChartItem>
         </Box>
         <Box gridColumn="span 10" gridRow="8/-1" className="chart-container">
-          <GridChartItem className="carousel" s>
+          <GridChartItem className="carousel">
             <ToggleButtonGroup
               value={currentChart}
               sx={{

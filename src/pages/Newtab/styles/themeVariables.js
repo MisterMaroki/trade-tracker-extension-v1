@@ -51,7 +51,7 @@ export const GridChartItem = styled(SectionContainer)`
 `;
 
 export const DashboardContainer = styled(Container)`
-  margin-top: 6rem;
+  margin-top: 7rem;
   /* height: 88vh; */
   min-height: 88vh;
   /* max-height: none; */

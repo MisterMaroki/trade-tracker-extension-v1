@@ -41,7 +41,7 @@ const TradesTable = () => {
       <FadeIn className="trade-container">
         {tradesArray?.slice((page - 1) * 5, (page - 1) * 5 + 5)?.map((row) => {
           return (
-            <Suspense fallback={<div>Loading</div>}>
+            <Suspense key={row?.date} fallback={<div>Loading</div>}>
               <TradeItem row={row} page={page} />
             </Suspense>
           );

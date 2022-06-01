@@ -112,9 +112,14 @@ const CryptoContext = ({ children }) => {
       if (coins.length === 0) {
         setLoading(true);
 
-        const data = await axios.get(CoinList(currency));
-        if (data.data !== coins) setCoins(data.data);
-        setLoading(false);
+        try {
+          const data = await axios.get(CoinList(currency));
+          if (data.data !== coins) setCoins(data.data);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
       }
     };
     fetchCoins();
@@ -149,7 +154,7 @@ const CryptoContext = ({ children }) => {
     }, 700);
   };
   useEffect(() => {
-    if (user?.uid) {
+    if (user?.uid && trades.length >= 1) {
       const writeTrades = async () => {
         const tradesRef = doc(db, 'trades', user.uid);
 
@@ -208,6 +213,7 @@ const CryptoContext = ({ children }) => {
   };
 
   const rowDataEnrichment = async () => {
+    console.log('row data enrichment outside useEffect');
     let enrichedRows = await Promise.all(
       trades?.map(async (trade) => {
         const currentPrice = await findProfits(trade, 'current-price');
@@ -230,6 +236,7 @@ const CryptoContext = ({ children }) => {
 
   useEffect(() => {
     const rowDataEnrichment = async () => {
+      console.log('rowDataEnrichment');
       let enrichedRows = await Promise.all(
         trades?.map(async (trade) => {
           const currentPrice = await findProfits(trade, 'current-price');
@@ -251,7 +258,7 @@ const CryptoContext = ({ children }) => {
       console.log('PnL updated');
     };
     rowDataEnrichment();
-  }, [count, filter, showTrades, whichCoinsToShow]);
+  }, [count, filter, showTrades, whichCoinsToShow, user?.uid, id]);
 
   const handleSearch = useCallback(() => {
     if (coins?.length > 20 && !loading) {

@@ -12,13 +12,15 @@ const ChartContext = ({ children }) => {
   const { currency, coin, trades } = CryptoState();
 
   const fetchHistoricalData = async (id) => {
-    setLoading(true);
-    const { data } = await axios.get(
-      HistoricalChart(id || coin?.id, days, currency)
-    );
+    if (id) {
+      setLoading(true);
+      const { data } = await axios.get(
+        HistoricalChart(id || coin?.id, days, currency)
+      );
 
-    setHistoricalData(data.prices);
-    setLoading(false);
+      setHistoricalData(data.prices);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

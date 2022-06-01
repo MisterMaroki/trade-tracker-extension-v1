@@ -173,33 +173,6 @@ const PerformanceSummary = () => {
           </span>
         </div>
       </Box>
-      {/* <Box gridColumn="1/-1 " gridRow="11/16">
-        <div className="container col darkbgonly">
-          <h6
-            style={{
-              fontSize: 22,
-              textTransform: 'uppercase',
-              color: primarytext,
-              margin: '0 auto',
-            }}
-          >
-            Overall PnL:
-          </h6>
-
-          <span
-            className={
-              averagePercentGain(allClosedTrades) >= 0 ? 'green' : 'red'
-            }
-            style={{ fontSize: 18, margin: '0 auto' }}
-          >
-            {averagePercentGain(allClosedTrades) >= 0 && '+'}
-            {numberWithCommas(
-              averagePercentGain(allClosedTrades).toFixed(2)
-            )}{' '}
-            {currency}
-          </span>
-        </div>
-      </Box> */}
     </Box>
   );
 };

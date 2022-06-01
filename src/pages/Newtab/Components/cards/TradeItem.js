@@ -38,7 +38,6 @@ const TradeItem = ({ row, page }) => {
     >
       <TradeCard
         className="trade carousel"
-        key={row?.id}
         onClick={() => {
           setId(row?.coin);
           setShowTrades(false);

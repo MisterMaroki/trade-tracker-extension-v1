@@ -4,7 +4,7 @@
   "description": "The best trade tracker for your chrome new tab.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
-  "permissions": ["storage", "activeTab", "scripting", "identity"],
+  "permissions": ["identity"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
