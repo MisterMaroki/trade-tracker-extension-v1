@@ -36,7 +36,10 @@ export default function WatchlistCoinItem({ row, price }) {
             color: currentColor,
             zIndex: 100,
           }}
-          onClick={() => inWatchlist && removeFromWatchlist(row)}
+          onClick={(e) => {
+            e.stopPropagation();
+            inWatchlist && removeFromWatchlist(row);
+          }}
         >
           {<DeleteForeverRounded />}
         </IconButton>

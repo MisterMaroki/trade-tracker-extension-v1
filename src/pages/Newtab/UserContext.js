@@ -7,7 +7,13 @@ import {
   browserLocalPersistence,
 } from 'firebase/auth';
 import { auth, db } from './firebase';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  setDoc,
+} from 'firebase/firestore';
 const User = createContext();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -32,9 +38,10 @@ const UserContext = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const coinRef = doc(db, 'watchlist', user?.uid);
+      getAllUsersTrades();
+      const coinsRef = doc(db, 'watchlist', user?.uid);
 
-      var unsubscribe = onSnapshot(coinRef, (coin) => {
+      var unsubscribe = onSnapshot(coinsRef, (coin) => {
         if (coin.exists) {
           setWatchlist(coin.data().coins);
         } else {
@@ -44,6 +51,15 @@ const UserContext = ({ children }) => {
       return () => unsubscribe();
     }
   }, [user]);
+
+  // Get a list of cities from your database
+  const getAllUsersTrades = async () => {
+    const tradesCol = collection(db, 'trades');
+    const tradesSnapshot = await getDocs(tradesCol);
+    const tradesList = tradesSnapshot.docs.map((doc) => doc.data());
+    console.log(tradesList);
+    return tradesList;
+  };
 
   const init = () => {
     // Detect auth state
@@ -191,6 +207,7 @@ const UserContext = ({ children }) => {
         watchlist,
         setWatchlist,
         addToWatchlist,
+        getAllUsersTrades,
         removeFromWatchlist,
       }}
     >

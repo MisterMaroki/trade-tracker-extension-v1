@@ -30,6 +30,7 @@ export const NewtabContainer = styled(Container)`
   background-color: ${black};
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   align-items: center;
 `;
 
@@ -107,6 +108,10 @@ export const CoinPageCoinCard = styled(CoinCard)`
   margin: 0;
   max-width: none !important;
 `;
+export const CoinPageTradeTools = styled(CoinPageCoinCard)`
+  display: flex;
+  gap: 1rem;
+`;
 
 export const TradeCard = styled(CoinPageCoinCard)`
   margin: 0;
@@ -162,6 +167,45 @@ export const textFieldSx = () => {
     marginBottom: 0,
     width: '100%',
     maxWidth: '300px',
+    padding: 0,
+
+    input: {
+      background: secondarybg,
+      borderRadius: 1,
+      color: currentColor,
+    },
+    '& .MuiOutlinedInput-root.Mui-focused': {
+      '& > fieldset': {
+        borderColor: currentColor,
+      },
+    },
+    '& label.Mui-focused': {
+      color: currentColor,
+    },
+    '& label': {
+      color: primarytext,
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: currentColor,
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'trnsparent',
+      },
+      '&:hover fieldset': {
+        borderColor: currentColor,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: currentColor,
+      },
+    },
+  };
+};
+export const tradeTextFieldSx = () => {
+  const { currentColor } = CryptoState();
+  return {
+    marginBottom: 0,
+    width: '100%',
     padding: 0,
 
     input: {

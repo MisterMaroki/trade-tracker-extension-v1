@@ -24,20 +24,9 @@ import TradesTable from '../Components/TradesTable';
 import MiniTradesTable from '../Components/MiniTradesTable';
 
 const CoinPage = () => {
-  const {
-    symbol,
-    setId,
-    setSearch,
-    setCoin,
-    coin,
-    coins,
-    currency,
-    currentColor,
+  const { coin, coins, currentColor } = CryptoState();
 
-    id,
-  } = CryptoState();
-
-  const { days, setDays, historicalData } = ChartState();
+  const { days, setDays } = ChartState();
 
   const ref = useRef();
 

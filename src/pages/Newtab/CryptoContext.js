@@ -112,14 +112,9 @@ const CryptoContext = ({ children }) => {
       if (coins.length === 0) {
         setLoading(true);
 
-        try {
-          const data = await axios.get(CoinList(currency));
-          if (data.data !== coins) setCoins(data.data);
-          setLoading(false);
-        } catch (err) {
-          console.log(err);
-          setLoading(false);
-        }
+        const data = await axios.get(CoinList(currency));
+        if (data.data !== coins) setCoins(data.data);
+        setLoading(false);
       }
     };
     fetchCoins();

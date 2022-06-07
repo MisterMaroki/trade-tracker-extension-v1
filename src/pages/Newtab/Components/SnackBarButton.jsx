@@ -34,7 +34,11 @@ export default function SnackbarButton({ direction, func, quantity, ticker }) {
     <Stack spacing={2} sx={{ width: '100%' }}>
       <ColorButton
         className={`direction-tag }`}
-        style={{ backgroundColor: direction === 'buy' ? 'green' : 'red' }}
+        style={{
+          backgroundColor: direction === 'buy' ? 'green' : 'red',
+          height: '38px',
+          marginTop: '2px',
+        }}
         onClick={() => {
           setTapped(!tapped);
           handleClick();

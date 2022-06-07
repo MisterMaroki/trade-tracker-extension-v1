@@ -9,9 +9,9 @@ const ChartContext = ({ children }) => {
 
   const [days, setDays] = useState(1);
   const [loading, setLoading] = useState(false);
-  const { currency, coin, trades } = CryptoState();
+  const { currency, coin, trades, id } = CryptoState();
 
-  const fetchHistoricalData = async (id) => {
+  const fetchHistoricalData = async () => {
     if (id) {
       setLoading(true);
       const { data } = await axios.get(

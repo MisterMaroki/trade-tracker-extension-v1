@@ -15,10 +15,6 @@ export function toTimestamp(strDate) {
   return datum / 1000;
 }
 const CoinRangeChart = ({ trade }) => {
-  console.log(
-    '🚀 ~ file: CoinRangeChart.js ~ line 18 ~ CoinRangeChart ~ trade',
-    trade
-  );
   const { currency, currentColor, coins } = CryptoState();
   const {
     days,
@@ -29,6 +25,10 @@ const CoinRangeChart = ({ trade }) => {
   } = ChartState();
 
   const [historicalRangeData, setHistoricalRangeData] = useState([]);
+  console.log(
+    '🚀 ~ file: CoinRangeChart.js ~ line 28 ~ CoinRangeChart ~ historicalRangeData',
+    historicalRangeData
+  );
   const [suppliedData, setSuppliedData] = useState([]);
   const [label, setLabel] = useState('');
   const [loading, setLoading] = useState(false);
@@ -44,9 +44,10 @@ const CoinRangeChart = ({ trade }) => {
         Math.floor(new Date(trade.closed || Date.now()).getTime() / 1000)
       )
     );
+
     const { prices } = data;
 
-    if (prices.length > 1) {
+    if (prices.length > 2) {
       setHistoricalRangeData(prices);
       setLoading(false);
       setLabel('Trade snapshot');
@@ -57,36 +58,14 @@ const CoinRangeChart = ({ trade }) => {
   };
 
   useEffect(() => {
-    if (true) {
-      historicalRangeData?.length > 2
-        ? setSuppliedData(historicalRangeData)
-        : setSuppliedData(historicalData);
-      console.log(
-        '🚀 ~ file: CoinRangeChart.js ~ line 67 ~ useEffect ~ historicalData',
-        historicalData
-      );
-      console.log(
-        '🚀 ~ file: CoinRangeChart.js ~ line 32 ~ CoinRangeChart ~ historicalRangeData',
-        historicalRangeData
-      );
-    }
-  });
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      historicalRangeData?.length > 1 && setLoading(false);
-      //assign interval to a variable to clear it.
-      historicalRangeData === undefined &&
-        loading &&
-        setHistoricalRangeData(historicalData);
-    }, 500);
-
-    // This is important
-  }, []);
+    historicalRangeData?.length > 2
+      ? setSuppliedData(historicalRangeData)
+      : setSuppliedData(historicalData);
+  }, [historicalData, historicalRangeData]);
 
   useEffect(() => {
     fetchHistoricalRangeData();
-  }, []);
+  }, [label]);
 
   return (
     <>
@@ -103,7 +82,7 @@ const CoinRangeChart = ({ trade }) => {
                   date.getHours() > 12
                     ? `${date.getHours() - 12}:${date.getMinutes()} PM`
                     : `${date.getHours()}:${date.getMinutes()} AM`;
-                // return '';
+
                 return suppliedData?.length < 300
                   ? time
                   : date.toLocaleDateString();

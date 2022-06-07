@@ -13,6 +13,7 @@ import WinLossPie from '../Components/charts/WinLossPie';
 import LongShortPie from '../Components/charts/LongShortPie';
 import { ResponsiveContainer } from 'recharts';
 import { AccountLineChart } from '../Components/charts/AccountLineChart';
+import LeaderBoardCard from '../Components/cards/LeaderBoardCard';
 
 const OverviewPage = () => {
   const { trades, currentColor } = CryptoState();
@@ -76,7 +77,12 @@ const OverviewPage = () => {
             {currentChart === 'line' && <AccountLineChart />}
           </GridChartItem>
         </Box>
-        <Box gridColumn="span 6" gridRow="8/-1" className="chart-container">
+        <Box gridColumn="span 6" gridRow="8/span 4" className="chart-container">
+          <GridChartItem className="carousel">
+            <LeaderBoardCard />
+          </GridChartItem>
+        </Box>
+        <Box gridColumn="span 6" gridRow="12/-1" className="chart-container">
           <GridChartItem></GridChartItem>
         </Box>
       </Box>
