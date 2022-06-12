@@ -9,13 +9,16 @@ import './index.css';
 import CryptoContext from './CryptoContext';
 import UserContext from './UserContext';
 import ChartContext from './ChartContext';
+import LeaderboardContext from './LeaderboardContext';
 TimeAgo.addDefaultLocale(en);
 
 render(
   <UserContext>
     <CryptoContext>
       <ChartContext>
-        <Newtab />
+        <LeaderboardContext>
+          <Newtab />
+        </LeaderboardContext>
       </ChartContext>
     </CryptoContext>
   </UserContext>,

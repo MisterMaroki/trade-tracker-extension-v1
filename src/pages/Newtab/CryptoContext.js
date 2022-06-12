@@ -177,7 +177,7 @@ const CryptoContext = ({ children }) => {
       };
       writeTrades();
     }
-  }, [setAlert, trades]);
+  }, [setAlert, trades, user?.uid]);
 
   useEffect(() => {
     setSearch('');

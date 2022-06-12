@@ -38,7 +38,6 @@ const UserContext = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      getAllUsersTrades();
       const coinsRef = doc(db, 'watchlist', user?.uid);
 
       var unsubscribe = onSnapshot(coinsRef, (coin) => {
@@ -51,15 +50,6 @@ const UserContext = ({ children }) => {
       return () => unsubscribe();
     }
   }, [user]);
-
-  // Get a list of cities from your database
-  const getAllUsersTrades = async () => {
-    const tradesCol = collection(db, 'trades');
-    const tradesSnapshot = await getDocs(tradesCol);
-    const tradesList = tradesSnapshot.docs.map((doc) => doc.data());
-    console.log(tradesList);
-    return tradesList;
-  };
 
   const init = () => {
     // Detect auth state
@@ -207,7 +197,6 @@ const UserContext = ({ children }) => {
         watchlist,
         setWatchlist,
         addToWatchlist,
-        getAllUsersTrades,
         removeFromWatchlist,
       }}
     >

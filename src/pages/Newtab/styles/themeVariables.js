@@ -74,6 +74,12 @@ export const PieContainer = styled(CarouselContainer)`
   width: 100%;
   height: 100%;
 `;
+export const LeaderboardContainer = styled(Container)`
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100px;
+  width: 100%;
+`;
 export const CoinPageContainer = styled(DashboardContainer)`
   margin-top: 3.5rem;
   margin-inline: 0;

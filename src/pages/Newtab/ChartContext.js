@@ -27,6 +27,8 @@ const ChartContext = ({ children }) => {
     fetchHistoricalData();
   }, [currency, days, coin]);
 
+  
+
   const volatilitydataset = {
     data: historicalData?.map((coin, index) => {
       if (index + 1 < historicalData?.length) {
