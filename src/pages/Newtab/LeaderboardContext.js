@@ -49,10 +49,6 @@ const LeaderboardContext = ({ children }) => {
     (a, b) => b.value - b.invested - (a.value - a.invested)
   )[0];
   bestResult = bestResult?.value - bestResult?.invested;
-  console.log(
-    '🚀 ~ file: LeaderboardContext.js ~ line 49 ~ LeaderboardContext ~ bestResult',
-    bestResult
-  );
 
   useEffect(() => {
     if (user?.uid && trades.length >= 1) {

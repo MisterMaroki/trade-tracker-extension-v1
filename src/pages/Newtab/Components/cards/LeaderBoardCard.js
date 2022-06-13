@@ -1,3 +1,4 @@
+import { Hello } from './hello';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import award from '../../../../assets/img';

@@ -13,7 +13,14 @@ import { IconButton } from '@mui/material';
 import { DeleteForeverRounded, DeleteOutlined } from '@mui/icons-material';
 
 export default function WatchlistCoinItem({ row, price }) {
-  const { symbol, setId, setSearch, currentColor } = CryptoState();
+  const {
+    symbol,
+    setId,
+    setSearch,
+    currentColor,
+    setShowTrades,
+    setShowingOverview,
+  } = CryptoState();
   const { user, setAlert, watchlist, addToWatchlist, removeFromWatchlist } =
     UserState();
   const profit = row.price_change_percentage_24h >= 0;
@@ -25,6 +32,8 @@ export default function WatchlistCoinItem({ row, price }) {
       onClick={() => {
         setId(row.id);
         setSearch('');
+        setShowTrades(false);
+        setShowingOverview(false);
       }}
     >
       {user && (

@@ -152,6 +152,10 @@ const CryptoContext = ({ children }) => {
     if (user?.uid && trades.length >= 1) {
       const writeTrades = async () => {
         const tradesRef = doc(db, 'trades', user.uid);
+        console.log(
+          '🚀 ~ file: CryptoContext.js ~ line 155 ~ writeTrades ~ tradesRef',
+          tradesRef
+        );
 
         try {
           console.log('writeTrades()');
