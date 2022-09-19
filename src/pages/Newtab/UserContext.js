@@ -23,6 +23,7 @@ const UserContext = ({ children }) => {
 
   // Auth instance for the current firebaseApp
   setPersistence(auth, browserLocalPersistence);
+
   const [alert, setAlert] = useState({
     open: false,
     message: '',
@@ -61,6 +62,7 @@ const UserContext = ({ children }) => {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);
+
         console.log('No user logged in!');
       }
     });

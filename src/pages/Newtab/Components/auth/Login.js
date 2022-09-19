@@ -20,10 +20,7 @@ const Login = ({ toggleOpen }) => {
     }
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log(
-        '🚀 ~ file: SignUp.js ~ line 29 ~ handleSubmit ~ result',
-        result
-      );
+
       setAlert({
         open: true,
         message: `Login Successful. Welcome ${result?.user?.email}`,
